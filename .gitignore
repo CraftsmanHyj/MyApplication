@@ -45,3 +45,18 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#Androidstudio是用gradle来构建项目的，有很多环境方面的文件都不需要增加到svn/git版本库。
+#以下为列出不需要增加到版本库的文件：
+#(1) .idea 文件夹，此文件夹是用来保存开发工具的设置信息。
+#(2) .gradle文件夹，此文件夹是用来保存gradle的依赖信息。
+#(3) build 文件夹，build文件夹是用来保存编译后的文件目录。
+#(4) .iml 文件，是用来保存开发工具信息。
+#(5)  local.properties 文件，是用来保存项目依赖信息。
+#黑名单设置
+.svn/
+.idea/
+.gradle/
+build/
+*.iml
+local.properties

@@ -1,0 +1,107 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Manifest Merging:
+-----------------
+Your project uses libraries that provide manifests, and your Eclipse
+project did not explicitly turn on manifest merging. In Android Gradle
+projects, manifests are always merged (meaning that contents from your
+libraries' manifests will be merged into the app manifest. If you had
+manually copied contents from library manifests into your app manifest
+you may need to remove these for the app to build correctly.
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .factorypath
+* .gitattributes
+* .gitignore
+* compile-lib\
+* compile-lib\androidannotations-3.2.jar
+* ic_launcher-web.png
+* proguard-project.txt
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:23.3.0
+android-support-v7-appcompat.jar => com.android.support:appcompat-v7:23.3.0
+gson-2.3.jar => com.google.code.gson:gson:2.3
+
+Potentially Missing Dependency:
+-------------------------------
+When we replaced the following .jar files with a Gradle dependency, we
+inferred the dependency version number from the filename. This
+specific version may not actually be available from the repository.
+If you get a build error stating that the dependency is missing, edit
+the version number to for example "+" to pick up the latest version
+instead. (This may require you to update your code if the library APIs
+have changed.)
+
+gson-2.3.jar => version 2.3 in com.google.code.gson:gson:2.3
+
+Replaced Libraries with Dependencies:
+-------------------------------------
+The importer recognized the following library projects as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the source files in your project were of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the library replacement in the import wizard and try
+again:
+
+android-support-v7-appcompat => [com.android.support:appcompat-v7:23.3.0]
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* .apt_generated\ => app\src\main\java\
+* AndroidManifest.xml => app\src\main\AndroidManifest.xml
+* assets\ => app\src\main\assets\
+* libs\android-support-v7-recyclerview.jar .jar => app\libs\android-support-v7-recyclerview.jar .jar
+* libs\androidannotations-api-3.2.jar => app\libs\androidannotations-api-3.2.jar
+* libs\httpcore-4.2.4.jar => app\libs\httpcore-4.2.4.jar
+* libs\httpmime-4.2.5.jar => app\libs\httpmime-4.2.5.jar
+* libs\nineoldandroids-2.4.0.jar => app\libs\nineoldandroids-2.4.0.jar
+* libs\universal-image-loader-1.9.4.jar => app\libs\universal-image-loader-1.9.4.jar
+* res\ => app\src\main\res\
+* src\ => app\src\main\java\
+* src\com\hyj\lib\annotaionsframe\readme.txt => app\src\main\resources\com\hyj\lib\annotaionsframe\readme.txt
+* src\com\hyj\lib\flowlayout\readme.txt => app\src\main\resources\com\hyj\lib\flowlayout\readme.txt
+* src\com\hyj\lib\image_preview\readme.txt => app\src\main\resources\com\hyj\lib\image_preview\readme.txt
+* src\com\hyj\lib\lockpattern\readme.txt => app\src\main\resources\com\hyj\lib\lockpattern\readme.txt
+* src\com\hyj\lib\mainview\readme.txt => app\src\main\resources\com\hyj\lib\mainview\readme.txt
+* src\com\hyj\lib\readme.txt => app\src\main\resources\com\hyj\lib\readme.txt
+* src\com\hyj\lib\scratch\readme.txt => app\src\main\resources\com\hyj\lib\scratch\readme.txt
+* src\com\hyj\lib\socket\readme.txt => app\src\main\resources\com\hyj\lib\socket\readme.txt
+* src\com\hyj\lib\tuling\readme.txt => app\src\main\resources\com\hyj\lib\tuling\readme.txt
+* src\com\hyj\lib\volley\readme.txt => app\src\main\resources\com\hyj\lib\volley\readme.txt
+* src\com\hyj\lib\wechat_imageUp\readme.txt => app\src\main\resources\com\hyj\lib\wechat_imageUp\readme.txt
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
