@@ -50,7 +50,7 @@
 
         <!-- 主界面实现方案合集 -->
         <activity
-            android:name="com.hyj.lib.mainview.MainTabActivity"
+            android:name=".SecondaryActivity"
             android:launchMode="singleTask" />
 
         <!-- Fragment实现Tab功能 -->
@@ -133,10 +133,10 @@
 
         <!-- 九宫格 -->
         <activity
-            android:name="com.hyj.lib.lockpattern.LockPatternActivity"
+            android:name=".lock.lockpattern.LockPatternActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.lockpattern2.LockTestActivity"
+            android:name=".lock.lockpattern2.LockTestActivity"
             android:launchMode="singleTask" />
 
         <!-- 仿微信图片上传 -->

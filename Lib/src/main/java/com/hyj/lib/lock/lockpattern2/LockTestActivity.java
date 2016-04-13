@@ -1,4 +1,4 @@
-package com.hyj.lib.lockpattern2;
+package com.hyj.lib.lock.lockpattern2;
 
 import android.app.Activity;
 import android.os.Bundle;

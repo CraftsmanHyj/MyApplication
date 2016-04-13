@@ -1,4 +1,4 @@
-package com.hyj.lib.lockpattern;
+package com.hyj.lib.lock.lockpattern;
 
 import com.hyj.lib.R;
 
