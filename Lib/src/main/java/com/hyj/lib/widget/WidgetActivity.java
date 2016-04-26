@@ -3,6 +3,7 @@ package com.hyj.lib.widget;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 /**
@@ -11,7 +12,7 @@ import com.hyj.lib.R;
  * @Author hyj
  * @Date 2016-2-5 上午10:20:19
  */
-public class WidgetActivity extends Activity {
+public class WidgetActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

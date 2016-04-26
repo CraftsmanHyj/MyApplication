@@ -12,11 +12,12 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ListView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.wechat_talk.AudioRecorderButton.OnAudioRecorderFinishListener;
 import com.hyj.lib.wechat_talk.AudioRecorderButton.OnAudioRecorderLongClickLisetener;
 
-public class WeChatTalkActivity extends Activity {
+public class WeChatTalkActivity extends BaseActivity {
 	private ListView mListView;
 	private TalkAdapter adapter;
 	private List<Recorder> lDatas;

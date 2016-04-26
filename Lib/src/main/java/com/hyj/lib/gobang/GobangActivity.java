@@ -1,5 +1,6 @@
 package com.hyj.lib.gobang;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.gobang.WuziqiPanel.OnGameOverListener;
 import com.hyj.lib.tools.DialogUtils;
@@ -8,7 +9,7 @@ import com.hyj.lib.tools.DialogUtils.DialogAction;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class GobangActivity extends Activity {
+public class GobangActivity extends BaseActivity {
 
 	private WuziqiPanel gobang;
 

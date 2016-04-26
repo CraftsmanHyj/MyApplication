@@ -9,12 +9,13 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.TextView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.jigsaw.GameJigsawLayout.OnGameJigsawListener;
 import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.DialogUtils.DialogAction;
 
-public class JigsawActivity extends Activity {
+public class JigsawActivity extends BaseActivity {
 	private GameJigsawLayout game;
 	private TextView tvLevel;
 	private TextView tvTime;

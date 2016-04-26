@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class FlowLayoutActivity extends Activity {
+public class FlowLayoutActivity extends BaseActivity {
 
 	private String[] mValues = new String[] { "jijojoj", "fwfew", "hdhdfhdfh",
 			"jijojoj", "fwfew", "hdhdfhdfh", "jijojoj", "fwfew", "hdhdfhdfh",

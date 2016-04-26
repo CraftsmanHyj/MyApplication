@@ -9,12 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.luckydial.PrizeInfo;
 import com.hyj.lib.scratch.ScratchCard.OnScratchCompleteListener;
 import com.hyj.lib.tools.DialogUtils;
 
-public class ScratchCardActivity extends Activity {
+public class ScratchCardActivity extends BaseActivity {
 	private List<PrizeInfo> lPrize;
 
 	private ScratchCard scratch;

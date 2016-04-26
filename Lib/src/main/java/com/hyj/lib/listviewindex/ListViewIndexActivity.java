@@ -10,9 +10,10 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.SectionIndexer;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class ListViewIndexActivity extends Activity {
+public class ListViewIndexActivity extends BaseActivity {
 	private ArrayList<String> mItems;
 	private ListViewIndex mListView;
 

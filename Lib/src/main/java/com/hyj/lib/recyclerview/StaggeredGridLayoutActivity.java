@@ -10,9 +10,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class StaggeredGridLayoutActivity extends Activity {
+public class StaggeredGridLayoutActivity extends BaseActivity {
 	private RecyclerView mRecyclerView;
 	private List<String> lDatas;
 	private StaggeredAdapter adapter;

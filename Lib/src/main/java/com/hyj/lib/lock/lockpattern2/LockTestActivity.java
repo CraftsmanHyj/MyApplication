@@ -1,13 +1,15 @@
-package com.hyj.lib.lockpattern2;
+package com.hyj.lib.lock.lockpattern2;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
+import com.hyj.lib.BaseActivity;
+
 /**
  * author : stone email : aa86799@163.com time : 15/12/25 22 53
  */
-public class LockTestActivity extends Activity {
+public class LockTestActivity extends BaseActivity {
 
 	private NineGridLockView mNineGridLockView;
 

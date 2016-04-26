@@ -12,9 +12,10 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class ViewPagerCustormerActivity extends Activity {
+public class ViewPagerCustormerActivity extends BaseActivity {
 
 	private ViewPagerTransformer mViewPager;
 	private List<Integer> lImageId;

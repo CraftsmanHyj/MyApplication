@@ -5,6 +5,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.DialogUtils;
 
@@ -20,7 +21,7 @@ import android.widget.TextView;
  * @Date 2016-1-26 上午9:15:19
  */
 @EActivity(R.layout.annotations_main)
-public class AnnotationsActivity extends Activity {
+public class AnnotationsActivity extends BaseActivity {
 
 	@ViewById(R.id.annoBtTest)
 	protected Button btnTest;

@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.DialogUtils;
 
 @SuppressLint("InflateParams")
-public class PopupActivity extends Activity implements OnClickListener {
+public class PopupActivity extends BaseActivity implements OnClickListener {
 
 	private Button bt4Bottom;// 从底部上滑显示popup
 

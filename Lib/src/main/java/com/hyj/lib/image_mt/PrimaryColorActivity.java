@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 /**
@@ -16,7 +17,7 @@ import com.hyj.lib.R;
  * @author async
  * 
  */
-public class PrimaryColorActivity extends Activity implements
+public class PrimaryColorActivity extends BaseActivity implements
 		OnSeekBarChangeListener {
 	private ImageView mImageView;
 	private Bitmap bitmap;

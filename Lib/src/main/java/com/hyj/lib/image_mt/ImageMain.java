@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 /**
@@ -14,7 +15,7 @@ import com.hyj.lib.R;
  * @author async
  * 
  */
-public class ImageMain extends Activity implements OnClickListener {
+public class ImageMain extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

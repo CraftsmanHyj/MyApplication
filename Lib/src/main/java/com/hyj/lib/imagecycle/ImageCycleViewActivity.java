@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.Constants;
 import com.hyj.lib.R;
 import com.hyj.lib.imagecycle.ImageCycleView.OnImageCycleViewListener;
@@ -26,7 +27,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
  * 描述：主页
  * 
  */
-public class ImageCycleViewActivity extends Activity {
+public class ImageCycleViewActivity extends BaseActivity {
 
 	private List<ADInfo> lAdInfo = new ArrayList<ADInfo>();
 	private ImageCycleView imageCycleView;

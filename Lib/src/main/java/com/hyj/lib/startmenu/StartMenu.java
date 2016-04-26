@@ -3,6 +3,7 @@ package com.hyj.lib.startmenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 import android.animation.ObjectAnimator;
@@ -20,7 +21,7 @@ import android.widget.Toast;
  * @author async
  * 
  */
-public class StartMenu extends Activity implements OnClickListener {
+public class StartMenu extends BaseActivity implements OnClickListener {
 	private int[] menuId;
 	private List<ImageView> lIv;
 	private boolean hasExpend = false;// 菜单是否展开

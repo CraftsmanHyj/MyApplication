@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hyj.lib"
     android:versionCode="1"
-    android:versionName="1.0.1" >
+    android:versionName="1.0.1">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -17,17 +17,18 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name="com.hyj.lib.LibApplication"
+        android:name=".LibApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="com.hyj.lib.MainLibActivity"
+            android:name=".MainLibActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,185 +38,188 @@
 
         <!-- 星型菜单 -->
         <activity
-            android:name="com.hyj.lib.startmenu.StartMenu"
+            android:name=".startmenu.StartMenu"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.startmenu.StartMenu2"
+            android:name=".startmenu.StartMenu2"
             android:launchMode="singleTask" />
 
         <!-- 倒计时 -->
         <activity
-            android:name="com.hyj.lib.ui.TimerCountActivity"
+            android:name=".ui.TimerCountActivity"
             android:launchMode="singleTask" />
 
         <!-- 主界面实现方案合集 -->
         <activity
-            android:name="com.hyj.lib.mainview.MainTabActivity"
+            android:name=".SecondaryActivity"
             android:launchMode="singleTask" />
 
         <!-- Fragment实现Tab功能 -->
         <activity
-            android:name="com.hyj.lib.mainview.tabfragment.FragmentTabActivity"
+            android:name=".mainview.tabfragment.FragmentTabActivity"
             android:launchMode="singleTask" />
 
         <!-- 仿微信界面 -->
         <activity
-            android:name="com.hyj.lib.mainview.wechat.WeChatActivivty"
+            android:name=".mainview.wechat.WeChatActivivty"
             android:launchMode="singleTask" />
 
         <!-- qq5.0侧滑菜单 -->
         <activity
-            android:name="com.hyj.lib.mainview.qq5_0.SlidingActivity"
+            android:name=".mainview.qq5_0.SlidingActivity"
             android:launchMode="singleTask" />
 
         <!-- ViewPager切换动画 -->
         <activity
-            android:name="com.hyj.lib.viewpager.ViewPagerActivity"
+            android:name=".viewpager.ViewPagerActivity"
             android:launchMode="singleTask" />
 
         <!-- ViewPager切换动画,自定义向下兼容 -->
         <activity
-            android:name="com.hyj.lib.viewpager.ViewPagerCustormerActivity"
+            android:name=".viewpager.ViewPagerCustormerActivity"
             android:launchMode="singleTask" />
 
         <!-- 自定义Title测试 -->
         <activity
-            android:name="com.hyj.lib.title_bar.TitleBarActivity"
+            android:name=".title_bar.TitleBarActivity"
             android:launchMode="singleTask" />
 
         <!-- 图片美化处理 -->
         <activity
-            android:name="com.hyj.lib.image_mt.ImageMain"
+            android:name=".image_mt.ImageMain"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.image_mt.PrimaryColorActivity"
+            android:name=".image_mt.PrimaryColorActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.image_mt.ColorMatrixActivity"
+            android:name=".image_mt.ColorMatrixActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.image_mt.PixelsActivity"
+            android:name=".image_mt.PixelsActivity"
             android:launchMode="singleTask" />
 
         <!-- 树形节点设计 -->
         <activity
-            android:name="com.hyj.lib.tree.TreeActivity"
+            android:name=".tree.TreeActivity"
             android:launchMode="singleTask" />
 
         <!-- 万能适配器 -->
         <activity
-            android:name="com.hyj.lib.adapter.AdapterAcitivty"
+            android:name=".adapter.AdapterAcitivty"
             android:launchMode="singleTask" />
 
         <!-- 轮播广告图片 -->
         <activity
-            android:name="com.hyj.lib.imagecycle.ImageCycleViewActivity"
+            android:name=".imagecycle.ImageCycleViewActivity"
             android:launchMode="singleTask" />
 
         <!-- 文件断点续传下载 -->
         <activity
-            android:name="com.hyj.lib.downservice.DownServiceActivity"
+            android:name=".downservice.DownServiceActivity"
             android:launchMode="singleTask" />
 
         <service
-            android:name="com.hyj.lib.http.download.DownService"
+            android:name=".http.download.DownService"
             android:launchMode="singleTask" />
 
         <!-- 流式布局 -->
         <activity
-            android:name="com.hyj.lib.flowlayout.FlowLayoutActivity"
+            android:name=".flowlayout.FlowLayoutActivity"
             android:launchMode="singleTask" />
 
         <!-- 下拉刷新组件 -->
         <activity
-            android:name="com.hyj.lib.listviewrefresh.ListViewRfreshActivity"
+            android:name=".listviewrefresh.ListViewRfreshActivity"
             android:launchMode="singleTask" />
 
         <!-- 九宫格 -->
         <activity
-            android:name="com.hyj.lib.lockpattern.LockPatternActivity"
+            android:name=".lock.lockpattern.LockPatternActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.lockpattern2.LockTestActivity"
+            android:name=".lock.lockpattern2.LockTestActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".lock.lockpattern3.Lock3Activity"
             android:launchMode="singleTask" />
 
         <!-- 仿微信图片上传 -->
         <activity
-            android:name="com.hyj.lib.wechat_imageUp.ImageLoaderActivity"
+            android:name=".wechat_imageUp.ImageLoaderActivity"
             android:launchMode="singleTask" />
 
         <!-- 仿微信聊天 -->
         <activity
-            android:name="com.hyj.lib.wechat_talk.WeChatTalkActivity"
+            android:name=".wechat_talk.WeChatTalkActivity"
             android:launchMode="singleTask" />
 
         <!-- 个性图片预览与多点触控 -->
         <activity
-            android:name="com.hyj.lib.image_preview.ImagePreviewActivity"
+            android:name=".image_preview.ImagePreviewActivity"
             android:launchMode="singleTask" />
 
         <!-- 刮刮卡 -->
         <activity
-            android:name="com.hyj.lib.scratch.ScratchCardActivity"
+            android:name=".scratch.ScratchCardActivity"
             android:launchMode="singleTask" />
 
         <!-- 带索引条的ListView -->
         <activity
-            android:name="com.hyj.lib.listviewindex.ListViewIndexActivity"
+            android:name=".listviewindex.ListViewIndexActivity"
             android:launchMode="singleTask" />
 
         <!-- DialogUtils工具类测试 -->
         <activity
-            android:name="com.hyj.lib.ui.DialogActivity"
+            android:name=".ui.DialogActivity"
             android:launchMode="singleTask" />
 
         <!-- 抽奖转盘 -->
         <activity
-            android:name="com.hyj.lib.luckydial.LuckyDialActivity"
+            android:name=".luckydial.LuckyDialActivity"
             android:launchMode="singleTask" />
 
         <!-- RecyclerView测试 -->
         <activity
-            android:name="com.hyj.lib.recyclerview.RecyclerActivity"
+            android:name=".recyclerview.RecyclerActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.recyclerview.StaggeredGridLayoutActivity"
+            android:name=".recyclerview.StaggeredGridLayoutActivity"
             android:launchMode="singleTask" />
 
         <!-- AndroidAnnotaion框架测试 -->
         <activity
-            android:name="com.hyj.lib.annotaionsframe.AnnotationsActivity_"
+            android:name=".annotaionsframe.AnnotationsActivity_"
             android:launchMode="singleTask" />
 
         <!-- 自定义相机测试 -->
         <activity
-            android:name="com.hyj.lib.camera.CameraMainActivity"
+            android:name=".camera.CameraMainActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.camera.CamaraCustomActivity"
+            android:name=".camera.CamaraCustomActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.camera.CameraResultActivity"
+            android:name=".camera.CameraResultActivity"
             android:launchMode="singleTask" />
 
         <!-- 图灵机器人测试 -->
         <activity
-            android:name="com.hyj.lib.tuling.TulingActivity"
+            android:name=".tuling.TulingActivity"
             android:launchMode="singleTask" />
 
         <!-- 拼图游戏 -->
         <activity
-            android:name="com.hyj.lib.jigsaw.JigsawActivity"
+            android:name=".jigsaw.JigsawActivity"
             android:launchMode="singleTask" />
 
         <!-- Widget桌面小控件 -->
         <activity
-            android:name="com.hyj.lib.widget.WidgetActivity"
+            android:name=".widget.WidgetActivity"
             android:launchMode="singleTask" />
 
-        <service android:name="com.hyj.lib.widget.TimerService" />
+        <service android:name=".widget.TimerService" />
 
-        <receiver android:name="com.hyj.lib.widget.WidgetProvider" >
+        <receiver android:name=".widget.WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -227,43 +231,43 @@
 
         <!-- 心愿分享 -->
         <activity
-            android:name="com.hyj.lib.wish.WishActivity"
+            android:name=".wish.WishActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
 
         <!-- 注解使用 -->
         <activity
-            android:name="com.hyj.lib.annotation.AnnotationActivity"
+            android:name=".annotation.AnnotationActivity"
             android:launchMode="singleTask" />
 
         <!-- 自定义ViewPagerIndicator指示器 -->
         <activity
-            android:name="com.hyj.lib.indicator.ViewPagerIndicatorActivity"
+            android:name=".indicator.ViewPagerIndicatorActivity"
             android:launchMode="singleTask" />
 
         <!-- 五子棋游戏 -->
         <activity
-            android:name="com.hyj.lib.gobang.GobangActivity"
+            android:name=".gobang.GobangActivity"
             android:launchMode="singleTask" />
 
         <!-- 高清加载巨图方案 -->
         <activity
-            android:name="com.hyj.lib.largeImage.LargeImageViewActivity"
+            android:name=".largeImage.LargeImageViewActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name="com.hyj.lib.largeImage.LargeImageViewSimpleBakActivity"
+            android:name=".largeImage.LargeImageViewSimpleBakActivity"
             android:launchMode="singleTask" />
 
         <!-- 弹出Popup实现方案合集 -->
         <activity
-            android:name="com.hyj.lib.popup.PopupActivity"
+            android:name=".popup.PopupActivity"
             android:launchMode="singleTask" />
 
         <!-- GridView的Item设置成正方形 -->
         <activity
-            android:name="com.hyj.lib.ui.SquareActivity"
-            android:launchMode="singleTask"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:name=".ui.SquareActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

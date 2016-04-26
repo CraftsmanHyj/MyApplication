@@ -8,11 +8,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.GridView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.adapter.CommonAdapter;
 import com.hyj.lib.tools.adapter.ViewHolder;
 
-public class SquareActivity extends Activity {
+public class SquareActivity extends BaseActivity {
 	private String[] strs = { "imtem1", "imtem2", "imtem3", "imtem4", "imtem5",
 			"imtem6", "imtem7", "imtem8", "imtem9" };
 

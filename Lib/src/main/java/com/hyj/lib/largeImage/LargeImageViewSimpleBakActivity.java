@@ -11,9 +11,10 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class LargeImageViewSimpleBakActivity extends Activity {
+public class LargeImageViewSimpleBakActivity extends BaseActivity {
 	private ImageView mImageView;
 
 	@Override

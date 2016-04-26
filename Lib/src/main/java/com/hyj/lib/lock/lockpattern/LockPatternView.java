@@ -1,4 +1,4 @@
-package com.hyj.lib.lockpattern;
+package com.hyj.lib.lock.lockpattern;
 
 import java.util.ArrayList;
 import java.util.List;

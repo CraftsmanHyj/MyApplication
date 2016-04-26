@@ -26,6 +26,7 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.image_preview.ImagePreviewActivity;
 import com.hyj.lib.tools.DialogUtils;
@@ -33,7 +34,7 @@ import com.hyj.lib.tools.FileUtils;
 import com.hyj.lib.wechat_imageUp.DirPopupWindow.OnDirSelectedListener;
 import com.hyj.lib.wechat_imageUp.ImageAdapter.PictureSelectedListener;
 
-public class ImageLoaderActivity extends Activity {
+public class ImageLoaderActivity extends BaseActivity {
     /**
      * 数据加载完成
      */

@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.down.DownLoad;
 import com.hyj.lib.http.download.DownLoadTask;
@@ -22,7 +23,7 @@ import com.hyj.lib.http.download.FileInfo;
 import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.ServiceUtils;
 
-public class DownServiceActivity extends Activity {
+public class DownServiceActivity extends BaseActivity {
 	private List<FileInfo> lFile;
 	private ListView lvDownFile;
 	private FileListAdapter adapter;

@@ -1,5 +1,6 @@
 package com.hyj.lib.image_mt;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 import android.app.Activity;
@@ -8,7 +9,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-public class PixelsActivity extends Activity {
+public class PixelsActivity extends BaseActivity {
 
 	private ImageView img1, img2, img3, img4;
 

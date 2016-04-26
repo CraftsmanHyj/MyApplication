@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class VPSimpleFragment extends Fragment {
+import com.hyj.lib.BaseFragment;
+
+public class VPSimpleFragment extends BaseFragment {
 	private static final String BUNDLE_TITLE = "title";
 
 	private String mTitle;

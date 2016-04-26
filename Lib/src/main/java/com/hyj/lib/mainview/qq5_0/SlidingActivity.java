@@ -1,5 +1,6 @@
 package com.hyj.lib.mainview.qq5_0;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 import android.app.Activity;
@@ -7,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
-public class SlidingActivity extends Activity {
+public class SlidingActivity extends BaseActivity {
 
 	private SlidingMenu mSlidingMenu;
 

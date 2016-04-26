@@ -23,9 +23,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/android-support-v7-recyclerview.jar .jar')
     compile files('libs/androidannotations-api-3.2.jar')
     compile files('libs/httpclient-4.5.jar')
@@ -33,4 +30,7 @@ dependencies {
     compile files('libs/httpmime-4.2.5.jar')
     compile files('libs/nineoldandroids-2.4.0.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 }

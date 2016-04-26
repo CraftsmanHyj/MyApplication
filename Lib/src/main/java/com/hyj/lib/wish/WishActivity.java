@@ -13,12 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.Constants;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.FileUtils;
 
-public class WishActivity extends Activity {
+public class WishActivity extends BaseActivity {
 	private ImageView imgTp;
 	private EditText etYw;
 	private Button btShare;

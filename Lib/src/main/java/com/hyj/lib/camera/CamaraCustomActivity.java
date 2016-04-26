@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.FileUtils;
 
@@ -25,7 +26,7 @@ import com.hyj.lib.tools.FileUtils;
  * @Date 2016-1-26 上午9:29:19
  */
 @SuppressWarnings("deprecation")
-public class CamaraCustomActivity extends Activity implements
+public class CamaraCustomActivity extends BaseActivity implements
 		SurfaceHolder.Callback {
 
 	private Button btPz;

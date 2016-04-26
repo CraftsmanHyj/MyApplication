@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.wechat_imageUp.ImageLoader;
 import com.hyj.lib.wechat_imageUp.ImageLoader.Type;
 
-public class ImagePreviewActivity extends Activity {
+public class ImagePreviewActivity extends BaseActivity {
 	/**
 	 * 传过来想要显示的图片数据
 	 */

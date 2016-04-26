@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 /**
@@ -27,7 +28,7 @@ import com.hyj.lib.R;
  * @author async
  * 
  */
-public class ColorMatrixActivity extends Activity implements OnClickListener {
+public class ColorMatrixActivity extends BaseActivity implements OnClickListener {
 
 	private ImageView imgView;
 	private Bitmap mBitmap;

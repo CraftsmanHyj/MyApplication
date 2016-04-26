@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.startmenu.ArcMenu.onMenuItemClickListener;
 
@@ -19,7 +20,7 @@ import com.hyj.lib.startmenu.ArcMenu.onMenuItemClickListener;
  * @author async
  * 
  */
-public class StartMenu2 extends Activity {
+public class StartMenu2 extends BaseActivity {
 
 	private ListView mListView;
 	private List<String> mDatas;

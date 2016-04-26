@@ -7,10 +7,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.listviewrefresh.ListViewRefresh.OnRefreshListener;
 
-public class ListViewRfreshActivity extends Activity implements
+public class ListViewRfreshActivity extends BaseActivity implements
 		OnRefreshListener {
 	private ListViewRefresh lvContent;
 	private ListViewAdapter adapter;

@@ -13,9 +13,10 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class ViewPagerActivity extends Activity {
+public class ViewPagerActivity extends BaseActivity {
 
 	private ViewPager mViewPager;
 	private List<Integer> lImageId;

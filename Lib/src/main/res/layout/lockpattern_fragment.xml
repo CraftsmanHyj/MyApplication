@@ -13,7 +13,7 @@
         android:gravity="center"
         android:text="请绘制密码" />
 
-    <com.hyj.lib.lockpattern.LockPatternView
+    <com.hyj.lib.lock.lockpattern.LockPatternView
         android:id="@+id/lockView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

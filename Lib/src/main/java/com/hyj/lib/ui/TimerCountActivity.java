@@ -1,5 +1,6 @@
 package com.hyj.lib.ui;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.utils.TimerCount;
 
@@ -16,7 +17,7 @@ import android.widget.Button;
  * @author async
  * 
  */
-public class TimerCountActivity extends Activity {
+public class TimerCountActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

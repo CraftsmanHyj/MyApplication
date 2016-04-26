@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.Utils;
 
@@ -18,7 +19,7 @@ import com.hyj.lib.tools.Utils;
  * @Author hyj
  * @Date 2016-2-18 下午3:36:54
  */
-public class AnnotationActivity extends Activity {
+public class AnnotationActivity extends BaseActivity {
 
 	private TextView tvSql;
 	private TextView tvReflect;

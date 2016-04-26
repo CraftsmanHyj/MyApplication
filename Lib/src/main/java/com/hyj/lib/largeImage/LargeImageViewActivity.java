@@ -6,9 +6,10 @@ import java.io.InputStream;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class LargeImageViewActivity extends Activity {
+public class LargeImageViewActivity extends BaseActivity {
 	private LargeImageView mLargeImageView;
 
 	@Override

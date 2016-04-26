@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.http.HttpApi;
 import com.hyj.lib.http.HttpFactory;
@@ -29,7 +30,7 @@ import com.hyj.lib.tuling.bean.ChatMessage;
 import com.hyj.lib.tuling.bean.Result;
 import com.hyj.lib.utils.ProgressExecutor;
 
-public class TulingActivity extends Activity {
+public class TulingActivity extends BaseActivity {
 	// 图灵机器人api接入地址
 	private final String URL = "http://www.tuling123.com/openapi/api";
 	// 用户key

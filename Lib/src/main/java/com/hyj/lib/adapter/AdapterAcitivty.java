@@ -3,6 +3,7 @@ package com.hyj.lib.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.Utils;
 
@@ -10,7 +11,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
-public class AdapterAcitivty extends Activity {
+public class AdapterAcitivty extends BaseActivity {
 
 	private ListView mListView;
 	private List<News> lDatas;

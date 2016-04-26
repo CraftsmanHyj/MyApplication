@@ -9,11 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.luckydial.LuckyDial.onRotationDownListener;
 import com.hyj.lib.tools.DialogUtils;
 
-public class LuckyDialActivity extends Activity {
+public class LuckyDialActivity extends BaseActivity {
 
 	private LuckyDial dial;
 	/**

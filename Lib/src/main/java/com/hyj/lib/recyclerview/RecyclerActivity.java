@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
 /**
@@ -27,7 +28,7 @@ import com.hyj.lib.R;
  * https://github.com/gabrielemariotti/RecyclerViewItemAnimators
  * </pre>
  */
-public class RecyclerActivity extends Activity {
+public class RecyclerActivity extends BaseActivity {
 	private RecyclerView mRecyclerView;
 	private List<String> lDatas;
 	private RecyclerAdapter adapter;

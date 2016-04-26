@@ -14,11 +14,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.Constants;
 import com.hyj.lib.R;
 import com.hyj.lib.tools.FileUtils;
 
-public class CameraMainActivity extends Activity implements OnClickListener {
+public class CameraMainActivity extends BaseActivity implements OnClickListener {
 	private static final int REQ_SLT = 1;// 返回的为一个缩略图
 	private static final int REQ_YT = 2;// 返回一个原图路径
 

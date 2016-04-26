@@ -12,11 +12,12 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.tree.Tree.OnTreeNodeClickListener;
 import com.hyj.lib.tree.Tree.onTreeNodeLongClickListener;
 
-public class TreeActivity extends Activity {
+public class TreeActivity extends BaseActivity {
 	private List<FileBean> lDatas;
 	private Tree<FileBean> mTree;
 

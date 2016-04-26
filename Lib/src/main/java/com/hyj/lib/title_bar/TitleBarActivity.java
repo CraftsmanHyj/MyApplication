@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 import com.hyj.lib.title_bar.TitleBar.DoActionIterface;
 
-public class TitleBarActivity extends Activity {
+public class TitleBarActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

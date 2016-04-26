@@ -9,9 +9,10 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.widget.ImageView;
 
+import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
 
-public class CameraResultActivity extends Activity {
+public class CameraResultActivity extends BaseActivity {
 	public static final String PIC_PATH = "picturePath";
 
 	private ImageView imgResult;
