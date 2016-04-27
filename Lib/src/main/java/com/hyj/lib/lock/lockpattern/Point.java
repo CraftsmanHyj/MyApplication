@@ -82,8 +82,7 @@ public  class Point implements Serializable {
 	 *            移动点的Y
 	 * @return 是否重合
 	 */
-	public static boolean with(float pointX, float pointY, float radius,
-			float movingX, float movingY) {
+	public static boolean with(float pointX, float pointY, float radius,float movingX, float movingY) {
 		// 开方
 		return Math.sqrt((pointX - movingX) * (pointX - movingX)
 				+ (pointY - movingY) * (pointY - movingY)) < radius;

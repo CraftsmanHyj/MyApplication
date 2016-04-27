@@ -25,6 +25,7 @@ import com.hyj.lib.jigsaw.JigsawActivity;
 import com.hyj.lib.largeImage.LargeImageViewActivity;
 import com.hyj.lib.listviewindex.ListViewIndexActivity;
 import com.hyj.lib.listviewrefresh.ListViewRfreshActivity;
+import com.hyj.lib.lock.LockActivity;
 import com.hyj.lib.lock.lockpattern.LockPatternActivity;
 import com.hyj.lib.lock.lockpattern2.LockTestActivity;
 import com.hyj.lib.lock.lockpattern3.Lock3Activity;
@@ -314,6 +315,11 @@ public class MainLibActivity extends BaseActivity {
         bean = new ListItem();
         bean.setTitle("九宫格解锁");
         bean.setValue(LockPatternActivity.class);
+        lData.add(bean);
+
+        bean = new ListItem();
+        bean.setTitle("当前APP九宫格解锁设置");
+        bean.setValue(LockActivity.class);
         lData.add(bean);
 
         Bundle bundle = new Bundle();

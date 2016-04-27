@@ -10,15 +10,15 @@ public class Point implements Serializable {
     /**
      * 状态：未选中
      */
-    public static int STATE_NORMAL = 0X001;
+    public static final int STATE_NORMAL = 0X001;
     /**
      * 状态：选中
      */
-    public static int STATE_CHECK = 0X002;
+    public static final int STATE_CHECK = 0X002;
     /**
      * 状态：选择错误
      */
-    public static int STATE_CHECK_ERROR = 0X003;
+    public static final int STATE_CHECK_ERROR = 0X003;
 
     public int state = STATE_NORMAL;
     public int index = 0;// 下标
@@ -67,18 +67,18 @@ public class Point implements Serializable {
         this.y = y;
     }
 
+
     /**
      * 两点间的距离
      *
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param a
+     * @param b
      * @return
      */
-    public static double distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.abs(x1 - x2) * Math.abs(x1 - x2)
-                + Math.abs(y1 - y2) * Math.abs(y1 - y2));
+    public static double distance(Point a, Point b) {
+        // x轴差的平方加上y轴差的平方,对和开放
+        return Math.sqrt(Math.abs(a.getX() - b.getX()) * Math.abs(a.getX() - b.getX())
+                + Math.abs(a.getY() - b.getY()) * Math.abs(a.getY() - b.getY()));
     }
 
     /**
@@ -92,17 +92,19 @@ public class Point implements Serializable {
         return Math.toDegrees(Math.atan2(x, y));
     }
 
+
     /**
-     * 点在圆肉
+     * 移动点是否跟原来的点重合
      *
-     * @param sx
-     * @param sy
-     * @param r
-     * @param x
-     * @param y
-     * @return
+     * @param px     参考点的X
+     * @param py     参考点的Y
+     * @param radius 圆的半径
+     * @param mx     移动点的X
+     * @param my     移动点的Y
+     * @return 是否重合
      */
-    public static boolean checkInRound(float sx, float sy, float r, float x, float y) {
-        return Math.sqrt((sx - x) * (sx - x) + (sy - y) * (sy - y)) < r;
+    public static boolean checkInRound(float px, float py, float radius, float mx, float my) {
+        // 开方
+        return Math.sqrt((px - mx) * (px - mx) + (py - my) * (py - my)) < radius;
     }
 }

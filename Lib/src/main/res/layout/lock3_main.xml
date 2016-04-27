@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hyj.lib.lock.lockpattern3.LocusPassWordView
+    <com.hyj.lib.lock.lockpattern3.LockPointView
         android:id="@+id/lock3Pattern"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

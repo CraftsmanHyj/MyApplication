@@ -46,8 +46,7 @@ public class ScreenTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-        LogUtils.e("执行倒计时：" + (millisUntilFinished / 1000) + " "
-                + millisUntilFinished);
+//        LogUtils.e("执行倒计时：" + (millisUntilFinished / 1000) + " " + millisUntilFinished);
 
         if (millisUntilFinished <= 2 * 1000) {
             isTimeFinish = true;

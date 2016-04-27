@@ -13,24 +13,23 @@ import android.graphics.RectF;
  * Created by Administrator on 2016/4/26.
  */
 public class BitmapUtil {
-
     /**
-     * 缩放图片
+     * 图片缩放
      *
-     * @param bitmap
+     * @param bitmap 源图片
+     * @param zf     缩放比
      * @return
      */
     public static Bitmap zoom(Bitmap bitmap, float zf) {
-        Matrix matrix = new Matrix();
-        matrix.postScale(zf, zf);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), matrix, true);
+        return zoom(bitmap, zf, zf);
     }
 
     /**
      * 缩放图片
      *
-     * @param bitmap
+     * @param bitmap 源图片
+     * @param wf     宽度缩放比
+     * @param hf     高度缩放比
      * @return
      */
     public static Bitmap zoom(Bitmap bitmap, float wf, float hf) {
@@ -53,10 +52,10 @@ public class BitmapUtil {
                 bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(dstbmp);
 
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        final RectF rectF = new RectF(rect);
+        int color = 0xff424242;
+        Paint paint = new Paint();
+        Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        RectF rectF = new RectF(rect);
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
