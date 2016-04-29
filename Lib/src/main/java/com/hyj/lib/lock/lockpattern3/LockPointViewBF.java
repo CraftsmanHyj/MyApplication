@@ -7,9 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
-import android.media.AudioManager;
-import android.media.SoundPool;
-import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +26,7 @@ import java.util.TimerTask;
  *
  * @author way
  */
-public class LockPointView extends View {
+public class LockPointViewBF extends View {
     private int pointNumber = 5;// 密码最小长度
     private int pointCount = 3;//密码行列数
 
@@ -57,21 +54,13 @@ public class LockPointView extends View {
     private boolean movingNoPoint = false;// 鼠标在移动但是不是九宫格里面的点
     private Matrix mMatrix = new Matrix();// 图片缩放矩阵
 
-    //    private int lineAlpha = 0;// 连线的透明度
-    private long CLEAR_TIME = 1 * 600;// 清除痕迹的时间
+
+    private int lineAlpha = 0;// 连线的透明度
+    private long CLEAR_TIME = 600;// 清除痕迹的时间
     private boolean isTouch = true; // 是否可操作
 
     private Timer timer = new Timer();//定时器
     private TimerTask task = null;//定时器任务
-
-    //////////以下是实现九宫格非必须变量//////////
-    private AudioManager audioManager;//铃声模式
-    private SoundPool soundPool;//音效播放
-    private Vibrator vibrator;//震动
-
-    private boolean isShowLine = true;//绘制线条是否可见
-    private boolean isShake = true;//按下是否震动
-    private boolean isSound = true;//是否有声音
 
     private OnCompleteListener completeListener;
 
@@ -89,78 +78,22 @@ public class LockPointView extends View {
     }
 
     /**
-     * 绘制线条是否可见
-     *
-     * @param showLine
-     */
-    public void setShowLine(boolean showLine) {
-        this.isShowLine = showLine;
-    }
-
-    /**
-     * 是否支持震动
-     *
-     * @param shake
-     */
-    public void setShake(boolean shake) {
-        this.isShake = shake;
-    }
-
-    /**
-     * 是否有声音
-     *
-     * @param sound
-     */
-    public void setSound(boolean sound) {
-        this.isSound = sound;
-    }
-
-    /**
      * @param completeListener
      */
     public void setOnCompleteListener(OnCompleteListener completeListener) {
         this.completeListener = completeListener;
     }
 
-    public LockPointView(Context context) {
+    public LockPointViewBF(Context context) {
         this(context, null);
     }
 
-    public LockPointView(Context context, AttributeSet attrs) {
+    public LockPointViewBF(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LockPointView(Context context, AttributeSet attrs, int defStyle) {
+    public LockPointViewBF(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-
-        myInit(context, attrs);
-
-    }
-
-    private void myInit(Context context, AttributeSet attrs) {
-        initAttrs(context, attrs);
-        initData();
-    }
-
-    /**
-     * 初始化自定义属性
-     *
-     * @param context
-     * @param attrs
-     */
-    private void initAttrs(Context context, AttributeSet attrs) {
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.);
-    }
-
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        soundPool = new SoundPool(pointCount, AudioManager.STREAM_MUSIC, 5);
-        soundPool.load(getContext(), R.raw.lock, 1);
-
-        vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -206,15 +139,14 @@ public class LockPointView extends View {
         }
 
         // 计算圆圈图片的大小
-        float roundMaxWidth = width / 20.0f * 2;//8.0f * 2//图片最大宽度
+        float roundMaxW = width / 20.0f * 2;//8.0f * 2//图片最大宽度
         float deviation = width % (20 * 2) / 2;//内容区域偏差量 (8 * 2) / 2
         offsetsX += deviation;
         offsetsY += deviation;
 
         //对图片进行缩放
-        if (locus_round_original.getWidth() > roundMaxWidth) {
-            // 取得缩放比例，将所有的图片进行缩放
-            float sf = roundMaxWidth * 1.0f / locus_round_original.getWidth();
+        if (locus_round_original.getWidth() > roundMaxW) {
+            float sf = roundMaxW * 1.0f / locus_round_original.getWidth(); // 取得缩放比例，将所有的图片进行缩放
             locus_round_original = BitmapUtil.zoom(locus_round_original, sf);
             locus_round_click = BitmapUtil.zoom(locus_round_click, sf);
             locus_round_click_error = BitmapUtil.zoom(locus_round_click_error, sf);
@@ -231,7 +163,8 @@ public class LockPointView extends View {
         float unitDistance = width / (points.length + 1);// 3个点将竖直/水平方向分成4分
         for (int row = 0, rCount = points.length; row < rCount; row++) {
             for (int column = 0, cCount = points[row].length; column < cCount; column++) {
-                Point point = new Point(offsetsX + unitDistance * (column + 1), offsetsY + unitDistance * (row + 1));
+                Point point = new Point(offsetsX + unitDistance * (column + 1),
+                        offsetsY + unitDistance * (row + 1));
                 point.setIndex(row * rCount + column);
                 points[row][column] = point;
             }
@@ -249,12 +182,13 @@ public class LockPointView extends View {
         canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));
 
         //1、画所有的点
+        float x, y;
         Bitmap bitmap = null;
         for (int row = 0, rCount = points.length; row < rCount; row++) {
             for (int column = 0, cCount = points[row].length; column < cCount; column++) {
                 Point p = points[row][column];
-                float x = p.getX() - bitRadius;
-                float y = p.getY() - bitRadius;
+                x = p.getX() - bitRadius;
+                y = p.getY() - bitRadius;
 
                 switch (p.getState()) {
                     case Point.STATE_NORMAL:
@@ -269,26 +203,16 @@ public class LockPointView extends View {
                         bitmap = locus_round_click_error;
                         break;
                 }
-
-                if (!isShowLine && Point.STATE_ERROR != p.getState()) {//不显示绘制路劲
-                    bitmap = locus_round_original;
-                }
-
                 canvas.drawBitmap(bitmap, x, y, mPaint);
             }
         }
 
         // 2、画点之间的连线
         if (lSelPoint.size() > 0) {
-            int tmpAlpha = mPaint.getAlpha();//获取画笔原本透明度
-//            mPaint.setAlpha(lineAlpha);
-
+            int tmpAlpha = mPaint.getAlpha();//获取线条原来的透明度
+            mPaint.setAlpha(lineAlpha);
             // 绘制九宫格里面的点
             Point prePoint = lSelPoint.get(0);
-            if (!isShowLine && Point.STATE_ERROR != prePoint.getState()) {
-                mPaint.setAlpha(0);
-            }
-
             for (int i = 1; i < lSelPoint.size(); i++) {
                 Point nextPoint = lSelPoint.get(i);
                 drawLine(canvas, prePoint, nextPoint);
@@ -301,9 +225,10 @@ public class LockPointView extends View {
             }
 
             mPaint.setAlpha(tmpAlpha);
-//            lineAlpha = mPaint.getAlpha();
+            lineAlpha = mPaint.getAlpha();
         }
     }
+
 
     /**
      * 画两点的连接
@@ -314,8 +239,8 @@ public class LockPointView extends View {
      */
     private void drawLine(Canvas canvas, Point a, Point b) {
         float lineLength = (float) Point.distance(a, b);//两点之间长度
-        //计算旋转角度
-        float degrees = (float) Math.toDegrees(Math.atan2(b.getY() - a.getY(), b.getX() - a.getX()));
+
+        float degrees = getDegrees(a, b);//旋转角度
         canvas.rotate(degrees, a.getX(), a.getY());
 
         Bitmap line;//线条主体部分
@@ -340,6 +265,59 @@ public class LockPointView extends View {
         canvas.rotate(-degrees, a.getX(), a.getY());
     }
 
+
+    /**
+     * 获取角度
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    private float getDegrees(Point a, Point b) {
+        return (float) Math.toDegrees(Math.atan2(b.getY() - a.getY(), b.getX() - a.getX()));
+    }
+
+    /**
+     * 检查鼠标的坐标和九宫格上的点是否吻合
+     */
+    private Point checkSelectPoint() {
+        for (int row = 0; row < points.length; row++) {
+            for (int col = 0; col < points[row].length; col++) {
+                Point p = points[row][col];
+                if (Point.checkInRound(p.getX(), p.getY(), bitRadius, movingX, movingY)) {
+                    //添加震动、声音代码
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 重置点的状态
+     */
+    public void resetPoint() {
+        for (Point p : lSelPoint) {
+            p.setState(Point.STATE_NORMAL);
+        }
+        lSelPoint.clear();
+
+        isTouch = true;
+    }
+
+    /**
+     * 交叉点
+     *
+     * @param point 点
+     * @return 是否交差
+     */
+    private boolean crossPoint(Point point) {
+        if (lSelPoint.contains(point)) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!isTouch) {// 不可操作
@@ -350,37 +328,53 @@ public class LockPointView extends View {
         movingX = event.getX();
         movingY = event.getY();
 
-        boolean isTouchUp = false;//是否是触摸抬起操作
+        Point point = null;
+        boolean isFinish = false;
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: // 按下
+            case MotionEvent.ACTION_DOWN: // 点下
                 // 如果正在清除密码,则取消
                 if (null != task) {
                     task.cancel();
                     task = null;
                 }
 
-                resetPoint();//重置九宫格界面
-                if (checkSelectPoint(isTouchUp)) {
+                // 删除之前的点
+                resetPoint();
+                point = checkSelectPoint();
+                if (null != point) {
                     isSelect = true;
                 }
                 break;
 
             case MotionEvent.ACTION_MOVE: // 移动
-                if (isSelect && !checkSelectPoint(isTouchUp)) {
-                    movingNoPoint = true;
+                if (isSelect) {
+                    point = checkSelectPoint();
+                    if (null == point) {
+                        movingNoPoint = true;
+                    }
                 }
                 break;
 
-            case MotionEvent.ACTION_UP: // 抬起
+            case MotionEvent.ACTION_UP: // 提起
+                point = checkSelectPoint();
                 isSelect = false;
-                isTouchUp = true;
-                checkSelectPoint(isTouchUp);
+                isFinish = true;
                 break;
         }
 
-        // 绘制结束,判断当前绘制的状态
+        // 选中重复检查
+        if (isSelect && !isFinish && null != point) {
+            if (crossPoint(point)) {
+                movingNoPoint = true;
+            } else {
+                point.setState(Point.STATE_CHECK);
+                lSelPoint.add(point);
+            }
+        }
+
+        // 绘制结束
         int pointCount = lSelPoint.size();
-        if (isTouchUp && pointCount > 0) {
+        if (isFinish && pointCount > 0) {
             if (1 == pointCount) {// 绘制不成立
                 resetPoint();
             } else if (pointCount < pointNumber && pointCount > 1) {
@@ -403,67 +397,6 @@ public class LockPointView extends View {
     }
 
     /**
-     * <pre>
-     *     1、检测手指滑过的点是否是九宫格上的点
-     *     2、该点点是否可用，经过九宫格的点是否已选中
-     * </pre>
-     *
-     * @param isTouchUp 是否是触摸抬起操作，最后抬起瞬间的点不检查
-     * @return
-     */
-    private boolean checkSelectPoint(boolean isTouchUp) {
-        for (int row = 0, rCount = points.length; row < rCount; row++) {
-            for (int col = 0, cCount = points[row].length; col < cCount; col++) {
-                Point p = points[row][col];
-                if (Point.checkInRound(p.getX(), p.getY(), bitRadius, movingX, movingY)) {
-
-                    if (!isTouchUp) {
-                        if (lSelPoint.contains(p)) {
-                            movingNoPoint = true;
-                            return false;
-                        } else {
-                            p.setState(Point.STATE_CHECK);
-                            lSelPoint.add(p);
-
-                            if (isSound) {
-                                playMusic();
-                            }
-
-                            if (isShake) {
-                                vibrator.vibrate(30);
-                            }
-                        }
-                    }
-
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 播放音效
-     */
-    private void playMusic() {
-        //判断当前手机模式不是普通模式则不发出声音
-        if (AudioManager.RINGER_MODE_NORMAL != audioManager.getRingerMode()) {
-            return;
-        }
-
-        soundPool.play(1, 1, 1, 0, 0, 1);
-    }
-
-    /**
-     * 显示提示信息
-     *
-     * @param msg
-     */
-    private void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
      * 设置已选中的点，选中状态为错误
      */
     public void errorPoint() {
@@ -474,18 +407,6 @@ public class LockPointView extends View {
     }
 
     /**
-     * 重置点的状态
-     */
-    public void resetPoint() {
-        for (Point p : lSelPoint) {
-            p.setState(Point.STATE_NORMAL);
-        }
-        lSelPoint.clear();
-
-        isTouch = true;
-    }
-
-    /**
      * 清除已绘制的密码
      */
     public void clearPassword() {
@@ -493,7 +414,7 @@ public class LockPointView extends View {
             if (null != task) {
                 task.cancel();
             }
-//            lineAlpha = 130;
+            lineAlpha = 130;
             postInvalidate();
             task = new TimerTask() {
                 public void run() {
@@ -506,6 +427,15 @@ public class LockPointView extends View {
             resetPoint();
             postInvalidate();
         }
+    }
+
+    /**
+     * 显示提示信息
+     *
+     * @param msg
+     */
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     /**

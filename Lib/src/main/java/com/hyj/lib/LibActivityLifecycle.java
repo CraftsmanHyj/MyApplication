@@ -5,7 +5,6 @@ import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 
 import com.hyj.lib.tools.DialogUtils;
-import com.hyj.lib.tools.LogUtils;
 import com.hyj.lib.tools.ServiceUtils;
 import com.hyj.lib.tools.Utils;
 
@@ -21,6 +20,7 @@ import com.hyj.lib.tools.Utils;
  */
 public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     private int activityCount = 0;// 当前活动Activity的数量
+    private Activity preActivity;//当前活动的Activity
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityResumed(Activity activity) {
+        preActivity = activity;
         ScreenTimer.getInstance().start(activity);
     }
 
@@ -43,14 +44,13 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     @Override
     public void onActivityStopped(Activity activity) {
         activityCount--;
-        LogUtils.i("当前运行Activity数：" + activityCount);
 
         if (activityCount <= 0 && ServiceUtils.isBackground(activity)) {
             DialogUtils.showToastShort(activity, Utils.getAppName(activity)
                     + "正在后台运行");
         }
 
-        ScreenTimer.getInstance().start(activity);
+        ScreenTimer.getInstance().start(preActivity);
     }
 
     @Override

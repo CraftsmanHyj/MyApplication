@@ -2,7 +2,10 @@ package com.hyj.lib.circleimageview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -19,7 +22,13 @@ import com.hyj.lib.R;
  */
 public class CircleImageView extends ImageView {
     private int outCircleWidth = 10;//外圆的宽度
-    private int outCircleColor = Color.GRAY;//外圆的颜色
+    private int outCircleColor = Color.WHITE;//外圆的颜色
+
+    private Paint paint;//定义画笔
+
+    private int width, height;//控件宽高
+
+    private Bitmap bitmap;
 
     public CircleImageView(Context context) {
         this(context, null);
@@ -37,6 +46,7 @@ public class CircleImageView extends ImageView {
 
     private void myInit(Context context, AttributeSet attrs) {
         initAttrs(context, attrs);
+        initView();
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
@@ -52,5 +62,61 @@ public class CircleImageView extends ImageView {
         outCircleWidth = (int) ta.getDimension(R.styleable.circleImageView_outCircleWidth, outCircleWidth);
 
         ta.recycle();
+    }
+
+    private void initView() {
+        paint = new Paint();
+        paint.setColor(outCircleColor);
+        paint.setAntiAlias(true);//设置抗锯齿
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int w = measureWidth(widthMeasureSpec);
+        int h = measureHeight(heightMeasureSpec);
+
+        width = w - outCircleWidth * 2;//减去外圆的宽度
+        height = h - outCircleWidth * 2;
+
+        setMeasuredDimension(w, h);
+    }
+
+    private int measureWidth(int widthMeasureSpec) {
+        int result = 0;
+
+        int mode = MeasureSpec.getMode(widthMeasureSpec);
+        int size = MeasureSpec.getSize(widthMeasureSpec);
+        if (MeasureSpec.EXACTLY == mode) {
+            result = size;
+        } else {
+            result = width;
+        }
+
+        return result;
+    }
+
+    private int measureHeight(int heightMeasureSpec) {
+        int result = 0;
+
+        int mode = MeasureSpec.getMode(heightMeasureSpec);
+        int size = MeasureSpec.getSize(heightMeasureSpec);
+        if (MeasureSpec.EXACTLY == mode) {
+            result = size;
+        } else {
+            result = height;
+        }
+
+        return result;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        loadImg();
+
+        super.onDraw(canvas);
+    }
+
+    //加载图片
+    private void loadImg() {
     }
 }

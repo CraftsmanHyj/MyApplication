@@ -1,8 +1,10 @@
 package com.hyj.lib;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.CountDownTimer;
 
+import com.hyj.lib.lock.LockActivity;
 import com.hyj.lib.tools.LogUtils;
 
 
@@ -13,7 +15,7 @@ public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 8 * 1000;
+    private final static long millisInFuture = 8 * 60 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;
@@ -46,22 +48,20 @@ public class ScreenTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-//        LogUtils.e("执行倒计时：" + (millisUntilFinished / 1000) + " " + millisUntilFinished);
-
+//        LogUtils.i("倒计时：" + millisUntilFinished);
         if (millisUntilFinished <= 2 * 1000) {
             isTimeFinish = true;
             return;
         }
-
         isTimeFinish = false;
     }
 
     @Override
     public void onFinish() {
         if (isTimeFinish) {
-
-            //跳转到
             LogUtils.e("倒计时结束，执行响应操作");
+            Intent intent = new Intent(activity, LockActivity.class);
+            activity.startActivity(intent);
 
             isTimeFinish = false;
         } else {
@@ -77,8 +77,13 @@ public class ScreenTimer extends CountDownTimer {
      */
     public void start(Activity activity) {
         this.activity = activity;
-
         stop();
+
+        LogUtils.i("当前类：" + activity.getClass());
+
+        if (activity instanceof LockActivity) {
+            return;
+        }
         instance.start();
     }
 

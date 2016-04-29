@@ -18,17 +18,13 @@ public class Point implements Serializable {
     /**
      * 状态：选择错误
      */
-    public static final int STATE_CHECK_ERROR = 0X003;
+    public static final int STATE_ERROR = 0X003;
 
-    public int state = STATE_NORMAL;
-    public int index = 0;// 下标
+    private int state = STATE_NORMAL;
+    private int index = 0;// 下标索引
 
-    public float x;
-    public float y;
-
-
-    public Point() {
-    }
+    private float x;
+    private float y;
 
     public Point(float x, float y) {
         this.x = x;
@@ -104,7 +100,7 @@ public class Point implements Serializable {
      * @return 是否重合
      */
     public static boolean checkInRound(float px, float py, float radius, float mx, float my) {
-        // 开方
+        // 开方，求半径长度
         return Math.sqrt((px - mx) * (px - mx) + (py - my) * (py - my)) < radius;
     }
 }

@@ -70,7 +70,7 @@ public class MainLibActivity extends BaseActivity {
     private MainLibAdapter adapter;
     private List<ListItem> lItems = new ArrayList<ListItem>();
 
-    private long exitTime;
+    private long exitTime;//APP退出标记
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
