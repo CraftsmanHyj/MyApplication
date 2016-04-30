@@ -21,6 +21,7 @@ public class Lock3Activity extends BaseActivity implements CompoundButton.OnChec
 
     private void myInit() {
         lock = (LockPointView) findViewById(R.id.lock3Pattern);
+        lock.setPointCount(5);
 
         ((CheckBox) findViewById(R.id.lock3Chkline)).setOnCheckedChangeListener(this);
         ((CheckBox) findViewById(R.id.lock3ChkSound)).setOnCheckedChangeListener(this);
@@ -31,15 +32,15 @@ public class Lock3Activity extends BaseActivity implements CompoundButton.OnChec
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.lock3Chkline:
-                lock.setShowLine(isChecked);
+                lock.setHasLine(isChecked);
                 break;
 
             case R.id.lock3ChkSound:
-                lock.setSound(isChecked);
+                lock.setHasSound(isChecked);
                 break;
 
             case R.id.lock3ChkShake:
-                lock.setShake(isChecked);
+                lock.setHasShake(isChecked);
                 break;
         }
     }

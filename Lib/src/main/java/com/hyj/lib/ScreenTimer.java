@@ -15,7 +15,7 @@ public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 8 * 60 * 1000;
+    private final static long millisInFuture = 4 * 60 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;

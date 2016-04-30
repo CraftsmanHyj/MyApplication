@@ -1,6 +1,7 @@
 package com.hyj.lib.lock.lockpattern3;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -33,7 +34,7 @@ public class LockPointView extends View {
     private int pointNumber = 5;// 密码最小长度
     private int pointCount = 3;//密码行列数
 
-    private Point[][] points = new Point[pointCount][pointCount];
+    private Point[][] points;
     private boolean isInit = false;//是否已经被初始化
 
     private float width, height;// 屏幕宽高
@@ -57,7 +58,6 @@ public class LockPointView extends View {
     private boolean movingNoPoint = false;// 鼠标在移动但是不是九宫格里面的点
     private Matrix mMatrix = new Matrix();// 图片缩放矩阵
 
-    //    private int lineAlpha = 0;// 连线的透明度
     private long CLEAR_TIME = 1 * 600;// 清除痕迹的时间
     private boolean isTouch = true; // 是否可操作
 
@@ -69,9 +69,9 @@ public class LockPointView extends View {
     private SoundPool soundPool;//音效播放
     private Vibrator vibrator;//震动
 
-    private boolean isShowLine = true;//绘制线条是否可见
-    private boolean isShake = true;//按下是否震动
-    private boolean isSound = true;//是否有声音
+    private boolean hasLine = true;//绘制线条是否可见
+    private boolean hasShake = true;//按下是否震动
+    private boolean hasSound = true;//是否有声音
 
     private OnCompleteListener completeListener;
 
@@ -83,36 +83,34 @@ public class LockPointView extends View {
     public void setPointCount(int pointCount) {
         this.pointCount = pointCount;
         this.pointNumber = pointCount * 2 - 1;
-
-        this.isInit = false;
-        invalidate();
+        this.points = new Point[pointCount][pointCount];
     }
 
     /**
      * 绘制线条是否可见
      *
-     * @param showLine
+     * @param line
      */
-    public void setShowLine(boolean showLine) {
-        this.isShowLine = showLine;
+    public void setHasLine(boolean line) {
+        this.hasLine = line;
     }
 
     /**
      * 是否支持震动
      *
-     * @param shake
+     * @param hasShake
      */
-    public void setShake(boolean shake) {
-        this.isShake = shake;
+    public void setHasShake(boolean hasShake) {
+        this.hasShake = hasShake;
     }
 
     /**
      * 是否有声音
      *
-     * @param sound
+     * @param hasSound
      */
-    public void setSound(boolean sound) {
-        this.isSound = sound;
+    public void setHasSound(boolean hasSound) {
+        this.hasSound = hasSound;
     }
 
     /**
@@ -134,7 +132,6 @@ public class LockPointView extends View {
         super(context, attrs, defStyle);
 
         myInit(context, attrs);
-
     }
 
     private void myInit(Context context, AttributeSet attrs) {
@@ -149,7 +146,16 @@ public class LockPointView extends View {
      * @param attrs
      */
     private void initAttrs(Context context, AttributeSet attrs) {
-//        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.lockPattern);
+
+        pointCount = ta.getInteger(R.styleable.lockPattern_pointCount, pointCount);
+        setPointCount(pointCount);
+
+        hasLine = ta.getBoolean(R.styleable.lockPattern_hasLine, hasLine);
+        hasSound = ta.getBoolean(R.styleable.lockPattern_hasSound, hasSound);
+        hasShake = ta.getBoolean(R.styleable.lockPattern_hasShake, hasShake);
+
+        ta.recycle();
     }
 
     /**
@@ -270,7 +276,7 @@ public class LockPointView extends View {
                         break;
                 }
 
-                if (!isShowLine && Point.STATE_ERROR != p.getState()) {//不显示绘制路劲
+                if (!hasLine && Point.STATE_ERROR != p.getState()) {//不显示绘制路劲
                     bitmap = locus_round_original;
                 }
 
@@ -281,11 +287,10 @@ public class LockPointView extends View {
         // 2、画点之间的连线
         if (lSelPoint.size() > 0) {
             int tmpAlpha = mPaint.getAlpha();//获取画笔原本透明度
-//            mPaint.setAlpha(lineAlpha);
 
             // 绘制九宫格里面的点
             Point prePoint = lSelPoint.get(0);
-            if (!isShowLine && Point.STATE_ERROR != prePoint.getState()) {
+            if (!hasLine && Point.STATE_ERROR != prePoint.getState()) {
                 mPaint.setAlpha(0);
             }
 
@@ -301,7 +306,6 @@ public class LockPointView extends View {
             }
 
             mPaint.setAlpha(tmpAlpha);
-//            lineAlpha = mPaint.getAlpha();
         }
     }
 
@@ -425,11 +429,11 @@ public class LockPointView extends View {
                             p.setState(Point.STATE_CHECK);
                             lSelPoint.add(p);
 
-                            if (isSound) {
+                            if (hasSound) {
                                 playMusic();
                             }
 
-                            if (isShake) {
+                            if (hasShake) {
                                 vibrator.vibrate(30);
                             }
                         }
@@ -493,7 +497,6 @@ public class LockPointView extends View {
             if (null != task) {
                 task.cancel();
             }
-//            lineAlpha = 130;
             postInvalidate();
             task = new TimerTask() {
                 public void run() {

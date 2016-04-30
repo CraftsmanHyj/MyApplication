@@ -66,6 +66,14 @@ public class LockQuestionActivity extends BaseActivity {
         question = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");
         answer = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_ANSWER, "");
 
+        //判断是从哪里跳转进来的
+        String str = getIntent().getStringExtra(Constants.FIELD_ANSWER);
+        if (!TextUtils.isEmpty(str) && TextUtils.isEmpty(question)) {
+            Intent intent = new Intent(this, LockActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
         if (TextUtils.isEmpty(question)) {
             state = STATE_SET;
         } else {

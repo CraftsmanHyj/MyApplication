@@ -65,9 +65,8 @@ public class LockActivity extends BaseActivity {
         tvUpdate = (TextView) findViewById(R.id.lockTvUpdate);
     }
 
-    private void initData() {
-//        lock.setPointCount(4);
 
+    private void initData() {
         pwd = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_PWD, "");
         if (TextUtils.isEmpty(pwd)) {
             state = STATE_SET;

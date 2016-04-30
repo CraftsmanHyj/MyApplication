@@ -66,8 +66,7 @@ public class SecondaryActivity extends BaseActivity {
                     case ListItem.TYPE_ACTIVITY:
                         if (null != bean.getValue()) {
                             Intent intent = new Intent();
-                            intent.setClass(SecondaryActivity.this,
-                                    (Class<?>) bean.getValue());
+                            intent.setClass(SecondaryActivity.this, (Class<?>) bean.getValue());
                             startActivity(intent);
                         } else {
                             Toast.makeText(SecondaryActivity.this, "即将开通……",
