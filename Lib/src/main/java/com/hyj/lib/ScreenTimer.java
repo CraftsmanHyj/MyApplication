@@ -15,7 +15,7 @@ public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 4 * 60 * 1000;
+    private final static long millisInFuture = 30 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;
@@ -24,6 +24,10 @@ public class ScreenTimer extends CountDownTimer {
      * 倒计时是否结束
      */
     private static boolean isTimeFinish = false;
+    /**
+     * APP是否是后台运行
+     */
+    public static boolean isBackgound = false;
 
     private ScreenTimer(long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
@@ -58,8 +62,9 @@ public class ScreenTimer extends CountDownTimer {
 
     @Override
     public void onFinish() {
-        if (isTimeFinish) {
+        if (isTimeFinish && !isBackgound) {
             LogUtils.e("倒计时结束，执行响应操作");
+
             Intent intent = new Intent(activity, LockActivity.class);
             activity.startActivity(intent);
 

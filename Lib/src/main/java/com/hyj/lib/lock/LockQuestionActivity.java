@@ -36,7 +36,7 @@ public class LockQuestionActivity extends BaseActivity {
     private TextView tvUpdate, tvSave;
 
     private int state;
-
+    private boolean isInit = false;//是否是第一次进入APP设置密保
     private String question, answer;
 
     @Override
@@ -66,15 +66,8 @@ public class LockQuestionActivity extends BaseActivity {
         question = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");
         answer = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_ANSWER, "");
 
-        //判断是从哪里跳转进来的
-        String str = getIntent().getStringExtra(Constants.FIELD_ANSWER);
-        if (!TextUtils.isEmpty(str) && TextUtils.isEmpty(question)) {
-            Intent intent = new Intent(this, LockActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         if (TextUtils.isEmpty(question)) {
+            isInit = true;
             state = STATE_SET;
         } else {
             state = STATE_UNLOCKING;
@@ -85,6 +78,7 @@ public class LockQuestionActivity extends BaseActivity {
         tvUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isInit = true;
                 state = STATE_UPDATE;
                 updateView();
             }
@@ -179,11 +173,13 @@ public class LockQuestionActivity extends BaseActivity {
                     return;
                 }
 
-                //重置九宫格密码
-                SPUtils.putParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_PWD, "");
+                if (!isInit) {
+                    //重置九宫格密码
+                    SPUtils.putParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_PWD, "");
+                    Intent intent = new Intent(this, LockActivity.class);
+                    startActivity(intent);
+                }
 
-                Intent intent = new Intent(this, LockActivity.class);
-                startActivity(intent);
                 finish();
                 break;
         }

@@ -34,6 +34,7 @@ public class LockActivity extends BaseActivity {
     private LockPointView lock;
     private LinearLayout llOperation;
     private TextView tvForget;
+    private TextView tvClear;
     private TextView tvUpdate;
 
     private String pwd;//设置的密码
@@ -62,6 +63,7 @@ public class LockActivity extends BaseActivity {
         lock = (LockPointView) findViewById(R.id.lock);
         llOperation = (LinearLayout) findViewById(R.id.lockLlOperation);
         tvForget = (TextView) findViewById(R.id.lockTvForget);
+        tvClear = (TextView) findViewById(R.id.lockTvClear);
         tvUpdate = (TextView) findViewById(R.id.lockTvUpdate);
     }
 
@@ -89,6 +91,17 @@ public class LockActivity extends BaseActivity {
                 Intent intent = new Intent(LockActivity.this, LockQuestionActivity.class);
                 LockActivity.this.startActivity(intent);
                 LockActivity.this.finish();
+            }
+        });
+
+        tvClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SPUtils.putParam(LockActivity.this, Constants.FILE_NAME_SHARED, Constants.FIELD_PWD, "");
+                SPUtils.putParam(LockActivity.this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");
+                SPUtils.putParam(LockActivity.this, Constants.FILE_NAME_SHARED, Constants.FIELD_ANSWER, "");
+
+                DialogUtils.showToastShort(LockActivity.this, "密码清除成功");
             }
         });
 
@@ -172,6 +185,13 @@ public class LockActivity extends BaseActivity {
 
             DialogUtils.showToastShort(this, "手势密码输入正确");
             lock.resetPoint();
+
+            //没有设置密保则跳入密保界面
+            String str = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");
+            if (TextUtils.isEmpty(str)) {
+                Intent intent = new Intent(this, LockQuestionActivity.class);
+                startActivity(intent);
+            }
             finish();
         }
     }

@@ -44,6 +44,16 @@
             android:textColor="@android:color/holo_blue_dark" />
 
         <TextView
+            android:id="@+id/lockTvClear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="清除密码"
+            android:textColor="@android:color/holo_blue_dark" />
+
+        <TextView
             android:id="@+id/lockTvUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

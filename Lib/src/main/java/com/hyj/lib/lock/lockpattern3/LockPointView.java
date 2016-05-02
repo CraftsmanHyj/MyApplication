@@ -25,10 +25,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * 所有以locus开头的图片都是九宫格要用到的图片<br>
- * 九宫格解锁
+ * <pre>
+ *  所有以locus开头的图片都是九宫格要用到的图片
+ *  九宫格解锁
+ * </pre>
  *
- * @author way
+ * @author hyj
  */
 public class LockPointView extends View {
     private int pointNumber = 5;// 密码最小长度
@@ -164,6 +166,7 @@ public class LockPointView extends View {
     private void initData() {
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         soundPool = new SoundPool(pointCount, AudioManager.STREAM_MUSIC, 5);
+        //把资源中的音效加载到指定的ID(播放的时候就对应到这个ID播放就行了)
         soundPool.load(getContext(), R.raw.lock, 1);
 
         vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -455,6 +458,8 @@ public class LockPointView extends View {
             return;
         }
 
+        // 参数说明：播放的音乐id;左声道音量;右声道音量;优先级0为最低;
+        // 循环次数，0无不循环，-1无永远循环;回放速度 ，该值在0.5-2.0之间，1为正常速度;
         soundPool.play(1, 1, 1, 0, 0, 1);
     }
 

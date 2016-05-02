@@ -1,8 +1,16 @@
 package com.hyj.lib.lock.lockpattern3;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import com.hyj.lib.BaseActivity;
 import com.hyj.lib.R;
