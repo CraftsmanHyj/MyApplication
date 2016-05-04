@@ -15,7 +15,7 @@ import com.hyj.lib.BaseFragment;
  *
  * @author async
  */
-public class TabFragment extends Fragment {
+public class TabFragment extends BaseFragment {
     public static final String TITLE = "title";
 
     private String sTitle = "Default";

@@ -13,20 +13,11 @@ import com.hyj.lib.tools.LogUtils;
  */
 public class BaseFragment extends Fragment {
 
-    BaseActivity.FragmentOnTouchListener touchListener = new BaseActivity.FragmentOnTouchListener() {
+    BaseActivity.OnFragmentTouchListener touchListener = new BaseActivity.OnFragmentTouchListener() {
         @Override
         public void onTouch(MotionEvent ev) {
             LogUtils.e("进入Fragment：" + ev.getAction());
-
-            switch (ev.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    ScreenTimer.getInstance().stop();
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    ScreenTimer.getInstance().start(getActivity());
-                    break;
-            }
+            ScreenTimer.getInstance().onTouch(getActivity(), ev);
         }
     };
 
@@ -34,13 +25,21 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((BaseActivity) getContext()).registerOnTouchListener(touchListener);
+        if (getContext() instanceof BaseActivity) {
+            ((BaseActivity) getContext()).registerOnTouchListener(touchListener);
+        } else if (getContext() instanceof BaseFragmentActivity) {
+            ((BaseFragmentActivity) getContext()).registerOnTouchListener(touchListener);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        ((BaseActivity) getContext()).unregisterOnTouchListener(touchListener);
+        if (getContext() instanceof BaseActivity) {
+            ((BaseActivity) getContext()).unregisterOnTouchListener(touchListener);
+        } else if (getContext() instanceof BaseFragmentActivity) {
+            ((BaseFragmentActivity) getContext()).unregisterOnTouchListener(touchListener);
+        }
     }
 }

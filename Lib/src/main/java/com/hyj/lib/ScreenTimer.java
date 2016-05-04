@@ -3,6 +3,7 @@ package com.hyj.lib;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.view.MotionEvent;
 
 import com.hyj.lib.lock.LockActivity;
 import com.hyj.lib.tools.LogUtils;
@@ -15,7 +16,7 @@ public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 30 * 1000;
+    private final static long millisInFuture = 10 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;
@@ -52,7 +53,7 @@ public class ScreenTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-//        LogUtils.i("倒计时：" + millisUntilFinished);
+        LogUtils.i("倒计时：" + millisUntilFinished + " " + activity.getClass());
         if (millisUntilFinished <= 2 * 1000) {
             isTimeFinish = true;
             return;
@@ -63,14 +64,14 @@ public class ScreenTimer extends CountDownTimer {
     @Override
     public void onFinish() {
         if (isTimeFinish && !isBackgound) {
-            LogUtils.e("倒计时结束，执行响应操作");
+            LogUtils.e("倒计时结束，执行响应操作" + activity.getClass());
 
             Intent intent = new Intent(activity, LockActivity.class);
             activity.startActivity(intent);
 
             isTimeFinish = false;
         } else {
-            LogUtils.e("倒计时被中断");
+            LogUtils.e("倒计时中断，停止计时" + activity.getClass());
         }
     }
 
@@ -84,8 +85,6 @@ public class ScreenTimer extends CountDownTimer {
         this.activity = activity;
         stop();
 
-        LogUtils.i("当前类：" + activity.getClass());
-
         if (activity instanceof LockActivity) {
             return;
         }
@@ -98,5 +97,23 @@ public class ScreenTimer extends CountDownTimer {
     public void stop() {
         instance.cancel();
         instance.onFinish();
+    }
+
+    /**
+     * 触摸事件响应
+     *
+     * @param activity
+     * @param ev
+     */
+    public void onTouch(Activity activity, MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                stop();
+                break;
+
+            case MotionEvent.ACTION_UP:
+                start(activity);
+                break;
+        }
     }
 }

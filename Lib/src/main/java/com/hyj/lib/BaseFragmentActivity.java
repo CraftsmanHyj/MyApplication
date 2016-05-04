@@ -2,15 +2,16 @@ package com.hyj.lib;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-public class BaseActivity extends Activity {
+public class BaseFragmentActivity extends FragmentActivity {
     /**
      * 存放Fragment中的Touch事件监听器
      */
-    private ArrayList<OnFragmentTouchListener> lFragmentTouch = new ArrayList<OnFragmentTouchListener>(
+    private ArrayList<BaseActivity.OnFragmentTouchListener> lFragmentTouch = new ArrayList<BaseActivity.OnFragmentTouchListener>(
             10);
 
     /**
@@ -18,7 +19,7 @@ public class BaseActivity extends Activity {
      *
      * @param onTouchListener
      */
-    public void registerOnTouchListener(OnFragmentTouchListener onTouchListener) {
+    public void registerOnTouchListener(BaseActivity.OnFragmentTouchListener onTouchListener) {
         lFragmentTouch.add(onTouchListener);
     }
 
@@ -27,31 +28,19 @@ public class BaseActivity extends Activity {
      *
      * @param onTouchListener
      */
-    public void unregisterOnTouchListener(OnFragmentTouchListener onTouchListener) {
+    public void unregisterOnTouchListener(BaseActivity.OnFragmentTouchListener onTouchListener) {
         lFragmentTouch.remove(onTouchListener);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         // 循环遍历注册过事件的Fragment对象
-        for (OnFragmentTouchListener listener : lFragmentTouch) {
+        for (BaseActivity.OnFragmentTouchListener listener : lFragmentTouch) {
             listener.onTouch(ev);
         }
 
         ScreenTimer.getInstance().onTouch(this, ev);
 
         return super.dispatchTouchEvent(ev);
-    }
-
-    /**
-     * Fragment中Touch事件接口
-     */
-    public interface OnFragmentTouchListener {
-        /**
-         * 触摸事件响应
-         *
-         * @param ev
-         */
-        public void onTouch(MotionEvent ev);
     }
 }

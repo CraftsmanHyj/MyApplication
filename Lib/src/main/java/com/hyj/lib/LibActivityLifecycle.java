@@ -29,13 +29,13 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     @Override
     public void onActivityStarted(Activity activity) {
         activityCount++;
+        preActivity = activity;
+        ScreenTimer.isBackgound = false;
+        ScreenTimer.getInstance().start(activity);
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        preActivity = activity;
-        ScreenTimer.isBackgound = false;
-        ScreenTimer.getInstance().start(activity);
     }
 
     @Override
@@ -46,12 +46,13 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     public void onActivityStopped(Activity activity) {
         activityCount--;
 
-        if (activityCount <= 0 && ServiceUtils.isBackground(activity)) {
+        if (activityCount <= 0) {
             ScreenTimer.isBackgound = true;
-            DialogUtils.showToastShort(activity, Utils.getAppName(activity) + "正在后台运行");
+            if (ServiceUtils.isBackground(activity)) {
+                DialogUtils.showToastShort(activity, Utils.getAppName(activity) + "正在后台运行");
+            }
+            ScreenTimer.getInstance().start(activity);
         }
-
-        ScreenTimer.getInstance().start(preActivity);
     }
 
     @Override
@@ -60,6 +61,8 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        ScreenTimer.getInstance().stop();
+        if (activity instanceof MainLibActivity) {
+            ScreenTimer.getInstance().stop();
+        }
     }
 }

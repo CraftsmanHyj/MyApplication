@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -28,7 +29,7 @@ public class CircleImageView extends ImageView {
 
     private int width, height;//控件宽高
 
-    private Bitmap bitmap;
+    private Bitmap bitmap;//显示的图片
 
     public CircleImageView(Context context) {
         this(context, null);
@@ -113,10 +114,26 @@ public class CircleImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         loadImg();
 
+        if (null == bitmap) {
+            return;
+        }
+
+        int min = Math.min(height, width);
+
+        int circleCenter = min / 2;
+        bitmap = Bitmap.createScaledBitmap(bitmap, min, min, false);
+
+        canvas.drawCircle(circleCenter + outCircleWidth, circleCenter + outCircleWidth, circleCenter + outCircleWidth, paint);
+//        canvas.drawBitmap(createCircleBitmap(bitmap, min));
+
         super.onDraw(canvas);
     }
 
     //加载图片
     private void loadImg() {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) this.getDrawable();
+        if (null != bitmapDrawable) {
+            bitmap = bitmapDrawable.getBitmap();
+        }
     }
 }

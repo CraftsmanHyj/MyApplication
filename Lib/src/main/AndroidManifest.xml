@@ -139,7 +139,6 @@
         <activity
             android:name=".lock.LockQuestionActivity"
             android:launchMode="singleTask" />
-
         <activity
             android:name=".lock.lockpattern.LockPatternActivity"
             android:launchMode="singleTask" />
