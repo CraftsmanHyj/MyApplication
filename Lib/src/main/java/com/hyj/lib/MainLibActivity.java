@@ -52,6 +52,7 @@ import com.hyj.lib.viewpager.ViewPagerCustormerActivity;
 import com.hyj.lib.wechat_imageUp.ImageLoaderActivity;
 import com.hyj.lib.wechat_talk.WeChatTalkActivity;
 import com.hyj.lib.wish.WishActivity;
+import com.hyj.lib.zxing.ZxingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,11 @@ public class MainLibActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("二维码扫描");
+        bean.setValue(ZxingActivity.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("设置GridView的Item正方形");

@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -124,9 +126,30 @@ public class CircleImageView extends ImageView {
         bitmap = Bitmap.createScaledBitmap(bitmap, min, min, false);
 
         canvas.drawCircle(circleCenter + outCircleWidth, circleCenter + outCircleWidth, circleCenter + outCircleWidth, paint);
-//        canvas.drawBitmap(createCircleBitmap(bitmap, min));
+        canvas.drawBitmap(createCircleBitmap(bitmap, min), outCircleWidth, outCircleWidth, null);
 
         super.onDraw(canvas);
+    }
+
+    /**
+     * 生成一个圆形的图片
+     *
+     * @param img
+     * @param min
+     * @return
+     */
+    private Bitmap createCircleBitmap(Bitmap img, int min) {
+        Bitmap bitmap = null;
+        Paint paintCircle = new Paint();
+        paintCircle.setAntiAlias(true);
+
+        bitmap = Bitmap.createBitmap(min, min, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas();
+        canvas.drawCircle(min, min, min, paintCircle);
+        paintCircle.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));//设置画笔模式
+        canvas.drawBitmap(img, 0, 0, paintCircle);
+
+        return bitmap;
     }
 
     //加载图片

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.hyj.lib"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 18
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile project(':libzxing')
 }

@@ -16,7 +16,6 @@ public class BaseFragment extends Fragment {
     BaseActivity.OnFragmentTouchListener touchListener = new BaseActivity.OnFragmentTouchListener() {
         @Override
         public void onTouch(MotionEvent ev) {
-            LogUtils.e("进入Fragment：" + ev.getAction());
             ScreenTimer.getInstance().onTouch(getActivity(), ev);
         }
     };

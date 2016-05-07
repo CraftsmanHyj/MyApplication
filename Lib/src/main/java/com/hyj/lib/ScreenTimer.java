@@ -10,13 +10,13 @@ import com.hyj.lib.tools.LogUtils;
 
 
 /**
- * Created by Administrator on 2016/4/26.
+ * Created by hyj on 2016/4/26.
  */
 public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 10 * 1000;
+    private final static long millisInFuture = 2 * 60 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;

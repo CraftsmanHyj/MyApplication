@@ -14,9 +14,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
@@ -273,6 +273,11 @@
         <activity
             android:name=".ui.SquareActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" />
+
+        <!--二维码扫描-->
+        <activity
+            android:name=".zxing.ZxingActivity"
             android:launchMode="singleTask" />
     </application>
 
