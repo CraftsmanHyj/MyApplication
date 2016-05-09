@@ -14,6 +14,7 @@ import com.hyj.lib.adapter.AdapterAcitivty;
 import com.hyj.lib.annotaionsframe.AnnotationsActivity_;
 import com.hyj.lib.annotation.AnnotationActivity;
 import com.hyj.lib.camera.CameraMainActivity;
+import com.hyj.lib.circleimageview.CircleImageActivity;
 import com.hyj.lib.downservice.DownServiceActivity;
 import com.hyj.lib.flowlayout.FlowLayoutActivity;
 import com.hyj.lib.gobang.GobangActivity;
@@ -110,6 +111,11 @@ public class MainLibActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("圆形头像实现");
+        bean.setValue(CircleImageActivity.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("二维码扫描");

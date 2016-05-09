@@ -21,8 +21,12 @@ import com.xys.libzxing.zxing.encoding.EncodingUtils;
 /**
  * <pre>
  *     Zxing第三方扫描库：https://github.com/zxing/zxing
+ *     由开源者抽取出来的：
  *     这里的jar包是从慕课网中下载，基于zxing 3.1抽取的一个android端扫描、解码、识别的库
  * </pre>
+ *
+ * @Author hyj
+ * @Date 2016/5/8 22:11
  */
 public class ZxingActivity extends BaseActivity {
     private final int REQCODE_ZXING = 0X00000001;//扫描二维码请求码
@@ -30,8 +34,8 @@ public class ZxingActivity extends BaseActivity {
     private Button btScan;
     private Button btGenerate;
     private TextView tvResult;
-    private EditText etMsg;
-    private ImageView imgEm;
+    private EditText etEwm;
+    private ImageView imgEwm;
     private CheckBox cbLoglo;
 
     @Override
@@ -46,20 +50,20 @@ public class ZxingActivity extends BaseActivity {
         initView();
         initData();
         initListener();
-        GenerateErMa();
+        GenerateEwm();
     }
 
     private void initView() {
         btScan = (Button) findViewById(R.id.zxingBtScan);
         btGenerate = (Button) findViewById(R.id.zxingBtGenerate);
         tvResult = (TextView) findViewById(R.id.zxingTvResult);
-        etMsg = (EditText) findViewById(R.id.zxingEtMsg);
-        imgEm = (ImageView) findViewById(R.id.zxingImgEm);
+        etEwm = (EditText) findViewById(R.id.zxingEtEwmInfo);
+        imgEwm = (ImageView) findViewById(R.id.zxingImgEwm);
         cbLoglo = (CheckBox) findViewById(R.id.zxingCbLogo);
     }
 
     private void initData() {
-        etMsg.setText("https://github.com/asyncHyj/MyApplication");
+        etEwm.setText("https://github.com/asyncHyj/MyApplication");
     }
 
     private void initListener() {
@@ -74,24 +78,22 @@ public class ZxingActivity extends BaseActivity {
         btGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GenerateErMa();
+                GenerateEwm();
             }
         });
 
-        etMsg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etEwm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etMsg.requestFocus();
-                    etMsg.selectAll();
-                }
+            public void onClick(View v) {
+                etEwm.setText(etEwm.getText().toString());
+                etEwm.selectAll();
             }
         });
 
         cbLoglo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GenerateErMa();
+                GenerateEwm();
             }
         });
     }
@@ -99,17 +101,17 @@ public class ZxingActivity extends BaseActivity {
     /**
      * 生成二维码
      */
-    private void GenerateErMa() {
-        String str = etMsg.getText().toString().trim();
+    private void GenerateEwm() {
+        String str = etEwm.getText().toString().trim();
         if (TextUtils.isEmpty(str)) {
-            DialogUtils.showToast(this, etMsg, "请输入要生成二维码的内容");
+            DialogUtils.showToast(this, etEwm, "请输入要生成二维码的内容");
             return;
         }
 
         Bitmap logo = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
         logo = cbLoglo.isChecked() ? logo : null;
         Bitmap bitmap = EncodingUtils.createQRCode(str, 500, 500, logo);
-        imgEm.setImageBitmap(bitmap);
+        imgEwm.setImageBitmap(bitmap);
     }
 
     @Override

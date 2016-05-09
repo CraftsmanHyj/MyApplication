@@ -28,10 +28,32 @@ public class CircleImageView extends ImageView {
     private int outCircleColor = Color.WHITE;//外圆的颜色
 
     private Paint paint;//定义画笔
-
     private int width, height;//控件宽高
-
     private Bitmap bitmap;//显示的图片
+
+    /**
+     * 设置外圆的颜色
+     *
+     * @param outCircleColor
+     */
+    public void setOutCircleColor(int outCircleColor) {
+        this.outCircleColor = outCircleColor;
+        if (null != paint) {
+            paint.setColor(outCircleColor);
+        }
+        invalidate();
+    }
+
+    /**
+     * 设置外圆的宽度
+     *
+     * @param outCircleWidth
+     */
+    public void setOutCircleWidth(int outCircleWidth) {
+        outCircleWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, outCircleWidth, getResources().getDisplayMetrics());
+        this.outCircleWidth = outCircleWidth;
+        invalidate();
+    }
 
     public CircleImageView(Context context) {
         this(context, null);
@@ -127,8 +149,6 @@ public class CircleImageView extends ImageView {
 
         canvas.drawCircle(circleCenter + outCircleWidth, circleCenter + outCircleWidth, circleCenter + outCircleWidth, paint);
         canvas.drawBitmap(createCircleBitmap(bitmap, min), outCircleWidth, outCircleWidth, null);
-
-        super.onDraw(canvas);
     }
 
     /**
@@ -144,8 +164,8 @@ public class CircleImageView extends ImageView {
         paintCircle.setAntiAlias(true);
 
         bitmap = Bitmap.createBitmap(min, min, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas();
-        canvas.drawCircle(min, min, min, paintCircle);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawCircle(min / 2, min / 2, min / 2, paintCircle);
         paintCircle.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));//设置画笔模式
         canvas.drawBitmap(img, 0, 0, paintCircle);
 

@@ -40,10 +40,11 @@
             android:textSize="16sp" />
 
         <EditText
-            android:id="@+id/zxingEtMsg"
+            android:id="@+id/zxingEtEwmInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp" />
+            android:layout_margin="2dp"
+            android:selectAllOnFocus="true" />
 
         <CheckBox
             android:id="@+id/zxingCbLogo"
@@ -54,7 +55,7 @@
             android:text="添加logo" />
 
         <ImageView
-            android:id="@+id/zxingImgEm"
+            android:id="@+id/zxingImgEwm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

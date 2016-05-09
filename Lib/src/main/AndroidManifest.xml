@@ -275,9 +275,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask" />
 
-        <!--二维码扫描-->
+        <!-- 二维码扫描 -->
         <activity
             android:name=".zxing.ZxingActivity"
+            android:launchMode="singleTask" />
+
+        <!--圆形图片-->
+        <activity
+            android:name=".circleimageview.CircleImageActivity"
             android:launchMode="singleTask" />
     </application>
 
