@@ -280,10 +280,16 @@
             android:name=".zxing.ZxingActivity"
             android:launchMode="singleTask" />
 
-        <!--圆形图片-->
+        <!-- 圆形图片 -->
         <activity
             android:name=".circleimageview.CircleImageActivity"
             android:launchMode="singleTask" />
+
+        <!-- Activity与service交互测试 -->
+        <activity
+            android:name=".ActivityService.MessengerActivit"
+            android:launchMode="singleTask" />
+        <service android:name=".ActivityService.MessengerService" />
     </application>
 
 </manifest>

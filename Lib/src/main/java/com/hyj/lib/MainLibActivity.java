@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.hyj.lib.ActivityService.MessengerActivit;
 import com.hyj.lib.a.HelloChild;
 import com.hyj.lib.adapter.AdapterAcitivty;
 import com.hyj.lib.annotaionsframe.AnnotationsActivity_;
@@ -111,6 +112,11 @@ public class MainLibActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("Activity与Service相互通信");
+        bean.setValue(MessengerActivit.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("圆形头像实现");

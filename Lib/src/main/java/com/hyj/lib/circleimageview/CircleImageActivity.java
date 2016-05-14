@@ -12,8 +12,6 @@ import android.view.View;
 
 import com.hyj.lib.R;
 import com.hyj.lib.tools.DialogUtils;
-import com.hyj.lib.tools.FileUtils;
-import com.hyj.lib.tools.LogUtils;
 
 import java.io.File;
 
@@ -78,6 +76,9 @@ public class CircleImageActivity extends Activity {
         });
     }
 
+    /**
+     * 打开摄像头拍照
+     */
     private void openCamera() {
         String state = Environment.getExternalStorageState();
         if (state.equals(Environment.MEDIA_MOUNTED)) {
@@ -107,6 +108,9 @@ public class CircleImageActivity extends Activity {
 //        startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
+    /**
+     * 在相册中选择照片
+     */
     private void openPic() {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
