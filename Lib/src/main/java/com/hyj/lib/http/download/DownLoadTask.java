@@ -18,8 +18,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,11 +28,6 @@ import java.util.concurrent.Executors;
  * @Date 2016-3-21 下午11:24:03
  */
 public class DownLoadTask {
-    /**
-     * 当前下载进度
-     */
-    public static final String PROGRESS = "progress";
-
     private Context context;
     private FileInfo fileInfo;
     private ThreadDao dao;
@@ -50,8 +43,8 @@ public class DownLoadTask {
     private List<DownLoadThread> lThread;// 线程集合
     /**
      * <pre>
-     * 多线程暂停的时候，每个线程会暂停一次，
-     * 控制只有最后一条线程也暂停的时候才去发送广播
+     *     多线程暂停的时候，每个线程会暂停一次，
+     *     控制只有最后一条线程也暂停的时候才去发送广播
      * </pre>
      */
     private int pausethreadCount = 0;
@@ -61,12 +54,9 @@ public class DownLoadTask {
      */
     public static ExecutorService esThreadService = Executors.newCachedThreadPool();
 
-    private Timer timer = new Timer();//定时器任务，每隔一段时间去刷新进度条
-
     /**
      * <pre>
-     * 获取文件下载状态
-     * 初始状态为：DownService.ACTION_START
+     *     获取文件下载状态
      * </pre>
      *
      * @return
@@ -93,6 +83,15 @@ public class DownLoadTask {
      */
     public FileInfo getFileInfo() {
         return fileInfo;
+    }
+
+    /**
+     * 设置下载任务的当前下载进度
+     *
+     * @param progress
+     */
+    public void setProgress(long progress) {
+        this.progress = progress;
     }
 
     /**
@@ -163,21 +162,6 @@ public class DownLoadTask {
         }
 
         sendBroadcast(DownService.ACTION_PREPARE);
-
-        //启动定时任务
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //发送广播修改Activity进度
-                int percent = (int) (progress * 100 / fileInfo.getLength());
-                LogUtils.i("文件：" + fileInfo.getFileName() + " 进度：" + percent);
-                // 发送广播更新进度条
-                Intent intent = new Intent(DownService.ACTION_START);
-                intent.putExtra(DownService.DOWNINFO, fileInfo);
-                intent.putExtra(PROGRESS, percent);
-                context.sendBroadcast(intent);
-            }
-        }, 1000, 1000);
     }
 
     /**
@@ -190,8 +174,6 @@ public class DownLoadTask {
                 return;
             }
         }
-
-        timer.cancel(); //取消更新Activity定时器
 
         dao.deleteThread(fileInfo.getUrl());// 删除线程信息
 
@@ -253,9 +235,9 @@ public class DownLoadTask {
 
     /**
      * <pre>
-     * 判断下载文件的所有线程是否停止
-     * 多线程暂停的时候，每个线程会暂停一次，
-     * 控制只有最后一条线程也暂停的时候才去发送广播
+     *     判断下载文件的所有线程是否停止
+     *     多线程暂停的时候，每个线程会暂停一次，
+     *     控制只有最后一条线程也暂停的时候才去发送广播
      * </pre>
      *
      * @return
@@ -317,8 +299,8 @@ public class DownLoadTask {
                 // 在读写的时候跳过设置好的字节数，从下一个字节数开始读写
                 raf.seek(start);
 
-//                Intent intent = new Intent(DownService.ACTION_START);
-//                intent.putExtra(DownService.DOWNINFO, fileInfo);
+                Intent intent = new Intent(DownService.ACTION_START);
+                intent.putExtra(DownService.DOWNINFO, fileInfo);
 
                 progress += threadInfo.getProgress();// 当前文件下载完成进度
 
@@ -340,16 +322,15 @@ public class DownLoadTask {
                         threadInfo.setProgress(threadInfo.getProgress() + len);
 
                         // 每隔500毫秒发送一次广播刷新进度条//此处移到定时器里面执行
-//                        if (System.currentTimeMillis() - time > 500) {
-//                            time = System.currentTimeMillis();
-//                            int percent = (int) (progress * 100 / fileInfo.getLength());
-//                            LogUtils.i("文件：" + fileInfo.getFileName() + " 进度：" + percent);
-//                            // 发送广播更新进度条
-//                            Intent intent = new Intent(DownService.ACTION_START);
-//                            intent.putExtra(DownService.DOWNINFO, fileInfo);
-//                            intent.putExtra(PROGRESS, percent);
-//                            context.sendBroadcast(intent);
-//                        }
+                        if (System.currentTimeMillis() - time > 1000) {
+                            time = System.currentTimeMillis();
+                            int percent = (int) (progress * 100 / fileInfo.getLength());
+                            LogUtils.i("文件：" + fileInfo.getFileName() + " 进度：" + percent);
+
+                            // 发送广播更新进度条
+                            fileInfo.setProgress(percent);
+                            context.sendBroadcast(intent);
+                        }
 
                         // 下载暂停时，保存下载进度
                         if (DownService.ACTION_PAUSE.equals(downStatus) || DownService.ACTION_STOP.equals(downStatus)) {
@@ -378,8 +359,8 @@ public class DownLoadTask {
                     if (con != null) {
                         con.disconnect();
                     }
-                } catch (Exception e2) {
-                    e2.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

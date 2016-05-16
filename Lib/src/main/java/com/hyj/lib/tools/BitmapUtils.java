@@ -12,9 +12,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.ExifInterface;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * 图片操作工具类
@@ -32,8 +34,7 @@ public class BitmapUtils {
      * @param reqHeight 目标高度
      * @return int图片压缩比例
      */
-    public static int calculateInSampleSize(Options option, int reqWidth,
-                                            int reqHeight) {
+    public static int calculateInSampleSize(Options option, int reqWidth, int reqHeight) {
         // Raw height and width of image
         int width = option.outWidth;
         int height = option.outHeight;
@@ -56,12 +57,32 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap getBitmapFromPath(String path) {
-        File file = new File(path);
-        if (file.exists()) {
-            return getBitmapFromFile(file);
+        if (TextUtils.isEmpty(path)) {
+            return null;
         }
 
-        return null;
+        // decode image size
+        Options option = new BitmapFactory.Options();
+        option.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, option);
+
+        // Find the correct scale value. It should be the power of 2.
+        int REQUIRED_SIZE = 100;
+
+        int tempWidth = option.outWidth;
+        int tempHeight = option.outHeight;
+        int inSampleSize = 1;
+
+        while (tempWidth / 2 >= REQUIRED_SIZE && tempHeight / 2 >= REQUIRED_SIZE) {
+            tempWidth /= 2;
+            tempHeight /= 2;
+            inSampleSize *= 2;
+        }
+
+        // decode with inSampleSize
+        option.inSampleSize = inSampleSize;// 采样率：指定解析图片的比例
+        option.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(path, option);
     }
 
     /**
@@ -71,8 +92,13 @@ public class BitmapUtils {
      * @return Bitmap
      */
     public static Bitmap getBitmapFromFile(File file) {
+        if (!file.exists()) {
+            return null;
+        }
+
+        FileInputStream fis = null;
         try {
-            FileInputStream fis = new FileInputStream(file);
+            fis = new FileInputStream(file);
 
             // decode image size
             Options option = new BitmapFactory.Options();
@@ -86,21 +112,30 @@ public class BitmapUtils {
             int tempHeight = option.outHeight;
             int inSampleSize = 1;
 
-            while (tempWidth / 2 >= REQUIRED_SIZE
-                    && tempHeight / 2 >= REQUIRED_SIZE) {
+            while (tempWidth / 2 >= REQUIRED_SIZE && tempHeight / 2 >= REQUIRED_SIZE) {
                 tempWidth /= 2;
                 tempHeight /= 2;
                 inSampleSize *= 2;
             }
 
             // decode with inSampleSize
-            option = new BitmapFactory.Options();
             option.inSampleSize = inSampleSize;// 采样率：指定解析图片的比例
+            option.inJustDecodeBounds = false;
+
+            fis = new FileInputStream(file);
             return BitmapFactory.decodeStream(fis, null, option);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (null != fis) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
     }
 
     /**
@@ -115,6 +150,7 @@ public class BitmapUtils {
         BitmapFactory.Options option = new BitmapFactory.Options();
         option.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, option);
+
         int inSampleSize = calculateInSampleSize(option, reqWidth, reqHeight);
         option.inSampleSize = inSampleSize;
         option.inJustDecodeBounds = false;
@@ -196,6 +232,7 @@ public class BitmapUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
         return angle;
     }
@@ -216,8 +253,7 @@ public class BitmapUtils {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
 
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), matrix, true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     /**

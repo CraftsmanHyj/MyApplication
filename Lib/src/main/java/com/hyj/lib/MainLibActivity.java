@@ -59,6 +59,12 @@ import com.hyj.lib.zxing.ZxingActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <pre>
+ *     APP主界面入口
+ *     D:\ProgamFiles(green)\Android\Android Studio\bin
+ * </pre>
+ */
 public class MainLibActivity extends BaseActivity {
     /**
      * 猜歌游戏APP

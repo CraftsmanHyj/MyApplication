@@ -21,8 +21,8 @@ import java.util.Map;
 
 /**
  * <pre>
- * 下载后台Service
- * 当Service被停止的时候会停止所有下载任务并保持当前下载进度
+ *     下载后台Service
+ *     当Service被停止的时候会停止所有下载任务并保持当前下载进度
  * </pre>
  *
  * @author hyj
@@ -42,11 +42,11 @@ public class DownService extends Service {
      */
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
     /**
-     * 下载状态——停止
+     * 下载状态——停止，保存下载进度，退出下载
      */
     public static final String ACTION_STOP = "ACTION_STOP";
     /**
-     * 下载状态——结束
+     * 下载状态——结束，删除数据库中线程信息
      */
     public static final String ACTION_FINISH = "ACTION_FINISH";
     /**
@@ -98,19 +98,30 @@ public class DownService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         FileInfo file = (FileInfo) intent.getSerializableExtra(DOWNINFO);
+        DownLoadTask downTask = mapDownTask.get(file.getId());
 
+        /**
+         * <pre>
+         *     开始下载文件有两种情况：
+         *          1、新文件下载
+         *          2、暂停后继续下载
+         * </pre>
+         */
         switch (intent.getAction()) {
             case ACTION_PREPARE:
-                // 启动线程下载文件
-                DownLoadTask.esThreadService.execute(new DownLoadThread(file));
+                if (null == downTask) {
+                    DownLoadTask.esThreadService.execute(new DownLoadThread(file));
+                } else {
+                    downTask.setDownStatus(intent.getAction());
+                    downTask.setProgress(0);
+                    downTask(file);
+                }
                 break;
 
             case ACTION_STOP:
             case ACTION_PAUSE:
-                DownLoadTask downTask = mapDownTask.get(file.getId());
                 if (null != downTask) {
-                    // 暂停下载任务
-                    downTask.setDownStatus(intent.getAction());
+                    downTask.setDownStatus(intent.getAction());// 暂停下载任务
                 }
                 break;
 
@@ -124,7 +135,7 @@ public class DownService extends Service {
 
     /**
      * <pre>
-     * 当绑定(onBind())成功的时候会调用此方法
+     *     当绑定(onBind())成功的时候会调用此方法
      * </pre>
      */
     @Override
@@ -147,15 +158,19 @@ public class DownService extends Service {
                 break;
         }
 
-        for (DownLoadTask downTask : mapDownTask.values()) {
-            if (downFileNum < DOWNTASK_COUNT && ACTION_PREPARE.equals(downTask.getDownStatus())) {
-                downTask.downLoad();
-                downFileNum++;
+        if (downFileNum < DOWNTASK_COUNT) {
+            for (DownLoadTask downTask : mapDownTask.values()) {
+                if (ACTION_PREPARE.equals(downTask.getDownStatus())) {
+                    downTask.downLoad();
+                    //发送一个启动命令广播
+                    Intent intent = new Intent(DownService.ACTION_PREPARE);
+                    intent.putExtra(DOWNINFO, downTask.getFileInfo());
+                    sendBroadcast(intent);
 
-                //hyj发送一个启动命令广播
-                Intent intent = new Intent(DownService.ACTION_PREPARE);
-                intent.putExtra(DOWNINFO, downTask.getFileInfo());
-                sendBroadcast(intent);
+                    if (++downFileNum >= DOWNTASK_COUNT) {
+                        break;
+                    }
+                }
             }
         }
 
@@ -185,10 +200,10 @@ public class DownService extends Service {
      * @Date 2016-1-21 下午4:05:38
      */
     private class DownLoadThread extends Thread {
-        private FileInfo mFileInfo;
+        private FileInfo fileInfo;
 
         public DownLoadThread(FileInfo mFileInfo) {
-            this.mFileInfo = mFileInfo;
+            this.fileInfo = mFileInfo;
         }
 
         @Override
@@ -197,7 +212,7 @@ public class DownService extends Service {
             RandomAccessFile raf = null;
             try {
                 // 链接网络文件
-                URL url = new URL(mFileInfo.getUrl());
+                URL url = new URL(fileInfo.getUrl());
                 con = (HttpURLConnection) url.openConnection();
                 con.setConnectTimeout(3000);
                 con.setRequestMethod("GET");// 除下载文件外其他都用post方式
@@ -212,18 +227,16 @@ public class DownService extends Service {
                 }
 
                 // 文件写入路径
-                String path = File.separator + Constants.DIR_DOWNLOAD
-                        + File.separator + mFileInfo.getFileName();
-                File file = FileUtils.getAppFile(
-                        DownService.this.getBaseContext(), path);
+                String path = File.separator + Constants.DIR_DOWNLOAD + File.separator + fileInfo.getFileName();
+                File file = FileUtils.getAppFile(DownService.this.getBaseContext(), path);
 
                 // 随机访问文件，可以在文件任意位置进行写入操作
                 raf = new RandomAccessFile(file, "rwd");
                 // 设置文件长度
                 raf.setLength(length);
 
-                mFileInfo.setLength(length);
-                handler.obtainMessage(WHAT_INIT, mFileInfo).sendToTarget();
+                fileInfo.setLength(length);
+                handler.obtainMessage(WHAT_INIT, fileInfo).sendToTarget();
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -235,8 +248,8 @@ public class DownService extends Service {
                     if (con != null) {
                         con.disconnect();
                     }
-                } catch (Exception e2) {
-                    e2.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

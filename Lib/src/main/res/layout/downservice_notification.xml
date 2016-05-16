@@ -48,7 +48,6 @@
                 android:id="@+id/downNfBtPause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"
                 android:text="暂停" />
         </LinearLayout>
     </LinearLayout>

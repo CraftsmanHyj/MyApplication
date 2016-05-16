@@ -16,7 +16,7 @@ public class ScreenTimer extends CountDownTimer {
     /**
      * 倒计时总时长(s)
      */
-    private final static long millisInFuture = 2 * 60 * 1000;
+    private final static long millisInFuture = 5 * 60 * 1000;
 
     private static ScreenTimer instance;
     private Activity activity;
@@ -53,7 +53,7 @@ public class ScreenTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
-        LogUtils.i("倒计时：" + millisUntilFinished + " " + activity.getClass());
+//        LogUtils.i("倒计时：" + millisUntilFinished + " " + activity.getClass());
         if (millisUntilFinished <= 2 * 1000) {
             isTimeFinish = true;
             return;
