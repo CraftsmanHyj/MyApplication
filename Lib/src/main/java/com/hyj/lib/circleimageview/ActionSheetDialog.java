@@ -17,61 +17,29 @@ import android.widget.TextView;
 
 import com.hyj.lib.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * <pre>
+ *     底部弹出选项Dialog
  * </pre>
  *
  * @Author hyj
  * @Date 2016/5/8 12:56
  */
 public class ActionSheetDialog {
+    private float textSize = 18;//字体大小
     private Context context;
+
+    private TextView tvTitle;
+    private TextView tvCancel;
+    private LinearLayout llContent;
+    private ScrollView svContent;
+
     private Dialog dialog;
-    private TextView txt_title;
-    private TextView txt_cancle;
-    private LinearLayout lLayout_content;
-    private ScrollView sLayout_content;
-    private boolean isShowTitle;//是否显示title
     private Display display;//拿到屏幕宽度
 
-    private List<SheetItem> sheetItemList;
-
-    public ActionSheetDialog(Context context) {
-        this.context = context;
-        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        display = manager.getDefaultDisplay();
-    }
-
-    public ActionSheetDialog builder() {
-        View view = LayoutInflater.from(context).inflate(R.layout.circleimg_dialog, null);
-        view.setMinimumWidth(display.getWidth());//设置view的最小宽度
-
-        lLayout_content = (LinearLayout) view.findViewById(R.id.lLayout_content);
-        sLayout_content = (ScrollView) view.findViewById(R.id.sLayout_content);
-        txt_title = (TextView) view.findViewById(R.id.txt_title);
-        txt_cancle = (TextView) view.findViewById(R.id.txt_cancel);
-        txt_cancle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        //dialog设置
-        dialog = new Dialog(context, R.style.ActionSheetDialogStyle);
-        dialog.setContentView(view);
-        Window dialogWindow = dialog.getWindow();
-        dialogWindow.setGravity(Gravity.LEFT | Gravity.BOTTOM);
-        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-        lp.x = 0;
-        lp.y = 0;
-        dialogWindow.setAttributes(lp);
-
-        return this;
-    }
+    private List<SheetItem> lSheetItem;
 
     /**
      * 设置标题
@@ -79,13 +47,11 @@ public class ActionSheetDialog {
      * @param title
      * @return
      */
-    public ActionSheetDialog setTitle(String title) {
+    public void setTitle(String title) {
         if (!TextUtils.isEmpty(title)) {
-            isShowTitle = true;
-            txt_title.setText(title);
-            txt_title.setVisibility(View.VISIBLE);
+            tvTitle.setText(title);
+            tvTitle.setVisibility(View.VISIBLE);
         }
-        return this;
     }
 
     /**
@@ -94,9 +60,8 @@ public class ActionSheetDialog {
      * @param cancel
      * @return
      */
-    public ActionSheetDialog setCancelable(boolean cancel) {
+    public void setCancelable(boolean cancel) {
         dialog.setCancelable(cancel);
-        return this;
     }
 
     /**
@@ -105,140 +70,127 @@ public class ActionSheetDialog {
      * @param cancel
      * @return
      */
-    public ActionSheetDialog setCanceledOnTouchOutside(boolean cancel) {
+    public void setCanceledOnTouchOutside(boolean cancel) {
         dialog.setCanceledOnTouchOutside(cancel);
-        return this;
     }
-
 
     /**
-     * 添加Item对象
-     *
-     * @param name
-     * @param color
-     * @param listener
-     * @return
+     * 显示弹出窗体
      */
-    public ActionSheetDialog addSheetItem(String name, SheetItemColor color, onSheetItemClickListener listener) {
-        if (null == sheetItemList) {
-            sheetItemList = new ArrayList<SheetItem>();
-        }
-        sheetItemList.add(new SheetItem(name, color, listener));
-        return this;
+    public void show() {
+        dialog.show();
     }
 
-    public void show() {
-        setSheetItem();
-        dialog.show();
+    public ActionSheetDialog(Context context, List<SheetItem> lSheetItem) {
+        this.context = context;
+        this.lSheetItem = lSheetItem;
+
+        initView();
+        initSheetItem();
+    }
+
+    public void initView() {
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        this.display = manager.getDefaultDisplay();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.circleimg_dialog, null);
+        view.setMinimumWidth(display.getWidth());//设置view的最小宽度
+
+        llContent = (LinearLayout) view.findViewById(R.id.headLlContent);
+        svContent = (ScrollView) view.findViewById(R.id.headSvContent);
+        tvTitle = (TextView) view.findViewById(R.id.headTvTitle);
+        tvCancel = (TextView) view.findViewById(R.id.headTvCancel);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        //dialog设置
+        dialog = new Dialog(context, R.style.HeadSheetDialogStyle);
+        dialog.setContentView(view);
+        Window dialogWindow = dialog.getWindow();
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.x = 0;
+        lp.y = 0;
+        dialogWindow.setAttributes(lp);
     }
 
     /**
      * 设置列表项
      */
-    private void setSheetItem() {
-        if (null == sheetItemList || sheetItemList.size() < 1) {
+    private void initSheetItem() {
+        if (null == lSheetItem || lSheetItem.isEmpty()) {
             return;
         }
 
-        int size = sheetItemList.size();
+        int size = lSheetItem.size();
         if (size > 6) {//控制高度
-            ViewGroup.LayoutParams params = sLayout_content.getLayoutParams();
+            ViewGroup.LayoutParams params = svContent.getLayoutParams();
             params.height = display.getHeight() / 2;
-            sLayout_content.setLayoutParams(params);
+            svContent.setLayoutParams(params);
         }
 
-        for (int i = 1; i <= size; i++) {
-            final int index = i;
+        for (int i = 0; i < size; i++) {
+            SheetItem sheetItem = lSheetItem.get(i);
+            llContent.addView(getTextView(sheetItem));
 
-            final SheetItem sheetItem = sheetItemList.get(i - 1);
-            TextView textView = new TextView(context);
-            textView.setText(sheetItem.name);
-            textView.setTextSize(18);
-            textView.setGravity(Gravity.CENTER);
-            if (1 == size) {
-                if (isShowTitle) {
-                    textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_bottom_selector
-                } else {
-                    textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_single_pressed
-                }
-            } else {
-                if (isShowTitle) {
-                    if (i >= 1 && i < size) {
-                        textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_middle_selector
-                    } else {
-                        textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_bottom_selector
-                    }
-                } else {
-                    if (1 == i) {
-                        textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_top_selector
-                    } else if (i < size) {
-                        textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_middle_selector
-                    } else {
-                        textView.setBackgroundResource(R.drawable.text_bg);//R.drawable.actionsheet_bottom_selector
-                    }
-                }
+            if (i < (size - 1)) {
+                llContent.addView(getLine());
             }
-
-            if (sheetItem.color != null) {
-                textView.setTextColor(Color.parseColor(sheetItem.color.getName()));
-            } else {
-                textView.setTextColor(Color.parseColor(SheetItemColor.BULE.getName()));
-            }
-
-            //设置高度
-            float scale = context.getResources().getDisplayMetrics().density;
-            int height = (int) (45 * scale + 0.5);
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sheetItem.listener.onClick(index);
-                    dialog.dismiss();
-                }
-            });
-
-            lLayout_content.addView(textView);
         }
     }
 
-    private class SheetItem {
-        public String name;
-        public onSheetItemClickListener listener;
-        public SheetItemColor color;
+    /**
+     * 获取一个TextView对象
+     *
+     * @return
+     */
+    private TextView getTextView(final SheetItem sheetItem) {
+        TextView textView = new TextView(context);
+        //高度缩放比
+        float scaleHeight = context.getResources().getDisplayMetrics().density;
+        int height = (int) (45 * scaleHeight + 0.5);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+        textView.setTextSize(textSize);
+        textView.setGravity(Gravity.CENTER);
 
-        public SheetItem(String name, SheetItemColor color, onSheetItemClickListener listener) {
-            this.name = name;
-            this.listener = listener;
-            this.color = color;
+        textView.setText(sheetItem.getName());
+        if (null != sheetItem.getColor()) {
+            textView.setTextColor(Color.parseColor(sheetItem.getColor()));
+        } else {
+            textView.setTextColor(Color.parseColor(SheetItem.BULE));
         }
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheetItem.getListener().onItemClick();
+                dialog.dismiss();
+            }
+        });
+
+        return textView;
+    }
+
+    /**
+     * 获取一条分割线
+     *
+     * @return
+     */
+    private View getLine() {
+        View view = new View(context);
+        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
+        view.setBackgroundColor(Color.parseColor("#8F8F8F"));
+        return view;
     }
 
     /**
      * Item点击事件
      */
-    public interface onSheetItemClickListener {
-        public void onClick(int witch);
-    }
-
-    /**
-     * 颜色枚举
-     */
-    public enum SheetItemColor {
-
-        BULE("#037BFF"), RED("#FD4A2E");
-
-        String name;
-
-        private SheetItemColor(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
+    public interface OnItemClickListener {
+        public void onItemClick();
     }
 }

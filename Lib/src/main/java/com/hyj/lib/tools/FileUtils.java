@@ -1,5 +1,16 @@
 package com.hyj.lib.tools;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Environment;
+import android.os.StatFs;
+
+import com.hyj.lib.R;
+import com.hyj.lib.db.DBHelper;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -10,15 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.math.BigDecimal;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Environment;
-import android.os.StatFs;
-
-import com.hyj.lib.R;
-import com.hyj.lib.db.DBHelper;
 
 /**
  * 与文件相关操作工具类
@@ -342,9 +344,9 @@ public class FileUtils {
     }
 
     /**
-     * 删除指定目录下的文件夹、目录
+     * 删除指定目录下的文件夹和该目录目录
      *
-     * @param obj 传入参数可以是：StringPath、File两种
+     * @param obj 参数可以传两种：1、File文件对象；2、StringPath文件绝对路径
      */
     public static void deleteFileByDirectory(Object obj) {
         File dir = isFile(obj);
@@ -359,6 +361,24 @@ public class FileUtils {
         }
 
         dir.delete();
+    }
+
+    /**
+     * 删除指定文件
+     *
+     * @param obj 参数可以传两种：1、File文件对象；2、StringPath文件绝对路径
+     */
+    public static void deleteFile(Object obj) {
+        File file = null;
+        if (obj instanceof File) {
+            file = (File) obj;
+        } else if (obj instanceof String) {
+            file = new File((String) obj);
+        }
+
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     /**
@@ -465,6 +485,7 @@ public class FileUtils {
      * @param sizeType 想要获取大小的类型(可用、已用、总大小)
      * @return long 返回值<0文件不存在
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public static long getSDCardSize(int sizeType) {
         File externalFile = getDirExternal();
         if (null == externalFile) {

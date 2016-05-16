@@ -24,8 +24,8 @@ import com.hyj.lib.R;
  * @Date 2016/4/26 22:27
  */
 public class CircleImageView extends ImageView {
-    private int outCircleWidth = 10;//外圆的宽度
-    private int outCircleColor = Color.WHITE;//外圆的颜色
+    private int outCircleWidth = 5;//外圆的宽度
+    private int outCircleColor = Color.GRAY;//外圆的颜色
 
     private Paint paint;//定义画笔
     private int width, height;//控件宽高
@@ -136,9 +136,10 @@ public class CircleImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        loadImg();
-
-        if (null == bitmap) {
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) this.getDrawable();
+        if (null != bitmapDrawable) {
+            bitmap = bitmapDrawable.getBitmap();
+        } else {
             return;
         }
 
@@ -170,13 +171,5 @@ public class CircleImageView extends ImageView {
         canvas.drawBitmap(img, 0, 0, paintCircle);
 
         return bitmap;
-    }
-
-    //加载图片
-    private void loadImg() {
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) this.getDrawable();
-        if (null != bitmapDrawable) {
-            bitmap = bitmapDrawable.getBitmap();
-        }
     }
 }

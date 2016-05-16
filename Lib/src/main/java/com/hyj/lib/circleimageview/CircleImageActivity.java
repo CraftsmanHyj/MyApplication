@@ -1,32 +1,43 @@
 package com.hyj.lib.circleimageview;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 
+import com.hyj.lib.BaseActivity;
+import com.hyj.lib.Constants;
 import com.hyj.lib.R;
+import com.hyj.lib.tools.BitmapUtils;
 import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.FileUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 圆形头像上传功能
+ * <pre>
+ *     圆形头像上传功能
+ *     获取系统图片等文件存放路径
+ *     File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+ * </pre>
  */
-public class CircleImageActivity extends Activity {
+public class CircleImageActivity extends BaseActivity {
     private final int REQUESTCODE_PIC = 0X00000001;//相册
     private final int REQUESTCODE_CAM = 0X00000002;//相机
     private final int REQUESTCODE_CUT = 0X00000003;//裁剪
 
+    private final String PHOTO_TEMP = File.separator + Constants.DIR_TEMP + File.separator + "temp.jpg";//临时文件
+    private final String PHOTO_HEAD = File.separator + Constants.DIR_TEMP + File.separator + "head.jpg";//头像文件
+
     private Bitmap headBitmap;//剪切好的图片文件
 
     private CircleImageView civHead;
-
+    private ActionSheetDialog dialog;
     private File file;
 
     @Override
@@ -50,27 +61,39 @@ public class CircleImageActivity extends Activity {
     }
 
     private void initData() {
+        List<SheetItem> lSheetItem = new ArrayList<SheetItem>();
+        SheetItem item = new SheetItem("拍照", SheetItem.BULE, new ActionSheetDialog.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                openCamera();
+            }
+        });
+        lSheetItem.add(item);
+
+        item = new SheetItem("打开相册", SheetItem.RED, new ActionSheetDialog.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                openPic();
+            }
+        });
+        lSheetItem.add(item);
+
+        dialog = new ActionSheetDialog(this, lSheetItem);
+        dialog.setTitle("选择图片");
+
+        //设置头像
+//        Bitmap bmpHead = BitmapFactory.decodeFile(FileUtils.getAppFile(this, PHOTO_HEAD).getAbsolutePath());
+//        Bitmap bmpHead = BitmapUtils.getBitmapFromFile(FileUtils.getAppFile(this, PHOTO_HEAD));
+        Bitmap bmpHead = BitmapUtils.getBitmapFromPath(FileUtils.getAppFile(this, PHOTO_HEAD).getAbsolutePath());
+        if (null != bmpHead) {
+            civHead.setImageBitmap(bmpHead);
+        }
     }
 
     private void initListener() {
         civHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActionSheetDialog dialog = new ActionSheetDialog(CircleImageActivity.this).builder();
-                dialog.addSheetItem("拍照", ActionSheetDialog.SheetItemColor.BULE, new ActionSheetDialog.onSheetItemClickListener() {
-                    @Override
-                    public void onClick(int witch) {
-                        openCamera();
-                    }
-                });
-
-                dialog.addSheetItem("打开相册", ActionSheetDialog.SheetItemColor.RED, new ActionSheetDialog.onSheetItemClickListener() {
-                    @Override
-                    public void onClick(int witch) {
-                        openPic();
-                    }
-                });
-
                 dialog.show();
             }
         });
@@ -80,32 +103,15 @@ public class CircleImageActivity extends Activity {
      * 打开摄像头拍照
      */
     private void openCamera() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File outDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            if (!outDir.exists()) {
-                outDir.mkdirs();
-            }
-
-            file = new File(outDir, "circleImageHeader.jpg");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-            startActivityForResult(intent, REQUESTCODE_CAM);
-        } else {
-            DialogUtils.showToastShort(this, "请插入SD卡");
+        file = FileUtils.getAppFile(this, PHOTO_TEMP);
+        if (null == file) {
+            DialogUtils.showToastShort(this, "请检查您的存储空间是否充足");
+            return;
         }
-
-//        String state = Environment.getExternalStorageState();
-//        if (!Environment.MEDIA_MOUNTED.equals(state)) {
-//            DialogUtils.showToastShort(this, "请插入SD卡");
-//            return;
-//        }
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        file = FileUtils.getAppFile(this, "circleImageHeader.jpg");
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));//
-//        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);//
-//        startActivityForResult(intent, REQUESTCODE_CAM);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        startActivityForResult(intent, REQUESTCODE_CAM);
     }
 
     /**
@@ -119,17 +125,19 @@ public class CircleImageActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (RESULT_OK != resultCode) {
+            return;
+        }
+
         switch (requestCode) {
             case REQUESTCODE_CAM:
                 startPhotoZoom(Uri.fromFile(file));
                 break;
 
             case REQUESTCODE_PIC:
-                if (null == data || null == data.getData()) {
-                    return;
+                if (null != data && null != data.getData()) {
+                    startPhotoZoom(data.getData());
                 }
-
-                startPhotoZoom(data.getData());
                 break;
 
             case REQUESTCODE_CUT:
@@ -162,6 +170,11 @@ public class CircleImageActivity extends Activity {
         startActivityForResult(intent, REQUESTCODE_CUT);
     }
 
+    /**
+     * 将图片显示在界面上
+     *
+     * @param data
+     */
     public void setPicToView(Intent data) {
         Bundle extras = data.getExtras();
         if (null == extras) {
@@ -174,5 +187,8 @@ public class CircleImageActivity extends Activity {
         }
         //这里可以添加文件上传代码，将头像上传到服务器
         civHead.setImageBitmap(headBitmap);
+
+        //保存头像到本地
+        FileUtils.saveFileFromBitmap(this, headBitmap, PHOTO_HEAD);
     }
 }
