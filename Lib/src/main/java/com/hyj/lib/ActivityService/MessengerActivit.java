@@ -41,7 +41,7 @@ public class MessengerActivit extends BaseActivity {
     private TextView tvMsg;
     private EditText etSendMsg;
     private Button btSend;
-    private ScrollView slContent;
+    private ScrollView svContent;
 
     private Handler handler = new Handler() {
         @Override
@@ -49,6 +49,17 @@ public class MessengerActivit extends BaseActivity {
             switch (msg.what) {
                 case REQUEST_SERVICE:
                     tvMsg.append(msg.obj + "\n");
+
+                    svContent.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            svContent.fullScroll(ScrollView.FOCUS_DOWN);
+
+                            //让etMsg重新获取焦点
+                            etSendMsg.setText("");
+                            etSendMsg.requestFocus();
+                        }
+                    });
                     break;
             }
         }
@@ -99,7 +110,7 @@ public class MessengerActivit extends BaseActivity {
     private void initView() {
         tvMsg = (TextView) findViewById(R.id.asTvMsg);
         etSendMsg = (EditText) findViewById(R.id.asEtSendMsg);
-        slContent = (ScrollView) findViewById(R.id.asSlContent);
+        svContent = (ScrollView) findViewById(R.id.asSlContent);
 
         btSend = (Button) findViewById(R.id.asBtSend);
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -129,10 +140,7 @@ public class MessengerActivit extends BaseActivity {
             return;
         }
 
-        etSendMsg.setText("");
-
         tvMsg.append("activity：" + msg + "\n");
-        slContent.smoothScrollTo(0, slContent.getMeasuredHeight());
 
         Message message = new Message();
         message.what = MessengerService.SERVICE_MSG;
@@ -148,6 +156,7 @@ public class MessengerActivit extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        LogUtils.i("解除Service的绑定");
         //与服务解除绑定
         unbindService(connection);
     }

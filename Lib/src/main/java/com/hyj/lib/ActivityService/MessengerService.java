@@ -38,7 +38,12 @@ public class MessengerService extends Service {
         }
     };
 
-    public MessengerService() {
+    @Override
+    public IBinder onBind(Intent intent) {
+        //创建Messenger对象，指定由handler来处理Activity发过来的信息
+        Messenger messenger = new Messenger(handler);
+        //返回Messenger的Binder给绑定的Activity
+        return messenger.getBinder();
     }
 
     /**
@@ -55,13 +60,5 @@ public class MessengerService extends Service {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        //创建Messenger对象，指定由handler来处理Activity发过来的信息
-        Messenger messenger = new Messenger(handler);
-        //返回Messenger的Binder给绑定的Activity
-        return messenger.getBinder();
     }
 }
