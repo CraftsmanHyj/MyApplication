@@ -15,7 +15,7 @@ import com.hyj.lib.R;
 import com.hyj.lib.db.ThreadDao;
 import com.hyj.lib.db.ThreadDaoImpl;
 import com.hyj.lib.down.DownLoad;
-import com.hyj.lib.downservice.notification.NotificationUtils;
+import com.hyj.lib.http.download.DownNotification;
 import com.hyj.lib.http.download.DownService;
 import com.hyj.lib.http.download.FileInfo;
 import com.hyj.lib.tools.DialogUtils;
@@ -35,7 +35,7 @@ public class DownServiceActivity extends BaseActivity {
 
     private ThreadDao dao;
     private Map<String, Integer> mapProgress;
-    private NotificationUtils notificationUtils;
+    private DownNotification notificationUtils;
 
     private String[][] urls = new String[0][0];//下载网址
 
@@ -60,20 +60,20 @@ public class DownServiceActivity extends BaseActivity {
                     notificationUtils.showNotification(file);//显示通知
                     break;
 
+                case DownService.ACTION_START:
+                    //更新通知里的进度
+                    notificationUtils.updateNotification(file.getId(), file.getProgress());
+                    break;
+
                 case DownService.ACTION_PAUSE:
                     break;
 
-                case DownService.ACTION_START:
-                    adapter.notifyDataSetChanged();
-
-                    //更新通知里的进度
-                    notificationUtils.updateNotification(file.getId(), file.getProgress());
+                case DownService.ACTION_STOP:
                     break;
 
                 case DownService.ACTION_FINISH:
                     // 下载完成进度条重置
                     file.setProgress(0);
-                    adapter.notifyDataSetChanged();
 
                     String msg = "文件<" + file.getFileName() + ">下载完成";
                     DialogUtils.showToastShort(DownServiceActivity.this, msg);
@@ -82,6 +82,7 @@ public class DownServiceActivity extends BaseActivity {
                     notificationUtils.cancleNotification(file.getId());
                     break;
             }
+            adapter.notifyDataSetChanged();
         }
     };
 
@@ -110,7 +111,7 @@ public class DownServiceActivity extends BaseActivity {
 
     private void initUrls() {
         boolean isNetWork = false;
-        String ip = "192.168.23.1";
+        String ip = "192.168.23.1";//公司
         ip = "192.168.31.225";
         if (isNetWork) {
             urls = new String[][]{
@@ -134,7 +135,7 @@ public class DownServiceActivity extends BaseActivity {
     }
 
     private void initData() {
-        notificationUtils = new NotificationUtils(this);
+        notificationUtils = new DownNotification(this);
         dao = new ThreadDaoImpl(this);
         mapProgress = dao.queryFileProgress();
 
@@ -156,6 +157,7 @@ public class DownServiceActivity extends BaseActivity {
         filter.addAction(DownService.ACTION_PREPARE);
         filter.addAction(DownService.ACTION_START);
         filter.addAction(DownService.ACTION_PAUSE);
+        filter.addAction(DownService.ACTION_STOP);
         filter.addAction(DownService.ACTION_FINISH);
         registerReceiver(receiver, filter);
     }

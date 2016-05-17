@@ -28,9 +28,7 @@ public class FileListAdapter extends CommonAdapter<FileInfo> {
         final Button btStart = holder.getView(R.id.downBtBegin);
         final Button btPause = holder.getView(R.id.downBtPause);
 
-
         btStart.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 btStart.setEnabled(false);

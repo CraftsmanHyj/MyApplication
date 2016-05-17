@@ -34,11 +34,11 @@ public class DownService extends Service {
      */
     public static final String ACTION_PREPARE = "ACTION_PREPARE";
     /**
-     * 下载状态——开始
+     * 下载状态——开始，文件进入下载任务队列
      */
     public static final String ACTION_START = "ACTION_START";
     /**
-     * 下载状态——暂停
+     * 下载状态——暂停，暂停当前任务后，还会通知service启动下一个下载任务
      */
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
     /**
@@ -65,7 +65,7 @@ public class DownService extends Service {
     private int downFileNum = 0;// 当前下载文件数
 
     // 下载任务集合
-    private Map<Integer, DownLoadTask> mapDownTask = new LinkedHashMap<Integer, DownLoadTask>();
+    private Map<Integer, DownTask> mapDownTask = new LinkedHashMap<Integer, DownTask>();
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -73,9 +73,8 @@ public class DownService extends Service {
                 case WHAT_INIT:
                     FileInfo file = (FileInfo) msg.obj;
 
-                    // 启动下载任务
-                    DownLoadTask downTask = new DownLoadTask(DownService.this, file, THREADCOUNT);
-
+                    // 文件初始化信息完成，启动下载任务
+                    DownTask downTask = new DownTask(DownService.this, file, THREADCOUNT);
                     // 将下载任务添加到集合中
                     mapDownTask.put(file.getId(), downTask);
 
@@ -98,7 +97,9 @@ public class DownService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         FileInfo file = (FileInfo) intent.getSerializableExtra(DOWNINFO);
-        DownLoadTask downTask = mapDownTask.get(file.getId());
+        DownTask downTask = mapDownTask.get(file.getId());
+        String value = intent.getStringExtra("value");
+        LogUtils.e("操作来源：" + value + " " + file);
 
         /**
          * <pre>
@@ -110,16 +111,15 @@ public class DownService extends Service {
         switch (intent.getAction()) {
             case ACTION_PREPARE:
                 if (null == downTask) {
-                    DownLoadTask.esThreadService.execute(new DownLoadThread(file));
+                    DownTask.esThreadService.execute(new FileSizeThread(file));
                 } else {
                     downTask.setDownStatus(intent.getAction());
-                    downTask.setProgress(0);
                     downTask(file);
                 }
                 break;
 
-            case ACTION_STOP:
             case ACTION_PAUSE:
+            case ACTION_STOP:
                 if (null != downTask) {
                     downTask.setDownStatus(intent.getAction());// 暂停下载任务
                 }
@@ -149,7 +149,7 @@ public class DownService extends Service {
      * @param file
      */
     private void downTask(FileInfo file) {
-        DownLoadTask task = mapDownTask.get(file.getId());
+        DownTask task = mapDownTask.get(file.getId());
         switch (task.getDownStatus()) {
             case ACTION_FINISH:
                 mapDownTask.remove(file.getId());
@@ -159,11 +159,11 @@ public class DownService extends Service {
         }
 
         if (downFileNum < DOWNTASK_COUNT) {
-            for (DownLoadTask downTask : mapDownTask.values()) {
+            for (DownTask downTask : mapDownTask.values()) {
                 if (ACTION_PREPARE.equals(downTask.getDownStatus())) {
                     downTask.downLoad();
-                    //发送一个启动命令广播
-                    Intent intent = new Intent(DownService.ACTION_PREPARE);
+                    //发送广播更新界面
+                    Intent intent = new Intent(ACTION_PREPARE);
                     intent.putExtra(DOWNINFO, downTask.getFileInfo());
                     sendBroadcast(intent);
 
@@ -185,7 +185,7 @@ public class DownService extends Service {
      */
     @Override
     public void onDestroy() {
-        for (DownLoadTask task : mapDownTask.values()) {
+        for (DownTask task : mapDownTask.values()) {
             task.setDownStatus(ACTION_STOP);
         }
 
@@ -199,10 +199,10 @@ public class DownService extends Service {
      * @Author hyj
      * @Date 2016-1-21 下午4:05:38
      */
-    private class DownLoadThread extends Thread {
+    private class FileSizeThread extends Thread {
         private FileInfo fileInfo;
 
-        public DownLoadThread(FileInfo mFileInfo) {
+        public FileSizeThread(FileInfo mFileInfo) {
             this.fileInfo = mFileInfo;
         }
 

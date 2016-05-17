@@ -15,8 +15,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "lib.db";
-    //数据库版本号
-    private static final int VERSION = 1;
+    private static final int VERSION = 1;//数据库版本号
 
     private final String SQL_CREATE_THREAD = "create table thread_info("
             + "id integer primary key autoincrement,"

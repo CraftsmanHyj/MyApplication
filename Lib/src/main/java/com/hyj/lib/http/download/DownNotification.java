@@ -1,4 +1,4 @@
-package com.hyj.lib.downservice.notification;
+package com.hyj.lib.http.download;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,8 +9,6 @@ import android.widget.RemoteViews;
 
 import com.hyj.lib.R;
 import com.hyj.lib.downservice.DownServiceActivity;
-import com.hyj.lib.http.download.DownService;
-import com.hyj.lib.http.download.FileInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,14 +21,14 @@ import java.util.Map;
  * @Author hyj
  * @Date 2016/5/9 22:29
  */
-public class NotificationUtils {
+public class DownNotification {
     private NotificationManager notificationManager = null;
     //所有通知集合，集中管理通知栏内容
     private Map<Integer, Notification> mapNotification = null;
 
     private Context context;
 
-    public NotificationUtils(Context context) {
+    public DownNotification(Context context) {
         this.context = context;
         //获得通知系统服务
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -66,24 +64,27 @@ public class NotificationUtils {
 
         //创建RemoteViews对象
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.downservice_notification);
+        //设置TextVie里面的值
+        remoteViews.setTextViewText(R.id.downNfTvFileName, fileInfo.getFileName());
+
         //设置开始按钮操作
         Intent intentStart = new Intent(context, DownService.class);
         intentStart.setAction(DownService.ACTION_PREPARE);
         intentStart.putExtra(DownService.DOWNINFO, fileInfo);
+        intentStart.putExtra("value", "start down");
         PendingIntent piStart = PendingIntent.getService(context, 0, intentStart, 0);
         remoteViews.setOnClickPendingIntent(R.id.downNfBtBegin, piStart);
+
         //设置暂停按钮操作
         Intent intentPause = new Intent(context, DownService.class);
         intentPause.setAction(DownService.ACTION_PAUSE);
         intentPause.putExtra(DownService.DOWNINFO, fileInfo);
+        intentPause.putExtra("value", "pause down");
         PendingIntent piPause = PendingIntent.getService(context, 0, intentPause, 0);
         remoteViews.setOnClickPendingIntent(R.id.downNfBtPause, piPause);
-        //设置TextVie里面的值
-        remoteViews.setTextViewText(R.id.downNfTvFileName, fileInfo.getFileName());
 
         //设置Notification的视图
         notification.contentView = remoteViews;
-
         //发出通知显示在通知栏
         notificationManager.notify(fileInfo.getId(), notification);
         //把通知加入到集合中

@@ -27,7 +27,7 @@ import java.util.concurrent.Executors;
  * @Author hyj
  * @Date 2016-3-21 下午11:24:03
  */
-public class DownLoadTask {
+public class DownTask {
     private Context context;
     private FileInfo fileInfo;
     private ThreadDao dao;
@@ -72,7 +72,10 @@ public class DownLoadTask {
      */
     public void setDownStatus(String downStatus) {
         this.downStatus = downStatus;
-
+        //准备下载文件，将当前下载进度置0
+        if (DownService.ACTION_PREPARE.equals(downStatus)) {
+            this.progress = 0;
+        }
         fileInfo.setDownStatus(downStatus);
     }
 
@@ -86,21 +89,12 @@ public class DownLoadTask {
     }
 
     /**
-     * 设置下载任务的当前下载进度
-     *
-     * @param progress
-     */
-    public void setProgress(long progress) {
-        this.progress = progress;
-    }
-
-    /**
      * 下载线程任务
      *
      * @param context
      * @param file    FileInfo对象
      */
-    public DownLoadTask(Context context, FileInfo file) {
+    public DownTask(Context context, FileInfo file) {
         this(context, file, 1);
     }
 
@@ -111,12 +105,11 @@ public class DownLoadTask {
      * @param file        file文件信息对象
      * @param threadCount threadCount下载该文件的线程数量
      */
-    public DownLoadTask(Context context, FileInfo file, int threadCount) {
+    public DownTask(Context context, FileInfo file, int threadCount) {
         this.context = context;
         this.fileInfo = file;
         this.threadCount = threadCount;
 
-        // this.downStatus = DownService.ACTION_PREPARE;
         this.dao = new ThreadDaoImpl(context);
         setDownStatus(DownService.ACTION_PREPARE);
     }
@@ -131,17 +124,15 @@ public class DownLoadTask {
             // 获取每个线程现在的长度
             int lengthTh = fileInfo.getLength() / threadCount;
 
-            int start, end;
-            ThreadInfo threadInfo;
             for (int i = 0; i < threadCount; i++) {
-                start = i * lengthTh;// 下载开始位置
-                end = (i + 1) * lengthTh - 1;// 下载结束位置
+                int start = i * lengthTh;// 下载开始位置
+                int end = (i + 1) * lengthTh - 1;// 下载结束位置
 
                 if (i == threadCount - 1) {
                     end = fileInfo.getLength();
                 }
 
-                threadInfo = new ThreadInfo(i, fileInfo.getUrl(), start, end);
+                ThreadInfo threadInfo = new ThreadInfo(i, fileInfo.getUrl(), start, end);
                 // 添加到线程信息集合中
                 lThreadInfo.add(threadInfo);
 
@@ -150,11 +141,10 @@ public class DownLoadTask {
             }
         }
 
-        DownLoadThread down = null;
         lThread = new ArrayList<DownLoadThread>();
         // 启动多个线程进行下载
         for (ThreadInfo thread : lThreadInfo) {
-            down = new DownLoadThread(thread);
+            DownLoadThread down = new DownLoadThread(thread);
             lThread.add(down);
 
             // 使用线程池来启动、执行线程
