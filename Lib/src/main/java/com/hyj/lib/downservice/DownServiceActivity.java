@@ -172,8 +172,8 @@ public class DownServiceActivity extends BaseActivity {
 
     /**
      * <pre>
-     * 单文件、多线程、在线下载文件
-     * 不在这个包里面
+     *     单文件、多线程、在线下载文件
+     *     不在这个包里面
      * </pre>
      */
     private void singleFileDown() {
