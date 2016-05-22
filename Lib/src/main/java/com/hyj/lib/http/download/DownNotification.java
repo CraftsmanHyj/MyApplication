@@ -49,7 +49,7 @@ public class DownNotification {
 
         //创建一个通知对象
         Notification notification = new Notification();
-        //设置滚动文字
+        //通知时在状态栏显示的内容
         notification.tickerText = fileInfo.getFileName() + "开始下载";
         //设置通知显示的时间
         notification.when = System.currentTimeMillis();
@@ -63,7 +63,7 @@ public class DownNotification {
         notification.contentIntent = pi;//点击通知栏之后的操作
 
         //创建RemoteViews对象
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.downservice_notification);
+        RemoteViews remoteViews =  new RemoteViews(context.getPackageName(), R.layout.downservice_notification);
         //设置TextVie里面的值
         remoteViews.setTextViewText(R.id.downNfTvFileName, fileInfo.getFileName());
 

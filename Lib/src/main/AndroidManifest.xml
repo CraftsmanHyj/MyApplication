@@ -289,7 +289,13 @@
         <activity
             android:name=".ActivityService.MessengerActivit"
             android:launchMode="singleTask" />
+
         <service android:name=".ActivityService.MessengerService" />
+
+        <!--六子飞-->
+        <activity
+            android:name=".six.SixGameActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

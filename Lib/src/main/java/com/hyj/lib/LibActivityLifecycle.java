@@ -20,7 +20,6 @@ import com.hyj.lib.tools.Utils;
  */
 public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     private int activityCount = 0;// 当前活动Activity的数量
-    private Activity preActivity;//当前活动的Activity
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -29,7 +28,6 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
     @Override
     public void onActivityStarted(Activity activity) {
         activityCount++;
-        preActivity = activity;
         ScreenTimer.isBackgound = false;
         ScreenTimer.getInstance().start(activity);
     }

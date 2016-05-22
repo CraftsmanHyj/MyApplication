@@ -38,6 +38,7 @@ import com.hyj.lib.mainview.wechat.WeChatActivivty;
 import com.hyj.lib.popup.PopupActivity;
 import com.hyj.lib.recyclerview.RecyclerActivity;
 import com.hyj.lib.scratch.ScratchCardActivity;
+import com.hyj.lib.six.SixGameActivity;
 import com.hyj.lib.startmenu.StartMenu;
 import com.hyj.lib.startmenu.StartMenu2;
 import com.hyj.lib.title_bar.TitleBarActivity;
@@ -118,6 +119,11 @@ public class MainLibActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("六子飞");
+        bean.setValue(SixGameActivity.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("Activity与Service相互通信");

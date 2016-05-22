@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -210,5 +214,41 @@ public class Utils {
      */
     public static String getUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    /**
+     * Bean深度克隆，前提JavaBean要实现Serializable接口
+     *
+     * @param src
+     * @param <T>
+     * @return
+     */
+    public static <T> T clone(T src) {
+        ByteArrayOutputStream memoryBuffer = new ByteArrayOutputStream();
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
+        T dist = null;
+
+        try {
+            out = new ObjectOutputStream(memoryBuffer);
+            out.writeObject(src);
+            out.flush();
+            in = new ObjectInputStream(new ByteArrayInputStream(memoryBuffer.toByteArray()));
+            dist = (T) in.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != out) {
+                    out.close();
+                }
+                if (null != in) {
+                    in.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return dist;
     }
 }
