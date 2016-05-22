@@ -36,6 +36,7 @@ import com.hyj.lib.mainview.qq5_0.SlidingActivity;
 import com.hyj.lib.mainview.tabfragment.FragmentTabActivity;
 import com.hyj.lib.mainview.wechat.WeChatActivivty;
 import com.hyj.lib.popup.PopupActivity;
+import com.hyj.lib.porgress.ProgressBarActivity;
 import com.hyj.lib.recyclerview.RecyclerActivity;
 import com.hyj.lib.scratch.ScratchCardActivity;
 import com.hyj.lib.six.SixGameActivity;
@@ -119,6 +120,11 @@ public class MainLibActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("自定义进度条(水平、圆形)");
+        bean.setValue(ProgressBarActivity.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("六子飞");

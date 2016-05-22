@@ -292,9 +292,14 @@
 
         <service android:name=".ActivityService.MessengerService" />
 
-        <!--六子飞-->
+        <!-- 六子飞 -->
         <activity
             android:name=".six.SixGameActivity"
+            android:launchMode="singleTask" />
+
+        <!--自定义进度条测试-->
+        <activity
+            android:name=".porgress.ProgressBarActivity"
             android:launchMode="singleTask" />
     </application>
 
