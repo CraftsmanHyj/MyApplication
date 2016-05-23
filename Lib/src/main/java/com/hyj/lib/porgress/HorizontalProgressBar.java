@@ -26,26 +26,38 @@ import com.hyj.lib.R;
  * @Date 2016/5/22 9:46
  */
 public class HorizontalProgressBar extends ProgressBar {
-    private final int DEFAULT_TEXT_SIZE = 10;//SP
-    private final int DEFAULT_TEXT_OFFSET = 10;
-    private final int DEFAULT_TEXT_COLOR = 0XFFFC00D1;
-    private final int DEFAULT_COLOR_UNREACH = 0XFFD3D6DA;
-    private final int DEFAULT_HEIGHT_UNREACH = 2;
-    private final int DEFAULT_COLOR_REACH = DEFAULT_TEXT_COLOR;
-    private final int DEFAULT_HEIGHT_REACH = 2;
-
     //自定义属性
-    protected int textSize = sp2px(DEFAULT_TEXT_SIZE);
-    protected int textColor = DEFAULT_TEXT_COLOR;
-    protected int textOffset = dp2px(DEFAULT_TEXT_OFFSET);
-    protected int unReachColor = DEFAULT_COLOR_UNREACH;
-    protected int unReachHeight = dp2px(DEFAULT_HEIGHT_UNREACH);
-    protected int reachColor = DEFAULT_COLOR_REACH;
-    protected int reachHeight = dp2px(DEFAULT_HEIGHT_REACH);
+    protected int textSize = sp2px(10);//显示文字大小
+    protected int textColor = 0XFFFC00D1;//显示文字颜色
+    protected int textOffset = dp2px(5);//文字跟进度条之间的距离
+    protected int unReachColor = 0XFFD3D6DA;//未下载进度颜色
+    protected int unReachHeight = dp2px(2);//未下载进度高度
+    protected int reachColor = 0XFFFC00D1;//已下载进度条颜色
+    protected int reachHeight = dp2px(2);//已下载进度条高度
 
     //绘制工具
     protected Paint paint = new Paint();
     protected int realWidth;//当前控件的宽度-padding值,真正占用的宽度
+
+    /**
+     * 将dp转换成px
+     *
+     * @param dpValue
+     * @return
+     */
+    protected int dp2px(int dpValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, getResources().getDisplayMetrics());
+    }
+
+    /**
+     * 将sp转换成px
+     *
+     * @param spValue
+     * @return
+     */
+    protected int sp2px(int spValue) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, getResources().getDisplayMetrics());
+    }
 
     public HorizontalProgressBar(Context context) {
         this(context, null);
@@ -66,9 +78,13 @@ public class HorizontalProgressBar extends ProgressBar {
         initData();
     }
 
+    /**
+     * 初始化自定义属性
+     *
+     * @param attrs
+     */
     protected void initAttrs(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalProBar);
-
         textSize = (int) ta.getDimension(R.styleable.HorizontalProBar_pbTextSize, textSize);
         textColor = ta.getColor(R.styleable.HorizontalProBar_pbTextColor, textColor);
         textOffset = (int) ta.getDimension(R.styleable.HorizontalProBar_pbTextOffset, textOffset);
@@ -76,32 +92,11 @@ public class HorizontalProgressBar extends ProgressBar {
         unReachHeight = (int) ta.getDimension(R.styleable.HorizontalProBar_PbUnreachHeight, unReachHeight);
         reachColor = ta.getColor(R.styleable.HorizontalProBar_pbReachColor, reachColor);
         reachHeight = (int) ta.getDimension(R.styleable.HorizontalProBar_pbReachHeight, reachHeight);
-
         ta.recycle();
     }
 
     protected void initData() {
         paint.setTextSize(textSize);//设置画笔绘制字体的大小
-    }
-
-    /**
-     * 将dp转换成px
-     *
-     * @param dpValue
-     * @return
-     */
-    protected int dp2px(int dpValue) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, getResources().getDisplayMetrics());
-    }
-
-    /**
-     * 将sp转换成px
-     *
-     * @param spValue
-     * @return
-     */
-    protected int sp2px(int spValue) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spValue, getResources().getDisplayMetrics());
     }
 
     @Override
@@ -130,10 +125,12 @@ public class HorizontalProgressBar extends ProgressBar {
 
         int mode = MeasureSpec.getMode(heightMeasureSpec);
         int size = MeasureSpec.getSize(heightMeasureSpec);
-        if (MeasureSpec.EXACTLY == mode) {//用户给了一个精确值
+        if (MeasureSpec.EXACTLY == mode) {//给了一个精确值
             height = size;
         } else {
             //高度取已显示、未显示、文字三者中最大的值
+            //paint.descent()：baseline之下至字符最低处的距离
+            //paint.ascent()：baseline之上至字符最高处的距离(负数)
             int textHieght = (int) (paint.descent() - paint.ascent());
             int max = Math.max(reachHeight, unReachHeight);
             max = Math.max(max, Math.abs(textHieght));
@@ -155,20 +152,21 @@ public class HorizontalProgressBar extends ProgressBar {
         //移动绘制坐标位置
         canvas.translate(getPaddingLeft(), getHeight() / 2);
 
-        boolean noNeedUnReach = false;//是否需要绘制未完成部分
+        boolean needUnreach = true;//是否需要绘制未完成部分
 
         //draw reachBar
         String text = getProgress() + "%";
         int textWidth = (int) paint.measureText(text);//测量文本宽度
+        textWidth += textOffset;//整个文本域的长度
 
-        float radio = getProgress() * 1.0f / getMax();//reachbar绘制长度
-        float progressX = radio * realWidth;
-        if (progressX + textWidth > realWidth) {
+        float radio = getProgress() * 1.0f / getMax();//reachbar长度所占比例
+        float progressX = radio * (realWidth - textWidth);
+        if (progressX + textWidth > realWidth) {//判断是否已经绘制完成
             progressX = realWidth - textWidth;
-            noNeedUnReach = true;
+            needUnreach = false;
         }
 
-        float endX = progressX - textOffset / 2;//reachbar实际长度得减去textoffset/2
+        float endX = progressX - textOffset;//reachbar实际长度得减去textoffset
         if (endX > 0) {
             paint.setColor(reachColor);
             paint.setStrokeWidth(reachHeight);
@@ -181,8 +179,8 @@ public class HorizontalProgressBar extends ProgressBar {
         canvas.drawText(text, progressX, y, paint);
 
         //draw unreachBar
-        if (!noNeedUnReach) {
-            float start = progressX + textOffset / 2 + textWidth;
+        if (needUnreach) {
+            float start = progressX + textWidth;
             paint.setColor(unReachColor);
             paint.setStrokeWidth(unReachHeight);
             canvas.drawLine(start, 0, realWidth, 0, paint);

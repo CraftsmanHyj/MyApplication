@@ -11,6 +11,7 @@ import com.hyj.lib.R;
 
 /**
  * <pre>
+ *     圆形进度条
  * </pre>
  *
  * @Author hyj
@@ -31,12 +32,26 @@ public class CircleProgressBar extends HorizontalProgressBar {
     public CircleProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        //增加视觉效果
-        reachHeight = (int) (unReachHeight * 2.5f);
+        initCircleAttrs(attrs);
+    }
 
+    /**
+     * 获取圆形进度条的属性
+     *
+     * @param attrs
+     */
+    private void initCircleAttrs(AttributeSet attrs) {
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.CircleProBar);
         radius = (int) ta.getDimension(R.styleable.CircleProBar_radius, radius);
         ta.recycle();
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+
+        //增加视觉效果
+        reachHeight = (int) (unReachHeight * 2.5f);
 
         paint.setStyle(Paint.Style.STROKE);
         paint.setAntiAlias(true);
@@ -78,10 +93,11 @@ public class CircleProgressBar extends HorizontalProgressBar {
         canvas.drawCircle(radius, radius, radius, paint);
 
         //draw reach bar
+        paint.setStyle(Paint.Style.FILL);
         paint.setColor(reachColor);
         paint.setStrokeWidth(reachHeight);
         float sweepAngle = getProgress() * 1.0f / getMax() * 360;
-        canvas.drawArc(new RectF(0, 0, radius * 2, radius * 2), 0, sweepAngle, false, paint);//画一个弧
+        canvas.drawArc(new RectF(0, 0, radius * 2, radius * 2), -90, sweepAngle, true, paint);//画一个弧
 
         //draw text
         paint.setStyle(Paint.Style.FILL);
