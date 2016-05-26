@@ -60,4 +60,4 @@ Temporary Items
 build/
 *.iml
 local.properties
-Lib/src/main/java/com/hyj/lib/six
+Demo/src/main/java/com/hyj/demo/six
