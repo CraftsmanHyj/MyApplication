@@ -13,7 +13,6 @@ import com.hyj.demo.R;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
-
     private LayoutInflater inflater;
     protected List<String> lDatas;
 
@@ -40,6 +39,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     }
 
     @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        View view = inflater.inflate(R.layout.recycler_item, parent, false);
+        MyViewHolder holder = new MyViewHolder(view);
+        return holder;
+    }
+
+    @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.tv.setText(lDatas.get(position));
 
@@ -61,13 +67,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 return false;
             }
         });
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-        View view = inflater.inflate(R.layout.recycler_item, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
     }
 
     /**

@@ -7,8 +7,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.CommonAdapter;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.CommonAdapter;
+import com.hyj.lib.adapter.ViewHolder;
 import com.hyj.demo.wechat_imageUp.ImageLoader.Type;
 
 import java.util.HashSet;

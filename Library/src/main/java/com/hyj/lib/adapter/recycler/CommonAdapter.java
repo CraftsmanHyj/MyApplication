@@ -1,11 +1,11 @@
-package com.hyj.demo.tools.adapter.recycle;
+package com.hyj.lib.adapter.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.ViewHolder;
 
 import java.util.List;
 

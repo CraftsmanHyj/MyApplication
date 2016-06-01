@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.CommonAdapter;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.CommonAdapter;
+import com.hyj.lib.adapter.ViewHolder;
 
 import java.util.List;
 

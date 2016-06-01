@@ -9,10 +9,10 @@ import android.widget.Toast;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.ViewHolder;
-import com.hyj.demo.tools.adapter.recycle.CommonAdapter;
-import com.hyj.demo.tools.adapter.recycle.DividerItemDecoration;
-import com.hyj.demo.tools.adapter.recycle.SectionAdapter;
+import com.hyj.lib.adapter.ViewHolder;
+import com.hyj.lib.adapter.recycler.CommonAdapter;
+import com.hyj.lib.adapter.recycler.DividerItemDecoration;
+import com.hyj.lib.adapter.recycler.SectionAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

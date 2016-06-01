@@ -1,4 +1,4 @@
-package com.hyj.demo.tools.adapter.recycle;
+package com.hyj.lib.adapter.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

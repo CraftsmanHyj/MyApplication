@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.hyj.demo.R;
 import com.hyj.demo.adapter.recycler.bean.ChatMessage;
-import com.hyj.demo.tools.adapter.CommonAdapter;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.CommonAdapter;
+import com.hyj.lib.adapter.ViewHolder;
 
 import java.util.List;
 

@@ -16,8 +16,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.CommonAdapter;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.CommonAdapter;
+import com.hyj.lib.adapter.ViewHolder;
 
 import java.util.List;
 

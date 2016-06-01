@@ -8,8 +8,8 @@ import android.widget.ListView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.CommonAdapter;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.CommonAdapter;
+import com.hyj.lib.adapter.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

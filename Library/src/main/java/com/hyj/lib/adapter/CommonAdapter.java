@@ -1,4 +1,4 @@
-package com.hyj.demo.tools.adapter;
+package com.hyj.lib.adapter;
 
 import android.content.Context;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.hyj.demo.tools.adapter.recycle;
+package com.hyj.lib.adapter.recycler;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.ViewHolder;
-import com.hyj.demo.tools.adapter.recycle.CommonAdapter;
-import com.hyj.demo.tools.adapter.recycle.DividerItemDecoration;
+import com.hyj.lib.adapter.ViewHolder;
+import com.hyj.lib.adapter.recycler.CommonAdapter;
+import com.hyj.lib.adapter.recycler.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

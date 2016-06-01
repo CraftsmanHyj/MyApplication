@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.hyj.demo.R;
-import com.hyj.demo.tools.adapter.ViewHolder;
+import com.hyj.lib.adapter.ViewHolder;
 import com.hyj.demo.tuling.bean.ChatMessage;
 import com.hyj.demo.tuling.bean.ChatMessage.Type;
 

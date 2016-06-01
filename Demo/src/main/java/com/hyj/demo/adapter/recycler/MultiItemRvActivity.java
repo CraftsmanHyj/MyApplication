@@ -11,7 +11,7 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.adapter.recycler.adapter.ChatAdapterForRv;
 import com.hyj.demo.adapter.recycler.bean.ChatMessage;
-import com.hyj.demo.tools.adapter.recycle.CommonAdapter;
+import com.hyj.lib.adapter.recycler.CommonAdapter;
 
 public class MultiItemRvActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
