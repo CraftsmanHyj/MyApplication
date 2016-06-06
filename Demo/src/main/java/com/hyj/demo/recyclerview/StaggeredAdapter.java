@@ -3,7 +3,7 @@ package com.hyj.demo.recyclerview;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

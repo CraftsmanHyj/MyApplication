@@ -15,7 +15,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.hyj.demo.LibApplication;
+import com.hyj.demo.DemoApplication;
 import com.hyj.demo.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -386,7 +386,7 @@ public class ImageCycleView extends LinearLayout {
 		// ImageLoader.getInstance().displayImage(url, imageView);
 
 		// 方法二：
-		DisplayImageOptions options = ((LibApplication) context
+		DisplayImageOptions options = ((DemoApplication) context
 				.getApplicationContext()).getImageOptions(50);
 		ImageLoader.getInstance().displayImage(url, imageView, options);
 

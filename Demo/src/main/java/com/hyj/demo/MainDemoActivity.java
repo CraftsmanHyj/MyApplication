@@ -47,9 +47,9 @@ import com.hyj.demo.six.SixGameActivity;
 import com.hyj.demo.startmenu.StartMenu;
 import com.hyj.demo.startmenu.StartMenu2;
 import com.hyj.demo.title_bar.TitleBarActivity;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.LogUtils;
-import com.hyj.demo.tools.Utils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.LogUtils;
+import com.hyj.lib.tools.Utils;
 import com.hyj.demo.tree.TreeActivity;
 import com.hyj.demo.tuling.TulingActivity;
 import com.hyj.demo.ui.DialogActivity;
@@ -72,7 +72,7 @@ import java.util.List;
  *     D:\ProgamFiles(green)\Android\Android Studio\bin
  * </pre>
  */
-public class MainLibActivity extends BaseActivity {
+public class MainDemoActivity extends BaseActivity {
     /**
      * 猜歌游戏APP
      */
@@ -83,7 +83,7 @@ public class MainLibActivity extends BaseActivity {
     public static final String DATA_BUNDLE = "dataBundle";
 
     private ListView lvItem;
-    private MainLibAdapter adapter;
+    private MainDemoAdapter adapter;
     private List<ListItem> lItems = new ArrayList<ListItem>();
 
     private long exitTime;//APP退出标记
@@ -119,7 +119,7 @@ public class MainLibActivity extends BaseActivity {
 
     private void initView() {
         lvItem = (ListView) findViewById(R.id.mainLv);
-        adapter = new MainLibAdapter(this, lItems);
+        adapter = new MainDemoAdapter(this, lItems);
         lvItem.setAdapter(adapter);
     }
 
@@ -449,7 +449,7 @@ public class MainLibActivity extends BaseActivity {
                     case ListItem.TYPE_ACTIVITY:
                         if (null != bean.getValue()) {
                             Intent intent = new Intent();
-                            intent.setClass(MainLibActivity.this,
+                            intent.setClass(MainDemoActivity.this,
                                     (Class<?>) bean.getValue());
 
                             Bundle bundle = bean.getBundle();
@@ -459,13 +459,13 @@ public class MainLibActivity extends BaseActivity {
 
                             startActivity(intent);
                         } else {
-                            Toast.makeText(MainLibActivity.this, "即将开通……",
+                            Toast.makeText(MainDemoActivity.this, "即将开通……",
                                     Toast.LENGTH_SHORT).show();
                         }
                         break;
 
                     case ListItem.TYPE_APP:
-                        Utils.startApp(MainLibActivity.this,
+                        Utils.startApp(MainDemoActivity.this,
                                 (String) bean.getValue());
                         break;
                 }

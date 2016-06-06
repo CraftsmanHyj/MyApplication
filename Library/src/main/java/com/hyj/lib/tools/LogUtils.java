@@ -1,24 +1,37 @@
-package com.hyj.demo.tools;
+package com.hyj.lib.tools;
 
 import android.util.Log;
 
-import com.hyj.demo.Constants;
 
 /**
- * log工具类，改变boolean值常量控制是否打印日志
+ * <pre>
+ *     log工具类，改变boolean值常量控制是否打印日志
+ *     在调用项目的Application中调用initParameter()方法，初始化参数
+ * </pre>
  *
  * @Author hyj
  * @Date 2015-12-16 下午2:53:10
  */
-public class LogUtils {
+public abstract class LogUtils {
     /**
      * 是否打印日志
      */
-    private final static boolean printLog = Constants.PROP_ISDEBUG;
+    private static boolean printLog = false;
     /**
      * 日志TAG标签
      */
-    private final static String TAG = Constants.PROP_LOGTAG;
+    private static String TAG = "TAG";
+
+    /**
+     * 初始化参数：printLog、TAG
+     *
+     * @param isPrintLog 是否打印日志
+     * @param tagName    打印标签名
+     */
+    public static void initParameter(boolean isPrintLog, String tagName) {
+        printLog = isPrintLog;
+        TAG = tagName;
+    }
 
     /**
      * 提醒信息

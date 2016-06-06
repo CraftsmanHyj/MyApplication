@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import com.hyj.demo.Constants;
 import com.hyj.demo.db.ThreadDao;
-import com.hyj.demo.tools.FileUtils;
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.LogUtils;
 import com.hyj.demo.db.ThreadDaoImpl;
 
 import org.apache.http.HttpStatus;

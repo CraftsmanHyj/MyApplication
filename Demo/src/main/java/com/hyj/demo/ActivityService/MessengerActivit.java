@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 /**
  * <pre>

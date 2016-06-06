@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.jigsaw.GameJigsawLayout.OnGameJigsawListener;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.DialogUtils.DialogAction;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils.DialogAction;
 
 public class JigsawActivity extends BaseActivity {
     private GameJigsawLayout game;

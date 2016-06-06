@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils;
 
 public class DialogActivity extends BaseActivity implements OnClickListener {
 	@Override

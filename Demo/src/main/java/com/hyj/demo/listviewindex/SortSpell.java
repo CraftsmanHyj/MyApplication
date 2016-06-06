@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import android.text.TextUtils;
 
-import com.hyj.demo.tools.CharacterParser;
+import com.hyj.lib.tools.CharacterParser;
 
 /**
  * 用于排序的拼音类

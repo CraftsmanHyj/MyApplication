@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.ServiceUtils;
-import com.hyj.demo.tools.Utils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ServiceUtils;
+import com.hyj.lib.tools.Utils;
 
 /**
  * <pre>
@@ -18,7 +18,7 @@ import com.hyj.demo.tools.Utils;
  * @author hyj
  * @Date 2016-3-21 下午2:54:16
  */
-public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
+public class DemoActivityLifecycle implements ActivityLifecycleCallbacks {
     private int activityCount = 0;// 当前活动Activity的数量
 
     @Override
@@ -59,7 +59,7 @@ public class LibActivityLifecycle implements ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if (activity instanceof MainLibActivity) {
+        if (activity instanceof MainDemoActivity) {
             ScreenTimer.getInstance().stop();
         }
     }

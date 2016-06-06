@@ -5,7 +5,7 @@ import android.widget.ListView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.Utils;
+import com.hyj.lib.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

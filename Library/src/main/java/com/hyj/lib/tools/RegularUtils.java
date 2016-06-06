@@ -1,4 +1,4 @@
-package com.hyj.demo.tools;
+package com.hyj.lib.tools;
 
 import java.util.HashMap;
 import java.util.Hashtable;

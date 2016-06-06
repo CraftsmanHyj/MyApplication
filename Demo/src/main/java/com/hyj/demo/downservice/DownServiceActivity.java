@@ -18,8 +18,8 @@ import com.hyj.demo.down.DownLoad;
 import com.hyj.demo.http.download.DownNotification;
 import com.hyj.demo.http.download.DownService;
 import com.hyj.demo.http.download.FileInfo;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.ServiceUtils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;

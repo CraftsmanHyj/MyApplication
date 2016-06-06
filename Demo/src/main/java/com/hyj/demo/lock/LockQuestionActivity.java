@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.MD5Utils;
-import com.hyj.demo.tools.SPUtils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.MD5Utils;
+import com.hyj.lib.tools.SPUtils;
 
 import java.util.HashMap;
 import java.util.Map;

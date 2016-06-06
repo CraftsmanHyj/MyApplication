@@ -9,7 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 
-import com.hyj.demo.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils;
 
 /**
  * Http模块工厂

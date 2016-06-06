@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class SecondaryActivity extends BaseActivity {
     private ListView lvItem;
-    private MainLibAdapter adapter;
+    private MainDemoAdapter adapter;
     private List<ListItem> lItems = new ArrayList<ListItem>();
 
     @Override
@@ -41,13 +41,13 @@ public class SecondaryActivity extends BaseActivity {
 
     private void initView() {
         lvItem = (ListView) findViewById(R.id.mainLv);
-        adapter = new MainLibAdapter(this, lItems);
+        adapter = new MainDemoAdapter(this, lItems);
         lvItem.setAdapter(adapter);
     }
 
     private void initData() {
         ArrayList<ListItem> lData = (ArrayList<ListItem>) getIntent()
-                .getSerializableExtra(MainLibActivity.DATA_BUNDLE);
+                .getSerializableExtra(MainDemoActivity.DATA_BUNDLE);
 
         for (ListItem bean : lData) {
             lItems.add(bean);

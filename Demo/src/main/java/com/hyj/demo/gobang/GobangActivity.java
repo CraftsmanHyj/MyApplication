@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils;
 
 /**
  * 五子棋

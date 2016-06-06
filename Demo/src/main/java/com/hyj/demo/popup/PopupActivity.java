@@ -14,7 +14,7 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils;
 
 @SuppressLint("InflateParams")
 public class PopupActivity extends BaseActivity implements OnClickListener {

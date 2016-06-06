@@ -20,13 +20,13 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name=".LibApplication"
+        android:name=".DemoApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainLibActivity"
+            android:name=".MainDemoActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
             <intent-filter>

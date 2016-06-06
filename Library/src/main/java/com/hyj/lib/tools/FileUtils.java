@@ -1,4 +1,4 @@
-package com.hyj.demo.tools;
+package com.hyj.lib.tools;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -7,9 +7,9 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.text.TextUtils;
 
-import com.hyj.demo.R;
-import com.hyj.demo.db.DBHelper;
+import com.hyj.lib.R;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,12 +23,15 @@ import java.io.RandomAccessFile;
 import java.math.BigDecimal;
 
 /**
- * 与文件相关操作工具类
+ * <pre>
+ *     与文件相关操作工具类
+ *     应该在调用项目Application中需要调用initAppName()方法，初始化根目录名字
+ * </pre>
  *
  * @author Administrator
  */
 @SuppressLint("SdCardPath")
-public class FileUtils {
+public abstract class FileUtils {
     /**
      * 文件不存在
      */
@@ -45,6 +48,21 @@ public class FileUtils {
      * SD总大小
      */
     public static final int SD_SIZE_TOTAL = 0x003;
+
+    /**
+     * App的名字，也是所有项目文件的根目录名字
+     */
+    private static String appName;
+
+    /**
+     * 在Application中调用此方法，设置项目根目录文件夹名
+     *
+     * @param appName
+     * @return
+     */
+    public static void initParameter(String appName) {
+        FileUtils.appName = appName;
+    }
 
     /**
      * 获取应用在内存中的缓存目录：/data/data/packageName/cache/
@@ -146,8 +164,7 @@ public class FileUtils {
      * @return
      */
     public static File getDirExternal() {
-        if (Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState())) {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return Environment.getExternalStorageDirectory();
         }
         return null;
@@ -191,8 +208,11 @@ public class FileUtils {
 
             // 创建一个文件说明文档
             String filePath = File.separator + "readme.txt";
-            String appName = context.getResources()
-                    .getString(R.string.app_name);
+
+            if (TextUtils.isEmpty(appName)) {
+                appName = context.getResources().getString(R.string.app_name);
+            }
+
             String msg = "此文件夹是应用《" + appName + "》的数据文件夹;\n";
             msg += "保存应用的一些设置、缓存、临时等数据;\n";
             msg += "不可删除;";
@@ -236,11 +256,9 @@ public class FileUtils {
     public static File getAppFile(Context context, String filePath) {
         File file = null;
         if (filePath.contains(File.separator)) {
-            String path = filePath.substring(0,
-                    filePath.lastIndexOf(File.separator));
+            String path = filePath.substring(0, filePath.lastIndexOf(File.separator));
             file = getAppDir(context, path);
-            file = new File(file, filePath.substring(filePath
-                    .lastIndexOf(File.separator)));
+            file = new File(file, filePath.substring(filePath.lastIndexOf(File.separator)));
         } else {
             file = new File(getAppRootDir(context), filePath);
         }
@@ -256,8 +274,7 @@ public class FileUtils {
      * @param filePath filePath文件路径 例：reader.txt或/download/reader.txt
      * @return File 返回保存的File
      */
-    public static File saveFileFromBytes(Context context, byte[] bytes,
-                                         String filePath) {
+    public static File saveFileFromBytes(Context context, byte[] bytes, String filePath) {
         BufferedOutputStream stream = null;
         File file = null;
         try {
@@ -288,8 +305,7 @@ public class FileUtils {
      * @param path    path：/temp/picture.jpg
      * @return File保存的图片对象
      */
-    public static File saveFileFromBitmap(Context context, Bitmap bitmap,
-                                          String path) {
+    public static File saveFileFromBitmap(Context context, Bitmap bitmap, String path) {
         File picture = FileUtils.getAppFile(context, path);
         FileOutputStream fos = null;
         try {
@@ -385,10 +401,11 @@ public class FileUtils {
      * 删除应用数据库文件
      *
      * @param context
+     * @param dbName  数据库名
      */
-    public static void cleanDataBase(Context context) {
+    public static void cleanDataBase(Context context, String dbName) {
         context = context.getApplicationContext();
-        File dbFile = context.getDatabasePath(DBHelper.DB_NAME);
+        File dbFile = context.getDatabasePath(dbName);
         deleteFileByDirectory(dbFile);
     }
 
@@ -399,8 +416,7 @@ public class FileUtils {
      */
     public static void cleanSharedPreference(Context context) {
         context = context.getApplicationContext();
-        String path = "/data/data/" + context.getPackageName()
-                + "/shared_prefs";
+        String path = "/data/data/" + context.getPackageName() + "/shared_prefs";
         deleteFileByDirectory(path);
     }
 
@@ -583,27 +599,23 @@ public class FileUtils {
         double megaByte = kiloByte / 1024;
         if (megaByte < 1) {
             BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
-            return result1.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "KB";
+            return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
         }
 
         double gigaByte = megaByte / 1024;
         if (gigaByte < 1) {
             BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
-            return result2.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "MB";
+            return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
         }
 
         double teraBytes = gigaByte / 1024;
         if (teraBytes < 1) {
             BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
-            return result3.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "GB";
+            return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
         }
 
         BigDecimal result4 = new BigDecimal(teraBytes);
-        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
-                + "TB";
+        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";
     }
 
     /**
@@ -630,8 +642,7 @@ public class FileUtils {
      * @return InputStream
      * @throws Exception
      */
-    public static InputStream getAssetsStream(Context context, String fileName)
-            throws Exception {
+    public static InputStream getAssetsStream(Context context, String fileName) throws Exception {
         return context.getResources().getAssets().open(fileName);
     }
 }

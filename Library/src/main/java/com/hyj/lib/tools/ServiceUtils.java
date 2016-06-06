@@ -1,12 +1,12 @@
-package com.hyj.demo.tools;
-
-import java.util.List;
+package com.hyj.lib.tools;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+
+import java.util.List;
 
 /**
  * 服务是否运行检测帮助类
@@ -24,10 +24,8 @@ public class ServiceUtils {
      * @return true 在运行 false 不在运行
      */
     public static boolean isServiceRunning(Context context, String className) {
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningServiceInfo> serviceList = activityManager
-                .getRunningServices(40);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<RunningServiceInfo> serviceList = activityManager.getRunningServices(40);
 
         for (RunningServiceInfo serviceInfo : serviceList) {
             LogUtils.w(serviceInfo.service.getClassName());
@@ -43,7 +41,7 @@ public class ServiceUtils {
      * 停止正在运行的Service
      *
      * @param context 上下文
-     * @param Class   clzs 任意长度数组
+     * @param clzs    任意长度数组
      */
     public static void stopService(Context context, Class<?>... clzs) {
         for (Class<?> clz : clzs) {
@@ -70,8 +68,7 @@ public class ServiceUtils {
      * @return
      */
     public static boolean isBackground(Context context) {
-        ActivityManager am = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningAppProcessInfo> lTasks = am.getRunningAppProcesses();
         for (RunningAppProcessInfo task : lTasks) {
             if (task.processName.equals(context.getPackageName())) {

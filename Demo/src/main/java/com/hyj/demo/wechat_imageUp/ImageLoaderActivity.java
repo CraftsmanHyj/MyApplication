@@ -21,8 +21,8 @@ import android.widget.Toast;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.image_preview.ImagePreviewActivity;
-import com.hyj.demo.tools.DialogUtils;
-import com.hyj.demo.tools.FileUtils;
+import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.FileUtils;
 import com.hyj.demo.wechat_imageUp.DirPopupWindow.OnDirSelectedListener;
 
 import java.io.File;

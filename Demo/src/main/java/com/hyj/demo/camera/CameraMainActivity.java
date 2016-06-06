@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.BitmapUtils;
-import com.hyj.demo.tools.FileUtils;
+import com.hyj.lib.tools.BitmapUtils;
+import com.hyj.lib.tools.FileUtils;
 
 import java.io.File;
 

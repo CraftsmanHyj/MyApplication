@@ -13,7 +13,7 @@ import java.util.Map;
 
 import org.apache.http.HttpStatus;
 
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 /**
  * @title Http请求工具类

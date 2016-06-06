@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 /**
  * <pre>

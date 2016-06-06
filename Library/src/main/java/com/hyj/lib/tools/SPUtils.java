@@ -1,4 +1,4 @@
-package com.hyj.demo.tools;
+package com.hyj.lib.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;

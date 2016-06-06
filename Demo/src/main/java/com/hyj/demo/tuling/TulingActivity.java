@@ -16,7 +16,7 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.http.HttpApi;
 import com.hyj.demo.http.HttpFactory;
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 import com.hyj.demo.tuling.bean.ChatMessage;
 import com.hyj.demo.tuling.bean.Result;
 import com.hyj.demo.utils.ProgressExecutor;

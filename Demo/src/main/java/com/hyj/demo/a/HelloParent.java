@@ -1,6 +1,6 @@
 package com.hyj.demo.a;
 
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 public class HelloParent {
     HelloY y = new HelloY("Parent");

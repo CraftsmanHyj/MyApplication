@@ -6,7 +6,7 @@ import android.os.CountDownTimer;
 import android.view.MotionEvent;
 
 import com.hyj.demo.lock.LockActivity;
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.LogUtils;
 
 
 /**

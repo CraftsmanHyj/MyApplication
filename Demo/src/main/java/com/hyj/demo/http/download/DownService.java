@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.hyj.demo.tools.FileUtils;
-import com.hyj.demo.tools.LogUtils;
+import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.LogUtils;
 import com.hyj.demo.Constants;
 
 import org.apache.http.HttpStatus;

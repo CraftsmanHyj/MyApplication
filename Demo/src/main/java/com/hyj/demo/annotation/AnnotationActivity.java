@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.Utils;
+import com.hyj.lib.tools.Utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

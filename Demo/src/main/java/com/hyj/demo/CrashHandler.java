@@ -14,8 +14,8 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.os.Process;
 
-import com.hyj.demo.tools.FileUtils;
-import com.hyj.demo.tools.Utils;
+import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.Utils;
 
 /**
  * <pre>

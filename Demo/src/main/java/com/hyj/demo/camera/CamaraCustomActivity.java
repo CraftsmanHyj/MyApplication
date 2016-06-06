@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.demo.tools.FileUtils;
+import com.hyj.lib.tools.FileUtils;
 
 import java.io.File;
 import java.io.IOException;

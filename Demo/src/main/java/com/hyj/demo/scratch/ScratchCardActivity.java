@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.luckydial.PrizeInfo;
-import com.hyj.demo.tools.DialogUtils;
+import com.hyj.lib.tools.DialogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hyj.demo.tools;
+package com.hyj.lib.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
