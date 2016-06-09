@@ -14,7 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @Date 2015-12-16 下午3:03:02
  */
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "lib.db";
+    private static final String DB_NAME = "lib.db";
     private static final int VERSION = 1;//数据库版本号
 
     private final String SQL_CREATE_THREAD = "create table thread_info("

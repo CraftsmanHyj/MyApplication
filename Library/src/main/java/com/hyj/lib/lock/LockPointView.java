@@ -1,4 +1,4 @@
-package com.hyj.demo.lock.lockpattern3;
+package com.hyj.lib.lock;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.hyj.demo.R;
+import com.hyj.lib.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ import java.util.TimerTask;
 
 /**
  * <pre>
- *  所有以locus开头的图片都是九宫格要用到的图片
- *  九宫格解锁
+ *     所有以locus开头的图片都是九宫格要用到的图片
+ *     九宫格解锁
  * </pre>
  *
  * @author hyj

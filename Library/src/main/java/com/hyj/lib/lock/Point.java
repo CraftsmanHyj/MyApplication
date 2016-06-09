@@ -1,4 +1,4 @@
-package com.hyj.demo.lock.lockpattern3;
+package com.hyj.lib.lock;
 
 import java.io.Serializable;
 

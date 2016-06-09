@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义九宫格中用到的-->
+    <declare-styleable name="lockPattern">
+        <attr name="pointCount" format="integer" />
+        <attr name="hasLine" format="boolean" />
+        <attr name="hasSound" format="boolean" />
+        <attr name="hasShake" format="boolean" />
+    </declare-styleable>
+</resources>

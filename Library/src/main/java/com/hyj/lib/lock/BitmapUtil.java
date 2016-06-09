@@ -1,4 +1,4 @@
-package com.hyj.demo.lock.lockpattern3;
+package com.hyj.lib.lock;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -35,8 +35,7 @@ public class BitmapUtil {
     public static Bitmap zoom(Bitmap bitmap, float wf, float hf) {
         Matrix matrix = new Matrix();
         matrix.postScale(wf, hf);
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-                bitmap.getHeight(), matrix, true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     /**
@@ -48,8 +47,7 @@ public class BitmapUtil {
      */
     public static Bitmap getRCB(Bitmap bitmap, float roundPX) {
         // RCB means Rounded Corner Bitmap
-        Bitmap dstbmp = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap dstbmp = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(dstbmp);
 
         int color = 0xff424242;

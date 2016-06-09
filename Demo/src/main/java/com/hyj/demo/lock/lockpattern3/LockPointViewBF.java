@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hyj.demo.R;
+import com.hyj.lib.lock.BitmapUtil;
+import com.hyj.lib.lock.Point;
 
 import java.io.File;
 import java.util.ArrayList;

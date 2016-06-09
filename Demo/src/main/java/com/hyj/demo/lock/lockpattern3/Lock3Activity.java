@@ -6,6 +6,7 @@ import android.widget.CompoundButton;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
+import com.hyj.lib.lock.LockPointView;
 
 public class Lock3Activity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
