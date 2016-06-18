@@ -34,8 +34,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
      * @param lDatas  Item数据集
      */
     public CommonAdapter(Context context, List<T> lDatas) {
-        this.context = context;
-        this.lDatas = lDatas;
+        this(context, lDatas, -1);
     }
 
     /**

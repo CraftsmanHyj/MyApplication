@@ -47,8 +47,8 @@ import com.hyj.demo.six.SixGameActivity;
 import com.hyj.demo.startmenu.StartMenu;
 import com.hyj.demo.startmenu.StartMenu2;
 import com.hyj.demo.title_bar.TitleBarActivity;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.LogUtils;
+import com.hyj.lib.tools.ToastUtils;
 import com.hyj.lib.tools.Utils;
 import com.hyj.demo.tree.TreeActivity;
 import com.hyj.demo.tuling.TulingActivity;
@@ -477,7 +477,7 @@ public class MainDemoActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                DialogUtils.showToastShort(this, "再按一次退出程序");
+                ToastUtils.showToast(this, "再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();

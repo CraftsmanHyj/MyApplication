@@ -5,6 +5,8 @@ import android.os.Handler;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
+import com.hyj.lib.view.ListViewRefresh;
+
 import java.util.ArrayList;
 import java.util.List;
 

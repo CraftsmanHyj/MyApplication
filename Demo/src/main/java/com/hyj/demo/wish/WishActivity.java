@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.io.File;
 
@@ -83,7 +83,7 @@ public class WishActivity extends BaseActivity {
         String path = File.separator + Constants.DIR_TEMP + File.separator + "SpringCard.jpg";
         FileUtils.saveFileFromBitmap(this, bitmap, path);
 
-        DialogUtils.showToastShort(this, "分享成功");
+        ToastUtils.showToast(this, "分享成功");
 
         // imgTp.setImageBitmap(bitmap);
     }

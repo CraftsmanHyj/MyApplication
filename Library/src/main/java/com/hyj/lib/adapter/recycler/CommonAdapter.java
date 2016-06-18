@@ -76,7 +76,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setPosition(position);
+        holder.setItemPosition(position);
         getItemView(holder, lDatas.get(position));
     }
 

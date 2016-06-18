@@ -15,16 +15,18 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 /**
  * <pre>
- * 程序崩溃日志处理
- * 调用方法，在Activity或Application中注册一下即可：
- * 		CrashHandler crashHandler = CrashHandler.getInstance();
- * 		crashHandler.init(getApplicationContext());
- * 		//当App启动的时候发送上一次未发送成功的崩溃日志
- * 		crashHandler.sendCrashInfoToServer();
+ *     程序崩溃日志处理
+ *     调用方法，在Activity或Application中注册一下即可：
+ *          CrashHandler crashHandler = CrashHandler.getInstance();
+ * 		    crashHandler.init(getApplicationContext());
+ * 		    //当App启动的时候发送上一次未发送成功的崩溃日志
+ * 		   crashHandler.sendCrashInfoToServer();
  * </pre>
  *
  * @Author hyj
@@ -39,9 +41,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * 文件存放根目录
      */
     private final String BASEPATH = File.separator + Constants.DIR_LOG + File.separator;
+    /**
+     * 崩溃日志是否以JSON方式保存
+     */
+    public static boolean crashInfoSaveAsJson;
 
     private Context context;
-    private JSONObject jsonObject;
+    private Map<String, String> mapErrorInfo;//存储崩溃错误信息
     private UncaughtExceptionHandler exceptionHandler;
 
     private static CrashHandler instance;
@@ -62,6 +68,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     public void init(Context context) {
         this.context = context;
+        this.crashInfoSaveAsJson = Constants.PROP_CRASHINFOSAVEASJSON;
         this.exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -90,8 +97,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         }
 
         try {
-            if (null == jsonObject) {
-                jsonObject = new JSONObject();
+            if (null == mapErrorInfo) {
+                mapErrorInfo = new HashMap<String, String>();
             }
 
             getDeviceInfo();
@@ -110,13 +117,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @throws JSONException
      */
     private void getDeviceInfo() throws JSONException {
-        jsonObject.put("platform", "Android");
-        jsonObject.put("time", Utils.getCurrentTime());
-        jsonObject.put("model", Utils.getMobileType());
-        jsonObject.put("osCode", Utils.getOSVersionCode());
-        jsonObject.put("osName", Utils.getOSVersionName());
-        jsonObject.put("appCode", Utils.getAppVersionCode(context));
-        jsonObject.put("appName", Utils.getAppVersionName(context));
+        mapErrorInfo.put("Platform", "Android");
+        mapErrorInfo.put("Time", Utils.getCurrentTime());
+        mapErrorInfo.put("Mobile", Utils.getMobileType());
+        mapErrorInfo.put("OSVersion", Utils.getOSVersionCode() + "");
+        mapErrorInfo.put("OSVersionName", Utils.getOSVersionName());
+        mapErrorInfo.put("AppVersion", Utils.getAppVersionCode(context) + "");
+        mapErrorInfo.put("AppVersionName", Utils.getAppVersionName(context));
     }
 
     /**
@@ -143,12 +150,26 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
         String result = writer.toString();
 
-        jsonObject.put("msgKey", ex.getMessage());
-        jsonObject.put("errorDetail", result);
+        mapErrorInfo.put("MsgKey", ex.getMessage());
+        mapErrorInfo.put("ErrorDetail", result);
+
+        byte[] errorByte = null;
+        if (crashInfoSaveAsJson) {
+            JSONObject jsonObject = new JSONObject();
+            for (Map.Entry<String, String> entry : mapErrorInfo.entrySet()) {
+                jsonObject.put(entry.getKey(), entry.getValue());
+            }
+            errorByte = jsonObject.toString().getBytes();
+        } else {
+            String errorMsg = "";
+            for (Map.Entry<String, String> entry : mapErrorInfo.entrySet()) {
+                errorMsg += entry.getKey() + "：" + entry.getValue() + "\n";
+            }
+            errorByte = errorMsg.getBytes();
+        }
 
         String path = BASEPATH + Utils.getCurrentTime() + EXTENTION;
-
-        FileUtils.saveFileFromBytes(context, jsonObject.toString().getBytes(), path);
+        FileUtils.saveFileFromBytes(context, errorByte, path);
     }
 
     /**

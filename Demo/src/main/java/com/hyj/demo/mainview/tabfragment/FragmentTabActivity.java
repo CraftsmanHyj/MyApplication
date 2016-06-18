@@ -142,7 +142,7 @@ public class FragmentTabActivity extends BaseFragmentActivity {
         transaction.show(fragmentTo);
 
         // 添加到返回堆栈
-        // transaction.addToBackStack(tag);
+//         transaction.addToBackStack(tagFrom);
 
         // 不保留状态提交事务
         transaction.commitAllowingStateLoss();

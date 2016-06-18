@@ -21,9 +21,9 @@ import android.widget.Toast;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.image_preview.ImagePreviewActivity;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.FileUtils;
 import com.hyj.demo.wechat_imageUp.DirPopupWindow.OnDirSelectedListener;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -107,7 +107,7 @@ public class ImageLoaderActivity extends BaseActivity {
     private void initData() {
         // 利用ContentProvider扫描手机中的所有图片
         if (null == FileUtils.getDirExternal()) {
-            DialogUtils.showToastShort(this, "当前存储卡不可用");
+            ToastUtils.showToast(this, "当前存储卡不可用");
             return;
         }
 

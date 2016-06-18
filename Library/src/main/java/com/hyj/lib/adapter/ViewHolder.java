@@ -27,7 +27,7 @@ import android.widget.TextView;
 public class ViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> saView;
 
-    private int position;
+    private int position;//当前item的索引位置
     private Context context;
     private View convertView;
 
@@ -36,16 +36,16 @@ public class ViewHolder extends RecyclerView.ViewHolder {
      *
      * @return
      */
-//    public int getPosition() {
-//        return position;
-//    }
+    public int getItemPosition() {
+        return position;
+    }
 
     /**
      * 更新当前holder的position索引
      *
      * @param position
      */
-    public void setPosition(int position) {
+    public void setItemPosition(int position) {
         this.position = position;
     }
 

@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -36,7 +36,7 @@ public class AnnotationsActivity extends BaseActivity {
 
 	@Click(R.id.annoBtTest)
 	public void annoBtnClick() {
-		DialogUtils.showToastShort(this, "AnnoFrame绑定clickListener事件");
+		ToastUtils.showToast(this, "AnnoFrame绑定clickListener事件");
 	}
 
 	/**

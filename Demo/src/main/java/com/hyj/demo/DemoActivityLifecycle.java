@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.ServiceUtils;
+import com.hyj.lib.tools.ToastUtils;
 import com.hyj.lib.tools.Utils;
 
 /**
@@ -47,7 +47,7 @@ public class DemoActivityLifecycle implements ActivityLifecycleCallbacks {
         if (activityCount <= 0) {
             ScreenTimer.isBackgound = true;
             if (ServiceUtils.isBackground(activity)) {
-                DialogUtils.showToastShort(activity, Utils.getAppName(activity) + "正在后台运行");
+                ToastUtils.showToast(activity, Utils.getAppName(activity) + "正在后台运行");
             }
             ScreenTimer.getInstance().start(activity);
         }

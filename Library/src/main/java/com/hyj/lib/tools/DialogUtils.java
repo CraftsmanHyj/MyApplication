@@ -1,18 +1,13 @@
 package com.hyj.lib.tools;
 
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * 提示对话框工具类
@@ -20,55 +15,6 @@ import android.widget.Toast;
  * @author Administrator
  */
 public class DialogUtils {
-    /**
-     * 初始化一个Toast
-     *
-     * @param context  上下文
-     * @param msg      提示语
-     * @param duration 显示时间
-     */
-    private static void initToast(Context context, String msg, int duration) {
-        Toast toast = Toast.makeText(context, msg, duration);
-        toast.setGravity(Gravity.BOTTOM, 0, 100);
-        toast.show();
-    }
-
-    /**
-     * 显示一个Toast，时间短
-     *
-     * @param context 上下文
-     * @param msg     提示语
-     */
-    public static void showToastShort(Context context, String msg) {
-        initToast(context, msg, Toast.LENGTH_SHORT);
-    }
-
-    /**
-     * 显示一个Toast，时间长
-     *
-     * @param context 上下文
-     * @param msg     提示语
-     */
-    public static void showToastLong(Context context, String msg) {
-        initToast(context, msg, Toast.LENGTH_LONG);
-    }
-
-    /**
-     * 显示一个Toast，并让EditText获取焦点且弹出软键盘
-     *
-     * @param activity
-     * @param et
-     * @param msg      提示信息
-     */
-    public static void showToast(Activity activity, EditText et, String msg) {
-        et.requestFocus();
-        InputMethodManager im = (InputMethodManager) activity
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        im.toggleSoftInput(InputMethodManager.SHOW_FORCED,
-                InputMethodManager.HIDE_IMPLICIT_ONLY);
-
-        showToastShort(activity, msg);
-    }
 
     /**
      * 弹出消息对话框
@@ -77,8 +23,7 @@ public class DialogUtils {
      * @param title   对话框的标题
      * @param msg     对话框信息
      */
-    public static Dialog showMessageDialog(Context context, String title,
-                                           String msg, final DialogAction okAction) {
+    public static Dialog showMessageDialog(Context context, String title, String msg, final DialogAction okAction) {
         Builder builder = new Builder(context);
         if (title != null) {
             builder.setTitle(title);

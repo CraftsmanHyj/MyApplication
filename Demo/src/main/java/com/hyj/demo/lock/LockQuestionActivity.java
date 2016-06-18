@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.MD5Utils;
 import com.hyj.lib.tools.SPUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -131,7 +131,7 @@ public class LockQuestionActivity extends BaseActivity {
         String strAnswer = etAnswer.getText().toString().trim();
 
         if (TextUtils.isEmpty(strAnswer)) {
-            DialogUtils.showToast(this, etAnswer, "请输入答案");
+            ToastUtils.showToast(this, etAnswer, "请输入答案");
             return;
         }
         strAnswer = MD5Utils.toMD5(strAnswer);
@@ -139,7 +139,7 @@ public class LockQuestionActivity extends BaseActivity {
         switch (state) {
             case STATE_SET:
                 if (TextUtils.isEmpty(strQuestion)) {
-                    DialogUtils.showToast(this, etQuestion, "请填写问题");
+                    ToastUtils.showToast(this, etQuestion, "请填写问题");
                     return;
                 }
 
@@ -158,7 +158,7 @@ public class LockQuestionActivity extends BaseActivity {
             case STATE_UPDATE:
                 if (!answer.equals(strAnswer)) {
                     etAnswer.setText("");
-                    DialogUtils.showToast(this, etAnswer, "答案错误，请重新输入");
+                    ToastUtils.showToast(this, etAnswer, "答案错误，请重新输入");
                     return;
                 }
 
@@ -169,7 +169,7 @@ public class LockQuestionActivity extends BaseActivity {
             case STATE_UNLOCKING:
                 if (!answer.equals(strAnswer)) {
                     etAnswer.setText("");
-                    DialogUtils.showToast(this, etAnswer, "答案错误，请重新输入");
+                    ToastUtils.showToast(this, etAnswer, "答案错误，请重新输入");
                     return;
                 }
 

@@ -12,6 +12,10 @@ public class Constants implements Serializable {
 
     /******************** 会从config.properties中读取数据覆盖这里的值 ********************/
     /**
+     * 字段：崩溃日志信息保存方式，ture：JSON格式保存；false：String格式保存
+     */
+    public static boolean PROP_CRASHINFOSAVEASJSON = false;
+    /**
      * 字段：程序是否处于调试状态
      */
     public static boolean PROP_ISDEBUG = false;

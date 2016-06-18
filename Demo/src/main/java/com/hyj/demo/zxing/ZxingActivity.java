@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
@@ -104,7 +104,7 @@ public class ZxingActivity extends BaseActivity {
     private void GenerateEwm() {
         String str = etEwm.getText().toString().trim();
         if (TextUtils.isEmpty(str)) {
-            DialogUtils.showToast(this, etEwm, "请输入要生成二维码的内容");
+            ToastUtils.showToast(this, etEwm, "请输入要生成二维码的内容");
             return;
         }
 

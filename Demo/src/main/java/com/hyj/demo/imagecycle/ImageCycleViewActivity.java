@@ -8,8 +8,8 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
 import com.hyj.demo.imagecycle.ImageCycleView.OnImageCycleViewListener;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.ToastUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -70,7 +70,7 @@ public class ImageCycleViewActivity extends BaseActivity {
                     public void onImageClick(ADInfo info, int position,
                                              View imageView) {
                         String msg = "position-->" + position + "　" + info.getContent();
-                        DialogUtils.showToastShort(ImageCycleViewActivity.this, msg);
+                        ToastUtils.showToast(ImageCycleViewActivity.this, msg);
                     }
                 });
     }

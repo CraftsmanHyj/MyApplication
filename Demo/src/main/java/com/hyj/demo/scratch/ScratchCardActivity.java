@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.demo.luckydial.PrizeInfo;
-import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class ScratchCardActivity extends BaseActivity {
 
 			@Override
 			public void onScratchComplete() {
-				DialogUtils.showToastShort(ScratchCardActivity.this, "全部刮完");
+				ToastUtils.showToast(ScratchCardActivity.this, "全部刮完");
 			}
 		});
 

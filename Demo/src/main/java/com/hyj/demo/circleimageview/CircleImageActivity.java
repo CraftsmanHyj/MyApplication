@@ -12,8 +12,9 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
 import com.hyj.lib.tools.BitmapUtils;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.ToastUtils;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +105,7 @@ public class CircleImageActivity extends BaseActivity {
     private void openCamera() {
         file = FileUtils.getAppFile(this, PHOTO_TEMP);
         if (null == file) {
-            DialogUtils.showToastShort(this, "请检查您的存储空间是否充足");
+            ToastUtils.showToast(this, "请检查您的存储空间是否充足");
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

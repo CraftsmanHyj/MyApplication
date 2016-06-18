@@ -27,12 +27,10 @@ import java.util.Properties;
  * @Date 2016-3-1 上午11:09:41
  */
 public class DemoApplication extends Application {
-
     /**
      * async-image-loading图片设置类
      */
     private DisplayImageOptions.Builder builder;
-
     /**
      * 程序配置Properties
      */
@@ -60,8 +58,8 @@ public class DemoApplication extends Application {
 
         /**
          * <pre>
-         * 注册Activity生命周期回调方法
-         * 通过这个ActivityLifecycleCallbacks拿到App所有Activity的生命周期回调
+         *     注册Activity生命周期回调方法
+         *     通过这个ActivityLifecycleCallbacks拿到App所有Activity的生命周期回调
          * </pre>
          */
         registerActivityLifecycleCallbacks(new DemoActivityLifecycle());
@@ -105,6 +103,8 @@ public class DemoApplication extends Application {
      * 把config.properties里面的值读出来赋值到常量Constants中
      */
     private void loadPropertyDatas() {
+        //是否以JSON格式保存崩溃日志
+        Constants.PROP_CRASHINFOSAVEASJSON = (Boolean) getProperty("crashInfoSaveAsJson", Constants.PROP_CRASHINFOSAVEASJSON);
         // 是否打印日志
         Constants.PROP_ISDEBUG = (Boolean) getProperty("isDebug", Constants.PROP_ISDEBUG);
         // 输出日志的TAG标签值
@@ -129,8 +129,7 @@ public class DemoApplication extends Application {
      * @return
      */
     private Object getProperty(String fieldName, Object defaultValue) {
-        String str = configProperties.getProperty(fieldName,
-                String.valueOf(defaultValue));
+        String str = configProperties.getProperty(fieldName, String.valueOf(defaultValue));
 
         Class<? extends Object> clz = defaultValue.getClass();
 
@@ -183,13 +182,13 @@ public class DemoApplication extends Application {
 
     /**
      * <pre>
-     * 初始化ImageLoader，调用方法
-     * 方法一：声明一个Application
-     * 	ImageLoader.getInstance().displayImage(url, imageView);
+     *     初始化ImageLoader，调用方法
+     *     方法一：声明一个Application
+     * 	       ImageLoader.getInstance().displayImage(url, imageView);
      *
-     * 方法二：
-     *  DisplayImageOptions options = ((DemoApplication) context.getApplicationContext()).getImageOptions(360);
-     *  ImageLoader.getInstance().displayImage(url, imageView, options);
+     *     方法二：
+     *         DisplayImageOptions options = ((DemoApplication) context.getApplicationContext()).getImageOptions(360);
+     *         ImageLoader.getInstance().displayImage(url, imageView, options);
      * </pre>
      *
      * @param context
@@ -197,12 +196,11 @@ public class DemoApplication extends Application {
     private void initImageLoader(Context context) {
         // 缓存文件的目录：/包名/imageCache
         String filePath = File.separator
-                + FileUtils.getAppRootDir(context).getName() + File.separator
-                + Constants.DIR_IMAGECACHE;
+                + FileUtils.getAppRootDir(context).getName()
+                + File.separator + Constants.DIR_IMAGECACHE;
         File fileCache = StorageUtils.getOwnCacheDirectory(context, filePath);
 
-        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
-                context);
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(context);
         // 设置值默认参数
         builder.defaultDisplayImageOptions(getImageOptions(0));
 
@@ -225,8 +223,7 @@ public class DemoApplication extends Application {
         // 自定义缓存路径
         builder.diskCache(new UnlimitedDiskCache(fileCache));
         // connectTimeout (5 s), readTimeout (30 s)超时时间
-        builder.imageDownloader(new BaseImageDownloader(context, 5 * 1000,
-                30 * 1000));
+        builder.imageDownloader(new BaseImageDownloader(context, 5 * 1000, 30 * 1000));
         // Remove for release app
         builder.writeDebugLogs();
         ImageLoaderConfiguration config = builder.build();

@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.LogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 /**
  * <pre>
@@ -136,7 +136,7 @@ public class MessengerActivit extends BaseActivity {
     private void sendToService() {
         String msg = etSendMsg.getText().toString().trim();
         if (TextUtils.isEmpty(msg)) {
-            DialogUtils.showToast(this, etSendMsg, "请输入要发送的信息");
+            ToastUtils.showToast(this, etSendMsg, "请输入要发送的信息");
             return;
         }
 

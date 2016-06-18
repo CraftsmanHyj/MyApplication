@@ -12,9 +12,9 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
 import com.hyj.lib.lock.LockPointView;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.MD5Utils;
 import com.hyj.lib.tools.SPUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 public class LockActivity extends BaseActivity {
     /**
@@ -101,7 +101,7 @@ public class LockActivity extends BaseActivity {
                 SPUtils.putParam(LockActivity.this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");
                 SPUtils.putParam(LockActivity.this, Constants.FILE_NAME_SHARED, Constants.FIELD_ANSWER, "");
 
-                DialogUtils.showToastShort(LockActivity.this, "密码清除成功");
+                ToastUtils.showToast(LockActivity.this, "密码清除成功");
             }
         });
 
@@ -158,7 +158,7 @@ public class LockActivity extends BaseActivity {
             } else if (1 == pwdSetNumber) {
                 pwdSetNumber = 0;
                 if (!pwd.equals(password)) {
-                    DialogUtils.showToastShort(this, "两次绘制的手势密码不一致，请重新绘制");
+                    ToastUtils.showToast(this, "两次绘制的手势密码不一致，请重新绘制");
                     lock.errorPoint();
                 } else {
                     lock.resetPoint();
@@ -170,7 +170,7 @@ public class LockActivity extends BaseActivity {
         } else if (STATE_UPDATE == state) {
             if (!pwd.equals(password)) {
                 lock.errorPoint();
-                DialogUtils.showToastShort(this, "手势密码错误，请重新输入");
+                ToastUtils.showToast(this, "手势密码错误，请重新输入");
                 return;
             }
             lock.resetPoint();
@@ -179,11 +179,11 @@ public class LockActivity extends BaseActivity {
         } else if (STATE_UNLOCKING == state) {
             if (!pwd.equals(password)) {
                 lock.errorPoint();
-                DialogUtils.showToastShort(this, "手势密码错误，请重新输入");
+                ToastUtils.showToast(this, "手势密码错误，请重新输入");
                 return;
             }
 
-            DialogUtils.showToastShort(this, "手势密码输入正确");
+            ToastUtils.showToast(this, "手势密码输入正确");
             lock.resetPoint();
 
             //没有设置密保则跳入密保界面
@@ -200,7 +200,7 @@ public class LockActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-//                DialogUtils.showToastShort(this, "再按一次退出程序");
+//                DialogUtils.showToast(this, "再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
 //                finish();

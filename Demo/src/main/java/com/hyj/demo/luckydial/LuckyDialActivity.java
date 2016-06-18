@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class LuckyDialActivity extends BaseActivity {
 
 			@Override
 			public void onRotationDown(PrizeInfo prize) {
-				DialogUtils.showToastShort(LuckyDialActivity.this,
+				ToastUtils.showToast(LuckyDialActivity.this,
 						prize.getLabel());
 			}
 		});

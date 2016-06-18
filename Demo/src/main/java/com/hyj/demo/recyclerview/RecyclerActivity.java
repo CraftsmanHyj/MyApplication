@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
-import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,12 +73,12 @@ public class RecyclerActivity extends BaseActivity {
         adapter.setOnItemclickListener(new RecyclerAdapter.OnItemclickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                DialogUtils.showToastShort(RecyclerActivity.this, "点击事件" + position);
+                ToastUtils.showToast(RecyclerActivity.this, "点击事件" + position);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                DialogUtils.showToastShort(RecyclerActivity.this, "长按事件" + position);
+                ToastUtils.showToast(RecyclerActivity.this, "长按事件" + position);
             }
         });
     }

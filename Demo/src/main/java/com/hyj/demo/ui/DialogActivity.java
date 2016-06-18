@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.lib.tools.DialogUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 public class DialogActivity extends BaseActivity implements OnClickListener {
 	@Override
@@ -41,7 +42,7 @@ public class DialogActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void action() {
-				DialogUtils.showToastShort(DialogActivity.this, "点击确认操作按钮");
+				ToastUtils.showToast(DialogActivity.this, "点击确认操作按钮");
 			}
 		};
 
@@ -49,7 +50,7 @@ public class DialogActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void action() {
-				DialogUtils.showToastShort(DialogActivity.this, "点击取消操作按钮");
+				ToastUtils.showToast(DialogActivity.this, "点击取消操作按钮");
 			}
 		};
 

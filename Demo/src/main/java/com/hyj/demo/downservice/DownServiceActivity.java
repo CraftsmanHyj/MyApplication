@@ -18,8 +18,8 @@ import com.hyj.demo.down.DownLoad;
 import com.hyj.demo.http.download.DownNotification;
 import com.hyj.demo.http.download.DownService;
 import com.hyj.demo.http.download.FileInfo;
-import com.hyj.lib.tools.DialogUtils;
 import com.hyj.lib.tools.ServiceUtils;
+import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public class DownServiceActivity extends BaseActivity {
                     file.setProgress(0);
 
                     String msg = "文件<" + file.getFileName() + ">下载完成";
-                    DialogUtils.showToastShort(DownServiceActivity.this, msg);
+                    ToastUtils.showToast(DownServiceActivity.this, msg);
 
                     //下载完成取消通知
                     notificationUtils.cancleNotification(file.getId());
