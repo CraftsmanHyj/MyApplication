@@ -21,7 +21,7 @@
             android:textColor="#3eadef"
             android:textSize="15dp" />
 
-        <com.hyj.demo.view.ListViewShowAll
+        <com.hyj.lib.listview.ListViewShowAll
             android:id="@+id/drLvContent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

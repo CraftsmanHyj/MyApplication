@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.hyj.lib.view.ListViewRefresh
+    <com.hyj.lib.listview.ListViewRefresh
         android:id="@+id/refreshLV"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,4 +1,4 @@
-package com.hyj.lib.view;
+package com.hyj.lib.listview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -91,7 +91,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
     }
 
     /**
-     * 厨师话界面,添加header到listview
+     * 初始化界面,添加header到listview
      */
     private void initView(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -104,10 +104,8 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
         addHeaderView(header);// 添加顶部文件
 
         // 实例化header里面的控件
-        headerPbLoadding = (ProgressBar) header
-                .findViewById(R.id.refreshHeaderPbLoading);
-        headerIvArrow = (ImageView) header
-                .findViewById(R.id.refreshHeaderIvArrow);
+        headerPbLoadding = (ProgressBar) header.findViewById(R.id.refreshHeaderPbLoading);
+        headerIvArrow = (ImageView) header.findViewById(R.id.refreshHeaderIvArrow);
         headerTvTip = (TextView) header.findViewById(R.id.refreshHeaderTvTip);
         headerTvTime = (TextView) header.findViewById(R.id.refreshHeaderTvTime);
 
@@ -121,13 +119,11 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
 
     private void initData() {
         // 从0转到180
-        ra02180 = new RotateAnimation(0, 180, RotateAnimation.RELATIVE_TO_SELF,
-                0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        ra02180 = new RotateAnimation(0, 180, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         ra02180.setDuration(500);
         ra02180.setFillAfter(true);
         // 从180转到0度
-        ra18020 = new RotateAnimation(180, 0, RotateAnimation.RELATIVE_TO_SELF,
-                0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        ra18020 = new RotateAnimation(180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         ra18020.setDuration(500);
         ra18020.setFillAfter(true);
     }
@@ -153,8 +149,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
         int height;
         int tempHeight = params.height;
         if (tempHeight > 0) {// 高度不为空，需要填充布局
-            height = MeasureSpec.makeMeasureSpec(tempHeight,
-                    MeasureSpec.EXACTLY);
+            height = MeasureSpec.makeMeasureSpec(tempHeight, MeasureSpec.EXACTLY);
         } else {// 高度为空则不需要填充
             height = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         }
@@ -168,8 +163,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
      * @param top
      */
     private void setHeaderTopPadding(int top) {
-        header.setPadding(header.getPaddingLeft(), top,
-                header.getPaddingRight(), header.getPaddingBottom());
+        header.setPadding(header.getPaddingLeft(), top, header.getPaddingRight(), header.getPaddingBottom());
         header.invalidate();
     }
 
@@ -179,8 +173,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
      * @param bottom
      */
     private void setFooterBottomPadding(int bottom) {
-        footer.setPadding(footer.getPaddingLeft(), footer.getPaddingTop(),
-                footer.getPaddingRight(), bottom);
+        footer.setPadding(footer.getPaddingLeft(), footer.getPaddingTop(), footer.getPaddingRight(), bottom);
         footer.invalidate();
     }
 
@@ -190,8 +183,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         this.firstVisibleItem = firstVisibleItem;
         this.lastVisibleItem = firstVisibleItem + visibleItemCount;
         this.totalItemCount = totalItemCount;
@@ -235,8 +227,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
                     }
 
                     refreshViewByState();
-                } else if (!isPullDownRefresh && totalItemCount == lastVisibleItem
-                        && NORMAIL == stateRefresh) {
+                } else if (!isPullDownRefresh && totalItemCount == lastVisibleItem && NORMAIL == stateRefresh) {
                     stateRefresh = REFRESHING;
                     setFooterBottomPadding(0);
                     if (refreshListener != null) {
@@ -258,7 +249,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
         // header与上边距的距离
         int topPadding = space - headerHeight;
         // 超过这个高度就刷新
-        int refreshHeight = headerHeight + 50;
+        int refreshHeight = headerHeight + 30;
 
         switch (stateRefresh) {
             case NORMAIL:
@@ -273,8 +264,7 @@ public class ListViewRefresh extends ListView implements OnScrollListener {
                 arrowRotate = true;
 
                 // 判断是否达到刷新条件
-                if (space > refreshHeight
-                        && SCROLL_STATE_TOUCH_SCROLL == stateScroll) {
+                if (space > refreshHeight && SCROLL_STATE_TOUCH_SCROLL == stateScroll) {
                     stateRefresh = RELEASE;
                     refreshViewByState();
                 }

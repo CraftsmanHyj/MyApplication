@@ -22,7 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hyj.demo.R;
-import com.hyj.demo.view.ListViewShowAll;
+import com.hyj.lib.listview.ListViewShowAll;
 import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;

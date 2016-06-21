@@ -1,4 +1,4 @@
-package com.hyj.demo.view;
+package com.hyj.lib.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

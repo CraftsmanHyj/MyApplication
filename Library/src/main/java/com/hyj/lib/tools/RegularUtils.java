@@ -1,11 +1,11 @@
 package com.hyj.lib.tools;
 
+import android.annotation.SuppressLint;
+import android.text.TextUtils;
+
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.regex.Pattern;
-
-import android.annotation.SuppressLint;
-import android.text.TextUtils;
 
 /**
  * 正则表达式校验工具类
@@ -17,9 +17,18 @@ public class RegularUtils {
     private static final String REGEX_SFZ = "^[1-9](\\d{14}|\\d{17}|\\d{16}(\\d|x|X))$";
     private static final String REGEX_MAIL = "\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*";
     private static final String REGEX_MOBILE = "^[1][3,4,5,8,7][0-9]{9}$";
-    private static final String REGEX_TEL = "^\\d{3-4}-?\\d{7-8}$";
+    private static final String REGEX_TEL = "^\\d{3,4}-?\\d{7,8}$";
     private static final String REGEX_CHINESE = "^[\u4e00-\u9fa5]+$";
     private static final String REGEX_SPACE = "(\\n|\\s|\\t\\r)+";
+    private static final String REGEX_URL = "^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-"
+            + "Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{"
+            + "2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}"
+            + "[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|"
+            + "[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-"
+            + "4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0"
+            + "-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/"
+            + "[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$\\=~_\\-@]*)*$";
+
 
     // 用于身份证最后一位校验位计算
     private static final int[] wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10,
@@ -126,6 +135,17 @@ public class RegularUtils {
     public static boolean isChinese(String str) {
         Pattern pattern = Pattern.compile(REGEX_CHINESE);
         return pattern.matcher(str).matches();
+    }
+
+    /**
+     * 判断输入的字符是否是合法的URL地址
+     *
+     * @param url
+     * @return
+     */
+    public static boolean isUrl(String url) {
+        Pattern pattern = Pattern.compile(REGEX_URL);
+        return pattern.matcher(url).matches();
     }
 
     /**
