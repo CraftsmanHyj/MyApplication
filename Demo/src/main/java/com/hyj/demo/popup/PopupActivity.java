@@ -9,14 +9,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.PopupWindow.OnDismissListener;
+import android.widget.TextView;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 import com.hyj.lib.dialog.ActionSheetDialog;
 import com.hyj.lib.dialog.AlertDialog;
-import com.hyj.lib.dialog.SheetItem;
+import com.hyj.lib.dialog.ActionSheetItem;
 import com.hyj.lib.tools.ToastUtils;
 
 import java.util.ArrayList;
@@ -26,11 +28,6 @@ import java.util.List;
 public class PopupActivity extends BaseActivity implements OnClickListener {
 
     private Button bt4Bottom;// 从底部上滑显示popup
-    private Button btn1;
-    private Button btn2;
-    private Button btn3;
-    private Button btn4;
-    private Button btn5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +45,11 @@ public class PopupActivity extends BaseActivity implements OnClickListener {
 
     private void initView() {
         bt4Bottom = (Button) findViewById(R.id.popupShowBottom);
-        btn1 = (Button) findViewById(R.id.btn1);
-        btn2 = (Button) findViewById(R.id.btn2);
-        btn3 = (Button) findViewById(R.id.btn3);
-        btn4 = (Button) findViewById(R.id.btn4);
-        btn5 = (Button) findViewById(R.id.btn5);
     }
 
     private AlertDialog alertDialog;
     private ActionSheetDialog sheetDialog;
-    private List<SheetItem> lSheetItem;
+    private List<ActionSheetItem> lSheetItem;
     private ActionSheetDialog.OnSheetItemClickListener sheetItemListener = new ActionSheetDialog.OnSheetItemClickListener() {
         @Override
         public void onClick(int index) {
@@ -73,11 +65,13 @@ public class PopupActivity extends BaseActivity implements OnClickListener {
 
     private void initListener() {
         bt4Bottom.setOnClickListener(this);
-        btn1.setOnClickListener(this);
-        btn2.setOnClickListener(this);
-        btn3.setOnClickListener(this);
-        btn4.setOnClickListener(this);
-        btn5.setOnClickListener(this);
+
+        findViewById(R.id.btn1).setOnClickListener(this);
+        findViewById(R.id.btn2).setOnClickListener(this);
+        findViewById(R.id.btn3).setOnClickListener(this);
+        findViewById(R.id.btn4).setOnClickListener(this);
+        findViewById(R.id.btn5).setOnClickListener(this);
+        findViewById(R.id.popupShowView).setOnClickListener(this);
     }
 
     @Override
@@ -90,8 +84,8 @@ public class PopupActivity extends BaseActivity implements OnClickListener {
 
             case R.id.btn1:
                 sheetDialog.setTitle("清空消息列表后，聊天记录依然保留，确定要清空消息列表？");
-                lSheetItem = new ArrayList<SheetItem>();
-                lSheetItem.add(new SheetItem("清空消息列表", sheetItemListener));
+                lSheetItem = new ArrayList<ActionSheetItem>();
+                lSheetItem.add(new ActionSheetItem("清空消息列表", sheetItemListener));
                 sheetDialog.setSheetItems(lSheetItem);
                 sheetDialog.show();
                 break;
@@ -99,36 +93,35 @@ public class PopupActivity extends BaseActivity implements OnClickListener {
             case R.id.btn2:
                 //清除以前设置的标题
                 sheetDialog.setTitle(null);
-                lSheetItem = new ArrayList<SheetItem>();
-                lSheetItem.add(new SheetItem("发送给好友", sheetItemListener));
-                lSheetItem.add(new SheetItem("转载到空间相册", sheetItemListener));
-                lSheetItem.add(new SheetItem("上传到群相册", sheetItemListener));
-                lSheetItem.add(new SheetItem("保存到手机", sheetItemListener));
-                lSheetItem.add(new SheetItem("收藏", sheetItemListener));
-                lSheetItem.add(new SheetItem("查看聊天图片", sheetItemListener));
+                lSheetItem = new ArrayList<ActionSheetItem>();
+                lSheetItem.add(new ActionSheetItem("发送给好友", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("转载到空间相册", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("上传到群相册", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("保存到手机", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("收藏", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("查看聊天图片", sheetItemListener));
                 sheetDialog.setSheetItems(lSheetItem);
                 sheetDialog.show();
                 break;
 
             case R.id.btn3:
                 sheetDialog.setTitle("请选择操作");
-                lSheetItem = new ArrayList<SheetItem>();
-                lSheetItem.add(new SheetItem("条目一", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目二", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目三", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目四", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目五", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目六", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目七", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目八", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目九", sheetItemListener));
-                lSheetItem.add(new SheetItem("条目十", sheetItemListener));
+                lSheetItem = new ArrayList<ActionSheetItem>();
+                lSheetItem.add(new ActionSheetItem("条目一", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目二", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目三", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目四", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目五", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目六", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目七", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目八", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目九", sheetItemListener));
+                lSheetItem.add(new ActionSheetItem("条目十", sheetItemListener));
                 sheetDialog.setSheetItems(lSheetItem);
                 sheetDialog.show();
                 break;
 
             case R.id.btn4:
-
                 alertDialog = new AlertDialog(this);
                 alertDialog.setTitle("退出当前账号");
                 alertDialog.setMsg("再连续登陆15天，就可变身为QQ达人。退出QQ可能会使你现有记录归零，确定退出？");
@@ -150,6 +143,24 @@ public class PopupActivity extends BaseActivity implements OnClickListener {
             case R.id.btn5:
                 alertDialog = new AlertDialog(this);
                 alertDialog.setMsg("你现在无法接收到新消息提醒。请到系统-设置-通知中开启消息提醒");
+                alertDialog.setNegativeButton("确定", new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                alertDialog.show();
+                break;
+
+            case R.id.popupShowView:
+                alertDialog = new AlertDialog(this);
+                alertDialog.setTitle("自定义View布局显示");
+                LinearLayout ll = new LinearLayout(this);
+                ll.setOrientation(LinearLayout.VERTICAL);
+                TextView tv = new TextView(this);
+                tv.setText("自定义布局弹出Dialog测试");
+                ll.addView(tv);
+                alertDialog.setContentView(ll);
                 alertDialog.setNegativeButton("确定", new OnClickListener() {
                     @Override
                     public void onClick(View v) {

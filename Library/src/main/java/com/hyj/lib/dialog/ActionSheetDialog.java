@@ -53,7 +53,7 @@ public class ActionSheetDialog {
     }
 
     /**
-     * 是否可以取消
+     * 点击back是否可以返回
      *
      * @param cancel
      */
@@ -75,11 +75,11 @@ public class ActionSheetDialog {
         this(context, null, null);
     }
 
-    public ActionSheetDialog(Context context, List<SheetItem> lSheetItem) {
+    public ActionSheetDialog(Context context, List<ActionSheetItem> lSheetItem) {
         this(context, null, lSheetItem);
     }
 
-    public ActionSheetDialog(Context context, String title, List<SheetItem> lSheetItem) {
+    public ActionSheetDialog(Context context, String title, List<ActionSheetItem> lSheetItem) {
         this.context = context;
 
         initView();
@@ -145,7 +145,7 @@ public class ActionSheetDialog {
      *
      * @param lSheetItem
      */
-    public void setSheetItems(List<SheetItem> lSheetItem) {
+    public void setSheetItems(List<ActionSheetItem> lSheetItem) {
         llContent.removeAllViews();
         if (lSheetItem == null || lSheetItem.size() <= 0) {
             return;
@@ -165,7 +165,7 @@ public class ActionSheetDialog {
 
         // 循环添加条目
         for (int i = 0; i < itemCount; i++) {
-            SheetItem sheetItem = lSheetItem.get(i);
+            ActionSheetItem sheetItem = lSheetItem.get(i);
             SheetItemColor color = sheetItem.color;
 
             TextView textView = new TextView(context);

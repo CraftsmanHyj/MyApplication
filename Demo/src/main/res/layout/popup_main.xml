@@ -56,5 +56,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="按钮二" />
+
+        <Button
+            android:id="@+id/popupShowView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义Content布局对话框" />
     </LinearLayout>
 </ScrollView>

@@ -100,7 +100,7 @@ public class Utils {
     }
 
     /**
-     * 显示软键盘
+     * 显示、隐藏软键盘
      *
      * @param activity     上下文
      * @param showKeyBoard 是否显示键盘

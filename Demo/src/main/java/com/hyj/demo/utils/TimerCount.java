@@ -12,7 +12,6 @@ import android.widget.Button;
  */
 public class TimerCount {
 
-    @SuppressWarnings("unused")
     private Context context;
     private Button mButton;
     private long millisInFuture;// 总时长
@@ -40,8 +39,7 @@ public class TimerCount {
      * @param countDownInterval 步长
      *                          (时间间隔) (秒为单位)
      */
-    public TimerCount(Context context, Button mButton, long millisInFuture,
-                      long countDownInterval) {
+    public TimerCount(Context context, Button mButton, long millisInFuture, long countDownInterval) {
         this.context = context;
         this.mButton = mButton;
         this.millisInFuture = millisInFuture * 1000;
@@ -52,7 +50,6 @@ public class TimerCount {
 
     private void myInit() {
         timer = new CountDownTimer(millisInFuture, countDownInterval) {
-
             @Override
             public void onTick(long millisUntilFinished) {
                 mButton.setEnabled(false);
