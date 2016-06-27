@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp" >
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/sheetTvTitle"
@@ -24,14 +24,14 @@
         android:id="@+id/sheetSvContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdge="none" >
+        android:fadingEdge="none"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/sheetLlContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:orientation="vertical" />
     </ScrollView>
 
     <TextView

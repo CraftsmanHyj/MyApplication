@@ -141,6 +141,28 @@ public class ActionSheetDialog {
     }
 
     /**
+     * 设置自定义Dialog布局视图
+     * TODO 高度控制是否有更好的方法？如何能达到动态计算View高度去控制？
+     *
+     * @param view     布局文件
+     * @param rowCount 显示行数
+     */
+    public void setContentView(View view, int rowCount) {
+        // TODO 高度控制，非最佳解决办法
+        // 添加条目过多的时候控制高度
+        LayoutParams params = (LayoutParams) svContent.getLayoutParams();
+        if (rowCount >= 7) {
+            params.height = display.getHeight() / 2;
+        } else {
+            params.height = LayoutParams.WRAP_CONTENT;
+        }
+        svContent.setLayoutParams(params);
+
+        svContent.removeAllViews();
+        svContent.addView(view);
+    }
+
+    /**
      * 设置Item条目
      *
      * @param lSheetItem

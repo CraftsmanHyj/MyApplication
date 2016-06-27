@@ -49,7 +49,6 @@ import com.hyj.demo.startmenu.StartMenu2;
 import com.hyj.demo.title_bar.TitleBarActivity;
 import com.hyj.lib.tools.LogUtils;
 import com.hyj.lib.tools.ToastUtils;
-import com.hyj.lib.tools.Utils;
 import com.hyj.demo.tree.TreeActivity;
 import com.hyj.demo.tuling.TulingActivity;
 import com.hyj.demo.ui.DialogActivity;
@@ -62,6 +61,7 @@ import com.hyj.demo.wechat_talk.WeChatTalkActivity;
 import com.hyj.demo.wish.WishActivity;
 import com.hyj.demo.zxing.ZxingActivity;
 import com.hyj.demo.camera.CameraMainActivity;
+import com.hyj.lib.tools.appinfo.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +187,7 @@ public class MainDemoActivity extends BaseActivity {
         bean.setValue(ViewPagerIndicatorActivity.class);
         lItems.add(bean);
 
-        if (Utils.hasApp(this, APP_MUSIC)) {
+        if (AppUtils.isInstallApp(this, APP_MUSIC)) {//AppUtils.hasApp(this, APP_MUSIC)
             bean = new ListItem();
             bean.setTitle("猜歌游戏");
             bean.setType(ListItem.TYPE_APP);
@@ -465,7 +465,7 @@ public class MainDemoActivity extends BaseActivity {
                         break;
 
                     case ListItem.TYPE_APP:
-                        Utils.startApp(MainDemoActivity.this,
+                        AppUtils.startApp(MainDemoActivity.this,
                                 (String) bean.getValue());
                         break;
                 }

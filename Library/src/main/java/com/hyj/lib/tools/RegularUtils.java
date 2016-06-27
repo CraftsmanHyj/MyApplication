@@ -20,19 +20,10 @@ public class RegularUtils {
     private static final String REGEX_TEL = "^\\d{3,4}-?\\d{7,8}$";
     private static final String REGEX_CHINESE = "^[\u4e00-\u9fa5]+$";
     private static final String REGEX_SPACE = "(\\n|\\s|\\t\\r)+";
-    private static final String REGEX_URL = "^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-"
-            + "Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{"
-            + "2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}"
-            + "[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|"
-            + "[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-"
-            + "4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0"
-            + "-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/"
-            + "[^/][a-zA-Z0-9\\.\\,\\?\\'\\\\/\\+&%\\$\\=~_\\-@]*)*$";
-
+    private static final String REGEX_URL = "^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|cn|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$";
 
     // 用于身份证最后一位校验位计算
-    private static final int[] wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10,
-            5, 8, 4, 2, 1};
+    private static final int[] wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};
     private static final int[] vi = {1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2};
 
     // 每月最大天数
@@ -144,6 +135,10 @@ public class RegularUtils {
      * @return
      */
     public static boolean isUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            return false;
+        }
+
         Pattern pattern = Pattern.compile(REGEX_URL);
         return pattern.matcher(url).matches();
     }
