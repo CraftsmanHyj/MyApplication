@@ -147,7 +147,7 @@ public class Utils {
      */
     public static void openUrl(Context context, String url) {
         Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);//"android.intent.action.VIEW"
+        intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         context.startActivity(intent);
     }

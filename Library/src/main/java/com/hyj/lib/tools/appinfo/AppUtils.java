@@ -20,29 +20,43 @@ import java.util.Map.Entry;
  * Created by hyj on 2016/6/27.
  */
 public class AppUtils {
-    private static Map<String, AppInfo> mapApp = new HashMap<String, AppInfo>();//所有APP
-    private static List<AppInfo> lSysApp = new ArrayList<AppInfo>();//系统App
-    private static List<AppInfo> lCusApp = new ArrayList<AppInfo>();//非系统App
+    private Map<String, AppInfo> mapApp = new HashMap<String, AppInfo>();//所有APP
+    private List<AppInfo> lSysApp = new ArrayList<AppInfo>();//系统App
+    private List<AppInfo> lCusApp = new ArrayList<AppInfo>();//非系统App
 
     private static AppUtils instance;
 
-    private AppUtils() {
-    }
-
-    public static AppUtils init(Context context) {
+    /**
+     * 获取一个AppUtils实例
+     *
+     * @param context
+     * @return
+     */
+    public static AppUtils getInstance(Context context) {
         if (null == instance) {
             synchronized (AppUtils.class) {
-                instance = new AppUtils();
-                initAppInfo(context);
+                instance = new AppUtils(context);
             }
         }
         return instance;
     }
 
     /**
+     * 销毁存放App的实例
+     */
+    public static void destroy() {
+        instance = null;
+        instance.mapApp.clear();
+    }
+
+    private AppUtils(Context context) {
+        initAppInfo(context);
+    }
+
+    /**
      * 初始化信息，获取所有安装APP的信息
      */
-    private static void initAppInfo(Context context) {
+    private void initAppInfo(Context context) {
         PackageManager pm = context.getPackageManager();
         List<PackageInfo> packages = pm.getInstalledPackages(0);//PackageManager.GET_UNINSTALLED_PACKAGES;
 
@@ -67,27 +81,16 @@ public class AppUtils {
     }
 
     /**
-     * 是否需要去初始化App信息
-     *
-     * @param context
-     */
-    private static void needInitAppInfo(Context context) {
-        if (null == mapApp || mapApp.isEmpty()) {
-            init(context);
-        }
-    }
-
-    /**
      * 获取手机上安装的所有应用
      *
      * @param context
      * @return
      */
     public static List<AppInfo> getApp(Context context) {
-        needInitAppInfo(context);
+        getInstance(context);
 
         List<AppInfo> lApp = new ArrayList<AppInfo>();
-        for (Entry<String, AppInfo> entry : mapApp.entrySet()) {
+        for (Entry<String, AppInfo> entry : instance.mapApp.entrySet()) {
             lApp.add(entry.getValue());
         }
 
@@ -101,8 +104,8 @@ public class AppUtils {
      * @return
      */
     public static List<AppInfo> getSytemApp(Context context) {
-        needInitAppInfo(context);
-        return lSysApp;
+        getInstance(context);
+        return instance.lSysApp;
     }
 
     /**
@@ -112,8 +115,8 @@ public class AppUtils {
      * @return
      */
     public static List<AppInfo> getCusApp(Context context) {
-        needInitAppInfo(context);
-        return lCusApp;
+        getInstance(context);
+        return instance.lCusApp;
     }
 
     /**
@@ -124,8 +127,8 @@ public class AppUtils {
      * @return
      */
     public static AppInfo getAppInfo(Context context, String packageName) {
-        needInitAppInfo(context);
-        return mapApp.get(packageName);
+        getInstance(context);
+        return instance.mapApp.get(packageName);
     }
 
     /**
@@ -138,14 +141,6 @@ public class AppUtils {
     public static boolean isInstallApp(Context context, String packageName) {
         AppInfo info = getAppInfo(context, packageName);
         return null != info;
-    }
-
-    /**
-     * 销毁存放App的实例
-     */
-    public static void destroy() {
-        mapApp.clear();
-        mapApp = null;
     }
 
     /**

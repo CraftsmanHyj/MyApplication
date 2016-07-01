@@ -17,7 +17,8 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
     protected int layoutItemID;
     protected List<T> lDatas;
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener clickListener;
+    private OnItemLongClickListener longClickListener;
 
     /**
      * 设置点击事件
@@ -25,7 +26,16 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
      * @param onItemClickListener
      */
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.mOnItemClickListener = onItemClickListener;
+        this.clickListener = onItemClickListener;
+    }
+
+    /**
+     * 设置Item长按事件
+     *
+     * @param onItemLongClickListener
+     */
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.longClickListener = onItemLongClickListener;
     }
 
     public CommonAdapter(Context context, List<T> lDatas) {
@@ -35,7 +45,7 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
     public CommonAdapter(Context context, List<T> lDatas, int layoutId) {
         this.context = context;
-        layoutItemID = layoutId;
+        this.layoutItemID = layoutId;
         this.lDatas = lDatas;
     }
 
@@ -88,32 +98,38 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
         return viewHolder.getPosition();//getAdapterPosition();
     }
 
-    protected boolean isEnabled(int viewType) {
+    /**
+     * 判断当前ITem是否支持点击事件
+     *
+     * @param viewType
+     * @return
+     */
+    protected boolean isClinckEnabled(int viewType) {
         return true;
     }
 
     protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType) {
-        if (!isEnabled(viewType)) {
+        if (!isClinckEnabled(viewType)) {
             return;
         }
 
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
+        View convertView = viewHolder.getConvertView();
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mOnItemClickListener) {
+                if (null != clickListener) {
                     int position = getPosition(viewHolder);
-                    mOnItemClickListener.onItemClick(parent, v, lDatas.get(position), position);
+                    clickListener.onItemClick(parent, v, lDatas.get(position), position);
                 }
             }
         });
 
-
-        viewHolder.getConvertView().setOnLongClickListener(new View.OnLongClickListener() {
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (null != mOnItemClickListener) {
+                if (null != longClickListener) {
                     int position = getPosition(viewHolder);
-                    return mOnItemClickListener.onItemLongClick(parent, v, lDatas.get(position), position);
+                    return longClickListener.onItemLongClick(parent, v, lDatas.get(position), position);
                 }
                 return false;
             }
@@ -127,7 +143,14 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
      */
     public interface OnItemClickListener<T> {
         public void onItemClick(ViewGroup parent, View view, T t, int position);
+    }
 
+    /**
+     * RecycleView长按事件
+     *
+     * @param <T>
+     */
+    public interface OnItemLongClickListener<T> {
         public boolean onItemLongClick(ViewGroup parent, View view, T t, int position);
     }
 }

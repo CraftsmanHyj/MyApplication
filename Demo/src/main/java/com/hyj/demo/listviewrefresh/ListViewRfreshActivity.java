@@ -38,7 +38,7 @@ public class ListViewRfreshActivity extends BaseActivity {
                     adapter.notifyDataSetChanged();
 
                     lvContent.refreshComplete();
-                    lvContent.showFooter();
+                    lvContent.showFooter("已显示全部数据");
                     break;
             }
         }

@@ -31,7 +31,9 @@ public class MultiItemRvActivity extends BaseActivity {
             public void onItemClick(ViewGroup parent, View view, ChatMessage o, int position) {
                 Toast.makeText(MultiItemRvActivity.this, "Click:" + position + " => " + o.getContent(), Toast.LENGTH_SHORT).show();
             }
+        });
 
+        adapter.setOnItemLongClickListener(new CommonAdapter.OnItemLongClickListener<ChatMessage>() {
             @Override
             public boolean onItemLongClick(ViewGroup parent, View view, ChatMessage o, int position) {
                 Toast.makeText(MultiItemRvActivity.this, "LongClick:" + position + " => " + o.getContent(), Toast.LENGTH_SHORT).show();

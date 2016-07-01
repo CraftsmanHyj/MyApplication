@@ -28,8 +28,11 @@ public class ActionSheetDialog {
 
     private TextView tvTitle;
     private TextView tvCancel;
-    private LinearLayout llContent;
     private ScrollView svContent;
+    private LinearLayout llContent;
+
+    //当自定义布局的时候显示此容器，隐藏SvContent
+    private LinearLayout llCusContent;
 
     private Display display;//屏幕宽、高参数
     private Dialog dialog;
@@ -72,7 +75,7 @@ public class ActionSheetDialog {
     }
 
     public ActionSheetDialog(Context context) {
-        this(context, null, null);
+        this(context, null);
     }
 
     public ActionSheetDialog(Context context, List<ActionSheetItem> lSheetItem) {
@@ -95,10 +98,12 @@ public class ActionSheetDialog {
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_actionsheet, null);
         view.setMinimumWidth(display.getWidth());// 设置Dialog最小宽度为屏幕宽度
 
+        tvTitle = (TextView) view.findViewById(R.id.sheetTvTitle);
         // 获取自定义Dialog布局中的控件
         svContent = (ScrollView) view.findViewById(R.id.sheetSvContent);
         llContent = (LinearLayout) view.findViewById(R.id.sheetLlContent);
-        tvTitle = (TextView) view.findViewById(R.id.sheetTvTitle);
+        //显示自定义布局的容器
+        llCusContent = (LinearLayout) view.findViewById(R.id.sheetLLCusContent);
 
         tvCancel = (TextView) view.findViewById(R.id.sheetTvCancel);
         tvCancel.setOnClickListener(new OnClickListener() {
@@ -148,18 +153,27 @@ public class ActionSheetDialog {
      * @param rowCount 显示行数
      */
     public void setContentView(View view, int rowCount) {
+        svContent.setVisibility(View.GONE);
+        llCusContent.setVisibility(View.VISIBLE);
+
+        if (showTitle) {
+            llCusContent.setBackgroundResource(R.drawable.actionsheet_bottom_selector);
+        } else {
+            llCusContent.setBackgroundResource(R.drawable.actionsheet_single_selector);
+        }
+
         // TODO 高度控制，非最佳解决办法
         // 添加条目过多的时候控制高度
-        LayoutParams params = (LayoutParams) svContent.getLayoutParams();
-        if (rowCount >= 7) {
+        LayoutParams params = (LayoutParams) llCusContent.getLayoutParams();
+        if (rowCount >= 4) {
             params.height = display.getHeight() / 2;
         } else {
             params.height = LayoutParams.WRAP_CONTENT;
         }
-        svContent.setLayoutParams(params);
+        llCusContent.setLayoutParams(params);
 
-        svContent.removeAllViews();
-        svContent.addView(view);
+        llCusContent.removeAllViews();
+        llCusContent.addView(view);
     }
 
     /**
@@ -168,6 +182,9 @@ public class ActionSheetDialog {
      * @param lSheetItem
      */
     public void setSheetItems(List<ActionSheetItem> lSheetItem) {
+        svContent.setVisibility(View.VISIBLE);
+        llCusContent.setVisibility(View.GONE);
+
         llContent.removeAllViews();
         if (lSheetItem == null || lSheetItem.size() <= 0) {
             return;
@@ -254,6 +271,13 @@ public class ActionSheetDialog {
      */
     public void show() {
         dialog.show();
+    }
+
+    /**
+     * 关闭Dialog弹出框
+     */
+    public void dismiss() {
+        dialog.dismiss();
     }
 
     /**

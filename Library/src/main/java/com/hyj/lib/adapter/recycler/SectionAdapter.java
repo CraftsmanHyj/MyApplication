@@ -76,10 +76,10 @@ public abstract class SectionAdapter<T> extends CommonAdapter<T> {
     }
 
     @Override
-    protected boolean isEnabled(int viewType) {
+    protected boolean isClinckEnabled(int viewType) {
         if (viewType == TYPE_SECTION)
             return false;
-        return super.isEnabled(viewType);
+        return super.isClinckEnabled(viewType);
     }
 
     //TODO 当释放Adapter的时候注销观察者，怎么做？

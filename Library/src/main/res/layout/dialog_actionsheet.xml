@@ -20,6 +20,13 @@
         android:textSize="13sp"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:id="@+id/sheetLLCusContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/sheetSvContent"
         android:layout_width="match_parent"
@@ -45,5 +52,4 @@
         android:textColor="@color/actionsheet_blue"
         android:textSize="18sp"
         android:textStyle="bold" />
-
 </LinearLayout>

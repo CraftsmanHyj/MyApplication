@@ -190,6 +190,10 @@ public class ListViewRefresh extends ListView {
         pullDownRefereshEnable = false;
         refreshStatus = STATUS_COMPLETE;
 
+        //初始化刷新时间提示
+        headerLastUpdated.setText(getRefreshTime());
+        footerLastUpdated.setText(getRefreshTime());
+
         ra02180 = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         ra02180.setDuration(150);
         ra02180.setFillAfter(true);
@@ -492,7 +496,7 @@ public class ListViewRefresh extends ListView {
     /**
      * 隐藏Footer
      */
-    private void hideFooter() {
+    public void hideFooter() {
         isFooterVisible = false;
 
         footerArrow.setVisibility(View.VISIBLE);
@@ -504,14 +508,26 @@ public class ListViewRefresh extends ListView {
     /**
      * 显示Footer提示语
      * 此方法需要在onRefreshComplete()方法之后调用
+     *
+     * @param msg 要显示的信息
      */
-    public void showFooter() {
+    public void showFooter(String msg) {
         isFooterVisible = true;
 
         footerArrow.setVisibility(View.GONE);
         footerLastUpdated.setVisibility(View.GONE);
-        footerTitle.setText("已显示全部数据");
+        footerTitle.setText(msg);
         footer.setPadding(0, 0, 0, 0);
+    }
+
+    /**
+     * 获取刷新时间提示
+     *
+     * @return
+     */
+    private String getRefreshTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return "最后刷新时间：" + sdf.format(new Date());
     }
 
     /**
@@ -519,15 +535,13 @@ public class ListViewRefresh extends ListView {
      */
     public void refreshComplete() {
         refreshStatus = STATUS_COMPLETE;
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        String hint = "最后刷新时间：" + sdf.format(new Date());
 
         if (pullType) {// 上拉
             onHeaderStateChange();
-            headerLastUpdated.setText(hint);
+            headerLastUpdated.setText(getRefreshTime());
         } else {// 下拉
             onFooterStateChange();
-            footerLastUpdated.setText(hint);
+            footerLastUpdated.setText(getRefreshTime());
         }
     }
 

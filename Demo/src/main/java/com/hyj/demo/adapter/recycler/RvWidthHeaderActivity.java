@@ -58,11 +58,6 @@ public class RvWidthHeaderActivity extends BaseActivity {
             public void onItemClick(ViewGroup parent, View view, String o, int position) {
                 Toast.makeText(RvWidthHeaderActivity.this, "Click:" + position + " => " + o, Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public boolean onItemLongClick(ViewGroup parent, View view, String o, int position) {
-                return false;
-            }
         });
         mRecyclerView.setAdapter(adapter);
     }
