@@ -81,6 +81,8 @@ public class ListViewRefresh extends ListView {
     private boolean isFooterVisible = false;//Footer当前是否可见
     private int pullUpRefreshType = REFRESH_PULL;//上拉刷新类型
 
+    private OnListViewTouchListener onTouchListener;//触摸事件
+
     /**
      * 设置下拉刷新监听事件
      *
@@ -130,6 +132,15 @@ public class ListViewRefresh extends ListView {
      */
     public void setPullUpRefreshType(int pullUpRefreshType) {
         this.pullUpRefreshType = pullUpRefreshType;
+    }
+
+    /**
+     * 设置触摸监听事件
+     *
+     * @param listener
+     */
+    public void setOnListViewTouchListener(OnListViewTouchListener listener) {
+        this.onTouchListener = listener;
     }
 
     public ListViewRefresh(Context context) {
@@ -230,11 +241,10 @@ public class ListViewRefresh extends ListView {
             refreshStatus = STATUS_REFRESHING;
             footer.setPadding(0, 0, 0, (int) ((startY - secondTempY) / RATIO - headerHeight));
             onFooterStateChange();
+            setSelection(getBottom());//显示正在刷新状态栏
             if (pullUpListener != null) {
                 pullUpListener.onRefresh();
             }
-
-            setSelection(getBottom());
         }
     }
 
@@ -406,6 +416,11 @@ public class ListViewRefresh extends ListView {
                     break;
             }
         }
+
+        if (null != onTouchListener) {
+            onTouchListener.onTouchEvent(ev);
+        }
+
         return super.onTouchEvent(ev);
     }
 
@@ -553,5 +568,17 @@ public class ListViewRefresh extends ListView {
          * 下拉刷新
          */
         public void onRefresh();
+    }
+
+    /**
+     * ListView的触摸事件
+     */
+    public interface OnListViewTouchListener {
+        /**
+         * 触摸事件
+         *
+         * @param event
+         */
+        public void onTouchEvent(MotionEvent event);
     }
 }

@@ -103,7 +103,7 @@ public class AlertDialog {
      */
     public void setTitle(String title) {
         if (TextUtils.isEmpty(title)) {
-            tvTitle.setText("标题");
+            tvTitle.setText("温馨提示");
         } else {
             tvTitle.setText(title);
         }

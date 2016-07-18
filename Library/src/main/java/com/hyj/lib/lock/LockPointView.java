@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hyj.lib.R;
+import com.hyj.lib.tools.LogUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -173,7 +174,23 @@ public class LockPointView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        LogUtils.i("onMeasure方法执行");
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int widthModel = MeasureSpec.getMode(widthMeasureSpec);
+        LogUtils.i("widthSize：" + widthSize + " widthModel：" + widthModel);
+
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        LogUtils.i("heightSize：" + heightSize + " heightMode：" + heightMode);
+    }
+
+    @Override
     public void onDraw(Canvas canvas) {
+        LogUtils.i("onDraw方法执行");
+        
         if (!isInit) {
             initCanvas();
         }
@@ -204,6 +221,8 @@ public class LockPointView extends View {
         //2、获取屏幕的宽高
         width = getWidth();
         height = getHeight();
+
+        LogUtils.i("width：" + width + " height：" + height);
 
         // 3.偏移量
         if (width > height) {// 横屏

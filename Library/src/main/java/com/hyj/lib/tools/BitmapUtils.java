@@ -5,6 +5,8 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
@@ -281,5 +283,27 @@ public class BitmapUtils {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return outBitmap;
+    }
+
+    /**
+     * 将彩色图片转换成灰色图片
+     *
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap setBitmapGrey(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        Bitmap faceIconGreyBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(faceIconGreyBitmap);
+        Paint paint = new Paint();
+        ColorMatrix colorMatrix = new ColorMatrix();
+        colorMatrix.setSaturation(0);
+        ColorMatrixColorFilter colorMatrixFilter = new ColorMatrixColorFilter(colorMatrix);
+        paint.setColorFilter(colorMatrixFilter);
+        canvas.drawBitmap(bitmap, 0, 0, paint);
+        return faceIconGreyBitmap;
     }
 }
