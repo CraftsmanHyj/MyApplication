@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hyj.lib.R;
-import com.hyj.lib.tools.LogUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -177,20 +176,19 @@ public class LockPointView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        LogUtils.i("onMeasure方法执行");
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int widthModel = MeasureSpec.getMode(widthMeasureSpec);
-        LogUtils.i("widthSize：" + widthSize + " widthModel：" + widthModel);
+        int w = MeasureSpec.getSize(widthMeasureSpec);
+        int h = MeasureSpec.getSize(heightMeasureSpec);
 
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        LogUtils.i("heightSize：" + heightSize + " heightMode：" + heightMode);
+        width = resolveSize(w, widthMeasureSpec);
+        height = resolveSize(h, heightMeasureSpec);
+
+        int size = (int) Math.min(width, height);
+
+        setMeasuredDimension(size, size);
     }
 
     @Override
     public void onDraw(Canvas canvas) {
-        LogUtils.i("onDraw方法执行");
-        
         if (!isInit) {
             initCanvas();
         }
@@ -222,8 +220,6 @@ public class LockPointView extends View {
         width = getWidth();
         height = getHeight();
 
-        LogUtils.i("width：" + width + " height：" + height);
-
         // 3.偏移量
         if (width > height) {// 横屏
             offsetsX = (width - height) / 2;// 这个值就是九宫格内容区域的宽度
@@ -234,8 +230,9 @@ public class LockPointView extends View {
         }
 
         // 计算圆圈图片的大小
-        float roundMaxWidth = width / 20.0f * 2;//8.0f * 2//图片最大宽度
-        float deviation = width % (20 * 2) / 2;//内容区域偏差量 (8 * 2) / 2
+        float scale = pointCount * 5f;//图片最大宽度计算比例基数
+        float roundMaxWidth = width / scale * 2;//8.0f * 2//图片最大宽度
+        float deviation = width % (scale * 2) / 2;//内容区域偏差量 (8 * 2) / 2
         offsetsX += deviation;
         offsetsY += deviation;
 
