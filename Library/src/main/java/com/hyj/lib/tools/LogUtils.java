@@ -12,26 +12,17 @@ import android.util.Log;
  * @Author hyj
  * @Date 2015-12-16 下午2:53:10
  */
-public abstract class LogUtils {
+public class LogUtils {
     /**
+     * config.properties配置文件中配置
      * 是否打印日志
      */
-    private static boolean printLog = false;
+    public static boolean isDebug = false;
     /**
+     * onfig.properties配置文件中配置
      * 日志TAG标签
      */
-    private static String TAG = "TAG";
-
-    /**
-     * 初始化参数：printLog、TAG
-     *
-     * @param isPrintLog 是否打印日志
-     * @param tagName    打印标签名
-     */
-    public static void initParameter(boolean isPrintLog, String tagName) {
-        printLog = isPrintLog;
-        TAG = tagName;
-    }
+    public static String TAG = "TAG";
 
     /**
      * 提醒信息
@@ -39,7 +30,7 @@ public abstract class LogUtils {
      * @param msg
      */
     public static void v(String msg) {
-        if (printLog) {
+        if (isDebug) {
             Log.v(TAG, msg);
         }
     }
@@ -50,7 +41,7 @@ public abstract class LogUtils {
      * @param msg
      */
     public static void d(String msg) {
-        if (printLog) {
+        if (isDebug) {
             Log.d(TAG, msg);
         }
     }
@@ -61,7 +52,7 @@ public abstract class LogUtils {
      * @param msg
      */
     public static void i(String msg) {
-        if (printLog) {
+        if (isDebug) {
             Log.i(TAG, msg);
         }
     }
@@ -72,7 +63,7 @@ public abstract class LogUtils {
      * @param msg
      */
     public static void w(String msg) {
-        if (printLog) {
+        if (isDebug) {
             Log.w(TAG, msg);
         }
     }
@@ -83,7 +74,7 @@ public abstract class LogUtils {
      * @param msg
      */
     public static void e(String msg) {
-        if (printLog) {
+        if (isDebug) {
             Log.e(TAG, msg);
         }
     }

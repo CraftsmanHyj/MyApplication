@@ -10,7 +10,6 @@ import android.widget.ProgressBar;
 
 import com.hyj.demo.R;
 
-
 /**
  * <pre>
  *     自定义控件几个步骤，也是要弄明白的几点

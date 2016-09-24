@@ -71,7 +71,7 @@ public class ListViewRefresh extends ListView {
     private float secondTempY = 0;
 
     private int refreshStatus;// 当前刷新状态
-    private boolean pullType = false;//当前拖动刷新类型    true：下拉；false：上拉；
+    private boolean pullType = true;//当前拖动刷新类型    true：下拉；false：上拉；
 
     private boolean pullDownRefereshEnable;// 下拉刷新是否可用
     private OnRefreshListener pullDownListener;//下拉刷新监听事件
@@ -198,7 +198,7 @@ public class ListViewRefresh extends ListView {
     }
 
     private void initData() {
-        pullDownRefereshEnable = false;
+//        pullDownRefereshEnable = false;
         refreshStatus = STATUS_COMPLETE;
 
         //初始化刷新时间提示
@@ -217,7 +217,7 @@ public class ListViewRefresh extends ListView {
     }
 
     private void initListener() {
-        setOnScrollListener(new OnScrollListener() {
+        this.setOnScrollListener(new OnScrollListener() {
             //滑动状态改变被调用
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -278,7 +278,8 @@ public class ListViewRefresh extends ListView {
         int lastVisibleItemIndex = getLastVisiblePosition() - 1;// 因为加有一尾视图，所以这里要减一
         int totalCounts = getCount() - 2;// 因为给listview加了一头一尾）视图所以这里要减二
 
-        if (pullDownRefereshEnable || pullUpRefreshEnable) {//有设置监听器，则可以进行刷新
+        //不处于正在刷新状态，且有设置监听器，则可以进行刷新
+        if (refreshStatus != STATUS_REFRESHING && (pullDownRefereshEnable || pullUpRefreshEnable)) {
             switch (ev.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     firstTempY = ev.getY();
@@ -303,39 +304,39 @@ public class ListViewRefresh extends ListView {
                             isRecorded = true;
                         }
 
-                        if (refreshStatus != STATUS_REFRESHING) {
-                            if (refreshStatus == STATUS_COMPLETE) {
-                                if (secondTempY - startY > 0) {     //初始状态→ 进入 下拉刷新
-                                    refreshStatus = STATUS_PULL_TO_REFRESH;
-                                    onHeaderStateChange();
-                                }
-                            }
-
-                            if (refreshStatus == STATUS_PULL_TO_REFRESH) {      // 下拉刷新 → 松开刷新
-                                if ((secondTempY - startY) / RATIO > headerHeight && secondTempY - firstTempY > 3) {
-                                    refreshStatus = STATUS_RELEASE_TO_REFRESH;
-                                    onHeaderStateChange();
-                                } else if (secondTempY - startY <= -5) {    // 下拉刷新 → 回到 刷新完成
-                                    refreshStatus = STATUS_COMPLETE;
-                                    onHeaderStateChange();
-                                }
-                            }
-
-                            if (refreshStatus == STATUS_RELEASE_TO_REFRESH) {
-                                if (firstTempY - secondTempY > 5) {// 松开刷新 →回到下拉刷新
-                                    refreshStatus = STATUS_PULL_TO_REFRESH;
-                                    isBack = true;// 从松开刷新 → 回到的下拉刷新
-                                    onHeaderStateChange();
-                                } else if (secondTempY - startY <= -5) { // 松开刷新 → 回到 刷新完成
-                                    refreshStatus = STATUS_COMPLETE;
-                                    onHeaderStateChange();
-                                }
-                            }
-
-                            if (refreshStatus == STATUS_PULL_TO_REFRESH || refreshStatus == STATUS_RELEASE_TO_REFRESH) {
-                                header.setPadding(0, (int) ((secondTempY - startY) / RATIO - headerHeight), 0, 0);
+//                        if (refreshStatus != STATUS_REFRESHING) {
+                        if (refreshStatus == STATUS_COMPLETE) {
+                            if (secondTempY - startY > 0) {     //初始状态→ 进入 下拉刷新
+                                refreshStatus = STATUS_PULL_TO_REFRESH;
+                                onHeaderStateChange();
                             }
                         }
+
+                        if (refreshStatus == STATUS_PULL_TO_REFRESH) {      // 下拉刷新 → 松开刷新
+                            if ((secondTempY - startY) / RATIO > headerHeight && secondTempY - firstTempY > 3) {
+                                refreshStatus = STATUS_RELEASE_TO_REFRESH;
+                                onHeaderStateChange();
+                            } else if (secondTempY - startY <= -5) {    // 下拉刷新 → 回到 刷新完成
+                                refreshStatus = STATUS_COMPLETE;
+                                onHeaderStateChange();
+                            }
+                        }
+
+                        if (refreshStatus == STATUS_RELEASE_TO_REFRESH) {
+                            if (firstTempY - secondTempY > 5) {     // 松开刷新 →回到下拉刷新
+                                refreshStatus = STATUS_PULL_TO_REFRESH;
+                                isBack = true;// 从松开刷新 → 回到的下拉刷新
+                                onHeaderStateChange();
+                            } else if (secondTempY - startY <= -5) {    // 松开刷新 → 回到 刷新完成
+                                refreshStatus = STATUS_COMPLETE;
+                                onHeaderStateChange();
+                            }
+                        }
+
+                        if (refreshStatus == STATUS_PULL_TO_REFRESH || refreshStatus == STATUS_RELEASE_TO_REFRESH) {
+                            header.setPadding(0, (int) ((secondTempY - startY) / RATIO - headerHeight), 0, 0);
+                        }
+//                        }
                     } else if (pullUpRefreshCondition() && REFRESH_PULL == pullUpRefreshType) {
                         //上拉刷新
                         firstTempY = secondTempY;
@@ -346,73 +347,73 @@ public class ListViewRefresh extends ListView {
                             isRecorded = true;
                         }
 
-                        if (refreshStatus != STATUS_REFRESHING) {// 不是正在刷新状态
-                            if (refreshStatus == STATUS_COMPLETE) {
-                                if (startY - secondTempY > 0) {  // 刷新完成/初始状态 → 进入 下拉刷新
-                                    refreshStatus = STATUS_PULL_TO_REFRESH;
-                                    onFooterStateChange();
-                                }
-                            }
-
-                            if (refreshStatus == STATUS_PULL_TO_REFRESH) {
-                                if ((startY - secondTempY) / RATIO > headerHeight && firstTempY - secondTempY >= 9) {
-                                    // 上拉刷新 → 松开刷新
-                                    refreshStatus = STATUS_RELEASE_TO_REFRESH;
-                                    onFooterStateChange();
-                                } else if (startY - secondTempY <= 0) { // 上拉刷新 → 回到 刷新完成
-                                    refreshStatus = STATUS_COMPLETE;
-                                    onFooterStateChange();
-                                }
-                            }
-
-                            if (refreshStatus == STATUS_RELEASE_TO_REFRESH) {
-                                if (firstTempY - secondTempY < -5) {// 从松开刷新 → 回到的上拉刷新
-                                    refreshStatus = STATUS_PULL_TO_REFRESH;
-                                    isBack = true;
-                                    onFooterStateChange();
-                                } else if (secondTempY - startY >= 0) {// 松开刷新 → 回到 刷新完成
-                                    refreshStatus = STATUS_COMPLETE;
-                                    onFooterStateChange();
-                                }
-                            }
-
-                            if ((refreshStatus == STATUS_PULL_TO_REFRESH
-                                    || refreshStatus == STATUS_RELEASE_TO_REFRESH) && secondTempY < startY) {
-                                footer.setPadding(0, 0, 0, (int) ((startY - secondTempY) / RATIO - headerHeight));
+//                        if (refreshStatus != STATUS_REFRESHING) {     // 不是正在刷新状态
+                        if (refreshStatus == STATUS_COMPLETE) {
+                            if (startY - secondTempY > 0) {     // 刷新完成/初始状态 → 进入 下拉刷新
+                                refreshStatus = STATUS_PULL_TO_REFRESH;
+                                onFooterStateChange();
                             }
                         }
-                    }
-                    break;
 
-                case MotionEvent.ACTION_UP:
-                    if (refreshStatus != STATUS_REFRESHING) {
                         if (refreshStatus == STATUS_PULL_TO_REFRESH) {
-                            refreshStatus = STATUS_COMPLETE;
-                            if (pullType) {// 下拉
-                                onHeaderStateChange();
-                            } else if (!pullType) {// 上拉
+                            if ((startY - secondTempY) / RATIO > headerHeight && firstTempY - secondTempY >= 9) {
+                                // 上拉刷新 → 松开刷新
+                                refreshStatus = STATUS_RELEASE_TO_REFRESH;
+                                onFooterStateChange();
+                            } else if (startY - secondTempY <= 0) {     // 上拉刷新 → 回到 刷新完成
+                                refreshStatus = STATUS_COMPLETE;
                                 onFooterStateChange();
                             }
                         }
 
                         if (refreshStatus == STATUS_RELEASE_TO_REFRESH) {
-                            refreshStatus = STATUS_REFRESHING;
-                            if (pullType) { // 下拉
-                                onHeaderStateChange();
-                                if (pullDownListener != null) {
-                                    if (isFooterVisible) {
-                                        hideFooter();
-                                    }
-                                    pullDownListener.onRefresh();
-                                }
-                            } else if (!pullType) {// 上拉
+                            if (firstTempY - secondTempY < -5) {    // 从松开刷新 → 回到的上拉刷新
+                                refreshStatus = STATUS_PULL_TO_REFRESH;
+                                isBack = true;
                                 onFooterStateChange();
-                                if (pullUpListener != null) {
-                                    pullUpListener.onRefresh();
-                                }
+                            } else if (secondTempY - startY >= 0) {     // 松开刷新 → 回到 刷新完成
+                                refreshStatus = STATUS_COMPLETE;
+                                onFooterStateChange();
+                            }
+                        }
+
+                        if ((refreshStatus == STATUS_PULL_TO_REFRESH
+                                || refreshStatus == STATUS_RELEASE_TO_REFRESH) && secondTempY < startY) {
+                            footer.setPadding(0, 0, 0, (int) ((startY - secondTempY) / RATIO - headerHeight));
+                        }
+//                        }
+                    }
+                    break;
+
+                case MotionEvent.ACTION_UP:
+//                    if (refreshStatus != STATUS_REFRESHING) {
+                    if (refreshStatus == STATUS_PULL_TO_REFRESH) {
+                        refreshStatus = STATUS_COMPLETE;
+                        if (pullType) {     // 下拉
+                            onHeaderStateChange();
+                        } else if (!pullType) {     // 上拉
+                            onFooterStateChange();
+                        }
+                    }
+
+                    if (refreshStatus == STATUS_RELEASE_TO_REFRESH) {
+                        refreshStatus = STATUS_REFRESHING;
+                        if (pullType) {     // 下拉
+                            onHeaderStateChange();
+                            if (pullDownListener != null) {
+//                                if (isFooterVisible) {
+//                                    hideFooter();
+//                                }
+                                pullDownListener.onRefresh();
+                            }
+                        } else if (!pullType) {     // 上拉
+                            onFooterStateChange();
+                            if (pullUpListener != null) {
+                                pullUpListener.onRefresh();
                             }
                         }
                     }
+//                    }
                     break;
             }
         }
@@ -457,6 +458,11 @@ public class ListViewRefresh extends ListView {
                 break;
 
             case STATUS_REFRESHING:
+                //若footer可见则隐藏 201609021040
+                if (isFooterVisible) {
+                    hideFooter();
+                }
+
                 headerProgressBar.setVisibility(View.VISIBLE);
                 headerArrow.setVisibility(View.GONE);
 
@@ -511,13 +517,23 @@ public class ListViewRefresh extends ListView {
     /**
      * 隐藏Footer
      */
-    public void hideFooter() {
+    private void hideFooter() {
         isFooterVisible = false;
 
         footerArrow.setVisibility(View.VISIBLE);
         footerLastUpdated.setVisibility(View.VISIBLE);
         footerTitle.setText("");
         footer.setPadding(0, -1 * headerHeight, 0, 0);
+    }
+
+    /********************对外公开方法********************/
+    /**
+     * 设置ListView状态为下拉正在刷新状态
+     */
+    public void setStateRefreshing() {
+        pullType = true;
+        refreshStatus = STATUS_REFRESHING;
+        onHeaderStateChange();
     }
 
     /**
@@ -536,16 +552,6 @@ public class ListViewRefresh extends ListView {
     }
 
     /**
-     * 获取刷新时间提示
-     *
-     * @return
-     */
-    private String getRefreshTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return "最后刷新时间：" + sdf.format(new Date());
-    }
-
-    /**
      * 处理刷新完成后事项
      */
     public void refreshComplete() {
@@ -558,6 +564,16 @@ public class ListViewRefresh extends ListView {
             onFooterStateChange();
             footerLastUpdated.setText(getRefreshTime());
         }
+    }
+
+    /**
+     * 获取刷新时间提示
+     *
+     * @return
+     */
+    private String getRefreshTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return "最后刷新时间：" + sdf.format(new Date());
     }
 
     /**

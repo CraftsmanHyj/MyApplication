@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="transparentor">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="green">#FF669900</color>
 
     <!-- listview的item点击效果 -->
     <color name="item_press">#ffff0000</color>
@@ -9,5 +13,9 @@
     <color name="blue">#037BFF</color>
     <color name="red">#FD4A2E</color>
     <color name="gray">#8F8F8F</color>
+
+    <!--按钮颜色-->
+    <color name="btn_normal">#1EAB94</color>
+    <color name="btn_pressed">#AAAAAA</color>
 
 </resources>

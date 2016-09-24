@@ -8,34 +8,32 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 
 public class TitleBarActivity extends BaseActivity {
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.titlebar);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.titlebar);
 
-		myInit();
-	}
+        myInit();
+    }
 
-	private void myInit() {
-		TitleBar titleBar = (TitleBar) findViewById(R.id.titleCustom);
+    private void myInit() {
+        TitleBar titleBar = (TitleBar) findViewById(R.id.titleCustom);
 
-		titleBar.setOnLeftButtonClick(new TitleBar.DoActionIterface() {
+        titleBar.setOnLeftButtonClick(new TitleBar.DoActionIterface() {
 
-			@Override
-			public void action() {
-				Toast.makeText(TitleBarActivity.this, "左边", Toast.LENGTH_SHORT)
-						.show();
-			}
-		});
+            @Override
+            public void action() {
+                Toast.makeText(TitleBarActivity.this, "左边", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-		titleBar.setOnRightButtonClick(new TitleBar.DoActionIterface() {
+        titleBar.setOnRightButtonClick(new TitleBar.DoActionIterface() {
 
-			@Override
-			public void action() {
-				Toast.makeText(TitleBarActivity.this, "右边", Toast.LENGTH_SHORT)
-						.show();
-			}
-		});
-	}
+            @Override
+            public void action() {
+                Toast.makeText(TitleBarActivity.this, "右边", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

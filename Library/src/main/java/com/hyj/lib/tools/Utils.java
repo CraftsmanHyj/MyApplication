@@ -1,12 +1,17 @@
 package com.hyj.lib.tools;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
@@ -115,6 +120,87 @@ public class Utils {
         }
     }
 
+    /******************** 网络处理模块 ********************/
+    /**
+     * 检查网络是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isOpenNetwork(final Context context) {
+        boolean isAvailable = hasNetwork(context);
+
+        if (!isAvailable) {
+            DialogUtils.DialogAction okAction = new DialogUtils.DialogAction() {
+
+                @Override
+                public void action() {
+                    Intent intent = null;
+                    int sdkVersion = Build.VERSION.SDK_INT;
+
+                    if (sdkVersion > 10) {
+                        intent = new Intent(Settings.ACTION_SETTINGS);
+                    } else {
+                        intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                    }
+
+                    context.startActivity(intent);
+                }
+            };
+
+            DialogUtils.showConfirmDialog(context, "提示", "网络未开启，是否马上设置？", okAction);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 判断手机网络是否正常(包括WIFI、移动网络)
+     *
+     * @param context
+     * @return
+     */
+    public static boolean hasNetwork(Context context) {
+        boolean isNormal = hasWifiNetwork(context);
+        isNormal = isNormal ? isNormal : hasMobileNetwork(context);
+        return isNormal;
+    }
+
+    /**
+     * WIFI是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean hasWifiNetwork(Context context) {
+        WifiManager wifiManager = (WifiManager) context
+                .getSystemService(Service.WIFI_SERVICE);
+        if (null == wifiManager) {
+            return false;
+        }
+
+        return WifiManager.WIFI_STATE_ENABLED == wifiManager.getWifiState();
+    }
+
+    /**
+     * 移动网络是否可用(4G/3G/2G网络)
+     *
+     * @param context
+     * @return
+     */
+    public static boolean hasMobileNetwork(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (null == manager) {
+            return false;
+        }
+
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        return null != info && info.isAvailable();
+    }
+
     /**
      * 判断传入数据是否为空
      *
@@ -146,6 +232,11 @@ public class Utils {
      * @param url
      */
     public static void openUrl(Context context, String url) {
+        //前面加https://协议，否则无法打开浏览器，直接崩溃
+        if (!url.startsWith("http")) {
+            url = "http://" + url;
+        }
+
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));

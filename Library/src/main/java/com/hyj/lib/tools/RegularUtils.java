@@ -20,7 +20,8 @@ public class RegularUtils {
     private static final String REGEX_TEL = "^\\d{3,4}-?\\d{7,8}$";
     private static final String REGEX_CHINESE = "^[\u4e00-\u9fa5]+$";
     private static final String REGEX_SPACE = "(\\n|\\s|\\t\\r)+";
-    private static final String REGEX_URL = "^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|cn|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$";
+    //    private static final String REGEX_URL = "^(((ht|f)tp(s?))\\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|cn|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$";
+    private static final String REGEX_URL = "^(((http(s)?\\://)|(www.))|(ftp(s)?\\://))([a-zA-Z].)[a-zA-Z0-9\\-\\.]+\\.(com|cn|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\\:[0-9]+)*(/($|[a-zA-Z0-9\\.\\,\\;\\?\\'\\\\\\+&amp;%\\$#\\=~_\\-]+))*$";
 
     // 用于身份证最后一位校验位计算
     private static final int[] wi = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1};

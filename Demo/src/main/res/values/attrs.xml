@@ -106,4 +106,14 @@
     <declare-styleable name="CircleProBar">
         <attr name="radius" />
     </declare-styleable>
+
+    <!-- 搜索波纹属性 -->
+    <declare-styleable name="RippleLayout">
+        <attr name="rippcolor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="radius" />
+        <attr name="duration" format="integer" />
+        <attr name="rippleNums" format="integer" />
+        <attr name="scale" format="float" />
+    </declare-styleable>
 </resources>

@@ -120,8 +120,6 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
                     break;
             }
         }
-
-        ;
     };
 
     public GameJigsawLayout(Context context) {
@@ -132,8 +130,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
         this(context, attrs, 0);
     }
 
-    public GameJigsawLayout(Context context, AttributeSet attrs,
-                            int defStyleAttr) {
+    public GameJigsawLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         myInit(context, attrs);
@@ -151,10 +148,8 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
      * @param attrs
      */
     private void initAttrs(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs,
-                R.styleable.jigsaw);
-        BitmapDrawable bd = (BitmapDrawable) ta
-                .getDrawable(R.styleable.jigsaw_drawable);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.jigsaw);
+        BitmapDrawable bd = (BitmapDrawable) ta.getDrawable(R.styleable.jigsaw_drawable);
         mBitmap = bd.getBitmap();
         isTimeLimit = ta.getBoolean(R.styleable.jigsaw_timelimit, true);
         ta.recycle();
@@ -243,8 +238,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
      * 设置ImageView(Item)的宽高等属性
      */
     private void initItem() {
-        itemWidth = (gameWidth - mPadding * 2 - mMargin * (mColumn - 1))
-                / mColumn;
+        itemWidth = (gameWidth - mPadding * 2 - mMargin * (mColumn - 1)) / mColumn;
         items = new ImageView[mColumn * mColumn];
 
         // 生成我们的Item，设置rule
@@ -258,8 +252,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
             item.setTag(i + SPLIT + lItemBitmap.get(i).getIndex());
             items[i] = item;
 
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    itemWidth, itemWidth);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(itemWidth, itemWidth);
             // 不是最后一列，设置Item间横向间隙通过rightMargin
             if ((i + 1) % mColumn != 0) {
                 lp.rightMargin = mMargin;
@@ -321,8 +314,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
                 int x = j * pieceWidth;
                 int y = i * pieceWidth;
 
-                imagePiece.setBitmap(Bitmap.createBitmap(bitmap, x, y,
-                        pieceWidth, pieceWidth));
+                imagePiece.setBitmap(Bitmap.createBitmap(bitmap, x, y, pieceWidth, pieceWidth));
 
                 lPieces.add(imagePiece);
             }
@@ -400,8 +392,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
         // 第一张交换图片
         ImageView ivTemp = new ImageView(getContext());
         ivTemp.setImageBitmap(firstBitmap);
-        RelativeLayout.LayoutParams lpTemp = new RelativeLayout.LayoutParams(
-                itemWidth, itemWidth);
+        RelativeLayout.LayoutParams lpTemp = new RelativeLayout.LayoutParams(itemWidth, itemWidth);
         lpTemp.leftMargin = ivSelFirst.getLeft() - mPadding;
         lpTemp.topMargin = ivSelFirst.getTop() - mPadding;
         ivTemp.setLayoutParams(lpTemp);
@@ -574,7 +565,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
     /**
      * 图片预览
      *
-     * @param boolean isPress是否按下预览
+     * @param isPress isPress是否按下预览
      */
     public void preview(boolean isPress) {
         initAnimLayout();
@@ -583,8 +574,7 @@ public class GameJigsawLayout extends RelativeLayout implements OnClickListener 
             ImageView ivTemp = new ImageView(getContext());
             ivTemp.setImageBitmap(mBitmap);
 
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                    gameWidth, gameWidth);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(gameWidth, gameWidth);
             lp.topMargin = -mMargin;
             lp.leftMargin = 0;
             ivTemp.setLayoutParams(lp);

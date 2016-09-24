@@ -33,11 +33,11 @@ public class Lock3Activity extends BaseActivity implements CompoundButton.OnChec
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()) {
             case R.id.lock3Chkline:
-                lock.setHasLine(isChecked);
+                lock.setHasTrack(isChecked);
                 break;
 
             case R.id.lock3ChkSound:
-                lock.setHasSound(isChecked);
+                lock.setHasVoice(isChecked);
                 break;
 
             case R.id.lock3ChkShake:

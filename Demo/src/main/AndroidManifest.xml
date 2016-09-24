@@ -28,7 +28,7 @@
         <activity
             android:name=".MainDemoActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -147,6 +147,12 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".lock.lockpattern3.Lock3Activity"
+            android:launchMode="singleTask" />
+
+        <!--数字锁-->
+        <activity
+            android:name=".lock.number.LockNumberActivity"
+            android:label="@string/title_activity_lock_number"
             android:launchMode="singleTask" />
 
         <!-- 仿微信图片上传 -->
@@ -297,12 +303,15 @@
             android:name=".six.SixGameActivity"
             android:launchMode="singleTask" />
 
-        <!--自定义进度条测试-->
+        <!-- 自定义进度条测试 -->
         <activity
             android:name=".porgress.ProgressBarActivity"
             android:launchMode="singleTask" />
+        <activity
+            android:name=".porgress.load.ProLoaddingActivity"
+            android:launchMode="singleTask" />
 
-        <!--recyclerView万能适配器测试-->
+        <!-- recyclerView万能适配器测试 -->
         <activity
             android:name=".adapter.recycler.RecyclerAdapterActivity"
             android:label="RecyclerView Test"
@@ -322,6 +331,11 @@
         <activity
             android:name=".adapter.recycler.RvWidthHeaderActivity"
             android:label="RvWidthHeaderActivity"
+            android:launchMode="singleTask" />
+
+        <!--波形搜索图-->
+        <activity
+            android:name=".ripp.RippleScanActivity"
             android:launchMode="singleTask" />
     </application>
 

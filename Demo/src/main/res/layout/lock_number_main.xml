@@ -3,17 +3,20 @@
     xmlns:hyj="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <com.hyj.lib.lock.LockPointView
-        android:id="@+id/lock3Pattern"
+
+    <com.hyj.lib.lock.LockNumberView
+        android:id="@+id/lockNumber"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
+        android:background="@color/btn_normal"
         hyj:hasShake="false"
         hyj:hasSound="false"
-        hyj:hasTrack="false" />
+        hyj:hasTrack="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,23 +26,28 @@
         android:padding="10dp">
 
         <CheckBox
-            android:id="@+id/lock3Chkline"
+            android:id="@+id/lnChkTrack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:checked="true"
+            android:enabled="false"
             android:text="轨迹" />
 
         <CheckBox
-            android:id="@+id/lock3ChkSound"
+            android:id="@+id/lnChkSound"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:text="声音" />
 
         <CheckBox
-            android:id="@+id/lock3ChkShake"
+            android:id="@+id/lnChkShake"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:text="震动" />
     </LinearLayout>

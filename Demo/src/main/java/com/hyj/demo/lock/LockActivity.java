@@ -159,9 +159,9 @@ public class LockActivity extends BaseActivity {
                 pwdSetNumber = 0;
                 if (!pwd.equals(password)) {
                     ToastUtils.showToast(this, "两次绘制的手势密码不一致，请重新绘制");
-                    lock.errorPoint();
+                    lock.error();
                 } else {
-                    lock.resetPoint();
+                    lock.resert();
                     SPUtils.putParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_PWD, pwd);
                     state = STATE_UNLOCKING;
                 }
@@ -169,22 +169,22 @@ public class LockActivity extends BaseActivity {
             updateView();
         } else if (STATE_UPDATE == state) {
             if (!pwd.equals(password)) {
-                lock.errorPoint();
+                lock.error();
                 ToastUtils.showToast(this, "手势密码错误，请重新输入");
                 return;
             }
-            lock.resetPoint();
+            lock.resert();
             state = STATE_SET;
             updateView();
         } else if (STATE_UNLOCKING == state) {
             if (!pwd.equals(password)) {
-                lock.errorPoint();
+                lock.error();
                 ToastUtils.showToast(this, "手势密码错误，请重新输入");
                 return;
             }
 
             ToastUtils.showToast(this, "手势密码输入正确");
-            lock.resetPoint();
+            lock.resert();
 
             //没有设置密保则跳入密保界面
             String str = (String) SPUtils.getParam(this, Constants.FILE_NAME_SHARED, Constants.FIELD_QUESTION, "");

@@ -188,6 +188,19 @@ public abstract class FileUtils {
     }
 
     /**
+     * 截取路径
+     * 源路径：/storage/emulated/0/com.hyj.code/Temp/data.xml
+     * 截取后：/com.hyj.code/Temp/data.xml
+     *
+     * @param context
+     * @param path
+     * @return
+     */
+    public static String subDataDirPath(Context context, String path) {
+        return path.replace(getDataDir().getPath(), "");
+    }
+
+    /**
      * <pre>
      * 获取应用存放数据的根目录
      * 若SD卡存在：/mnt/sdcard/packageName
@@ -220,6 +233,19 @@ public abstract class FileUtils {
         }
 
         return rootDir;
+    }
+
+    /**
+     * 截取路径
+     * 源路径：/storage/emulated/0/com.hyj.code/Temp/data.xml
+     * 截取后：/Temp/data.xml
+     *
+     * @param context 上下文
+     * @param path    绝对路径
+     * @return 相对于app根目录的相对路径
+     */
+    public static String subAppRootDirPath(Context context, String path) {
+        return path.replace(getAppRootDir(context).getPath(), "");
     }
 
     /**
@@ -360,7 +386,7 @@ public abstract class FileUtils {
     }
 
     /**
-     * 删除指定目录下的文件夹和该目录目录
+     * 删除指定目录下的文件夹和该目录
      *
      * @param obj 参数可以传两种：1、File文件对象；2、StringPath文件绝对路径
      */

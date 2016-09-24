@@ -35,13 +35,16 @@ import com.hyj.demo.lock.LockActivity;
 import com.hyj.demo.lock.lockpattern.LockPatternActivity;
 import com.hyj.demo.lock.lockpattern2.LockTestActivity;
 import com.hyj.demo.lock.lockpattern3.Lock3Activity;
+import com.hyj.demo.lock.number.LockNumberActivity;
 import com.hyj.demo.luckydial.LuckyDialActivity;
 import com.hyj.demo.mainview.qq5_0.SlidingActivity;
 import com.hyj.demo.mainview.tabfragment.FragmentTabActivity;
 import com.hyj.demo.mainview.wechat.WeChatActivivty;
 import com.hyj.demo.popup.PopupActivity;
 import com.hyj.demo.porgress.ProgressBarActivity;
+import com.hyj.demo.porgress.load.ProLoaddingActivity;
 import com.hyj.demo.recyclerview.RecyclerActivity;
+import com.hyj.demo.ripp.RippleScanActivity;
 import com.hyj.demo.scratch.ScratchCardActivity;
 import com.hyj.demo.six.SixGameActivity;
 import com.hyj.demo.startmenu.StartMenu;
@@ -127,6 +130,16 @@ public class MainDemoActivity extends BaseActivity {
         ListItem bean;
 
         bean = new ListItem();
+        bean.setTitle("波形搜索图");
+        bean.setValue(RippleScanActivity.class);
+        lItems.add(bean);
+
+        bean = new ListItem();
+        bean.setTitle("数字解锁");
+        bean.setValue(LockNumberActivity.class);
+        lItems.add(bean);
+
+        bean = new ListItem();
         bean.setTitle("RcyclerView 适配器");
         bean.setValue(RecyclerAdapterActivity.class);
         bean.setBundle(getRecyclerAdapter());
@@ -135,6 +148,11 @@ public class MainDemoActivity extends BaseActivity {
         bean = new ListItem();
         bean.setTitle("RecyclerView");
         bean.setValue(RecyclerActivity.class);
+        lItems.add(bean);
+
+        bean = new ListItem();
+        bean.setTitle("进度条加载等待");
+        bean.setValue(ProLoaddingActivity.class);
         lItems.add(bean);
 
         bean = new ListItem();

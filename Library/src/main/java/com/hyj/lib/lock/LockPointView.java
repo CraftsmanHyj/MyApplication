@@ -71,9 +71,9 @@ public class LockPointView extends View {
     private SoundPool soundPool;//音效播放
     private Vibrator vibrator;//震动
 
-    private boolean hasLine = true;//绘制线条是否可见
+    private boolean hasTrack = true;//绘制线条是否可见
     private boolean hasShake = true;//按下是否震动
-    private boolean hasSound = true;//是否有声音
+    private boolean hasVoice = true;//是否有声音
 
     private OnCompleteListener completeListener;
 
@@ -89,12 +89,12 @@ public class LockPointView extends View {
     }
 
     /**
-     * 绘制线条是否可见
+     * 绘制轨迹是否可见
      *
-     * @param line
+     * @param track
      */
-    public void setHasLine(boolean line) {
-        this.hasLine = line;
+    public void setHasTrack(boolean track) {
+        this.hasTrack = track;
     }
 
     /**
@@ -109,13 +109,15 @@ public class LockPointView extends View {
     /**
      * 是否有声音
      *
-     * @param hasSound
+     * @param hasVoice
      */
-    public void setHasSound(boolean hasSound) {
-        this.hasSound = hasSound;
+    public void setHasVoice(boolean hasVoice) {
+        this.hasVoice = hasVoice;
     }
 
     /**
+     * 设置绘制完成事件
+     *
      * @param completeListener
      */
     public void setOnCompleteListener(OnCompleteListener completeListener) {
@@ -153,8 +155,8 @@ public class LockPointView extends View {
         pointCount = ta.getInteger(R.styleable.lockPattern_pointCount, pointCount);
         setPointCount(pointCount);
 
-        hasLine = ta.getBoolean(R.styleable.lockPattern_hasLine, hasLine);
-        hasSound = ta.getBoolean(R.styleable.lockPattern_hasSound, hasSound);
+        hasTrack = ta.getBoolean(R.styleable.lockPattern_hasTrack, hasTrack);
+        hasVoice = ta.getBoolean(R.styleable.lockPattern_hasSound, hasVoice);
         hasShake = ta.getBoolean(R.styleable.lockPattern_hasShake, hasShake);
 
         ta.recycle();
@@ -295,7 +297,7 @@ public class LockPointView extends View {
                         break;
                 }
 
-                if (!hasLine && Point.STATE_ERROR != p.getState()) {//不显示绘制路劲
+                if (!hasTrack && Point.STATE_ERROR != p.getState()) {//不显示绘制路劲
                     bitmap = locus_round_original;
                 }
 
@@ -309,7 +311,7 @@ public class LockPointView extends View {
 
             // 绘制九宫格里面的点
             Point prePoint = lSelPoint.get(0);
-            if (!hasLine && Point.STATE_ERROR != prePoint.getState()) {
+            if (!hasTrack && Point.STATE_ERROR != prePoint.getState()) {
                 mPaint.setAlpha(0);
             }
 
@@ -382,7 +384,7 @@ public class LockPointView extends View {
                     task = null;
                 }
 
-                resetPoint();//重置九宫格界面
+                resert();//重置九宫格界面
                 if (checkSelectPoint(isTouchUp)) {
                     isSelect = true;
                 }
@@ -405,9 +407,9 @@ public class LockPointView extends View {
         int pointCount = lSelPoint.size();
         if (isTouchUp && pointCount > 0) {
             if (1 == pointCount) {// 绘制不成立
-                resetPoint();
+                resert();
             } else if (pointCount < pointNumber && pointCount > 1) {
-                errorPoint(); // 绘制错误
+                error(); // 绘制错误
                 showToast("密码最小长度为 " + pointNumber + " 位,请重新输入");
             } else if (pointCount >= pointNumber && null != completeListener) {// 绘制成功
                 isTouch = false;
@@ -448,7 +450,7 @@ public class LockPointView extends View {
                             p.setState(Point.STATE_CHECK);
                             lSelPoint.add(p);
 
-                            if (hasSound) {
+                            if (hasVoice) {
                                 playMusic();
                             }
 
@@ -491,7 +493,7 @@ public class LockPointView extends View {
     /**
      * 设置已选中的点，选中状态为错误
      */
-    public void errorPoint() {
+    public void error() {
         for (Point p : lSelPoint) {
             p.setState(Point.STATE_ERROR);
         }
@@ -501,7 +503,7 @@ public class LockPointView extends View {
     /**
      * 重置点的状态
      */
-    public void resetPoint() {
+    public void resert() {
         for (Point p : lSelPoint) {
             p.setState(Point.STATE_NORMAL);
         }
@@ -521,13 +523,13 @@ public class LockPointView extends View {
             postInvalidate();
             task = new TimerTask() {
                 public void run() {
-                    resetPoint();
+                    resert();
                     postInvalidate();
                 }
             };
             timer.schedule(task, CLEAR_TIME);
         } else {
-            resetPoint();
+            resert();
             postInvalidate();
         }
     }
