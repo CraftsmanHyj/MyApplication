@@ -1,4 +1,4 @@
-package com.hyj.demo.porgress;
+package com.hyj.lib.progress;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,9 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-
-import com.hyj.demo.R;
-
+import com.hyj.lib.R;
 /**
  * <pre>
  *     圆形进度条

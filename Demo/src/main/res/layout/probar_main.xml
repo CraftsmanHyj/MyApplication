@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.hyj.demo.porgress.HorizontalProgressBar
+        <com.hyj.lib.progress.HorizontalProgressBar
             android:id="@+id/proBarPb1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             hyj:pbTextColor="#ffff0000"
             hyj:pbUnreachColor="#44ff0000" />
 
-        <com.hyj.demo.porgress.HorizontalProgressBar
+        <com.hyj.lib.progress.HorizontalProgressBar
             android:id="@+id/proBarPb2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             hyj:pbTextColor="#44ff0000"
             hyj:pbUnreachColor="#ffff0000" />
 
-        <com.hyj.demo.porgress.HorizontalProgressBar
+        <com.hyj.lib.progress.HorizontalProgressBar
             android:id="@+id/proBarPb3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             hyj:pbTextColor="#44ff0000"
             hyj:pbUnreachColor="#ffff0000" />
 
-        <com.hyj.demo.porgress.CircleProgressBar
+        <com.hyj.lib.progress.CircleProgressBar
             android:id="@+id/proBarPb4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             hyj:pbUnreachColor="#ffff0000"
             hyj:radius="20dp" />
 
-        <com.hyj.demo.porgress.CircleProgressBar
+        <com.hyj.lib.progress.CircleProgressBar
             android:id="@+id/proBarPb5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,5 +62,22 @@
             hyj:pbTextSize="30sp"
             hyj:pbUnreachColor="#44ff0000"
             hyj:radius="60dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#a33232"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <com.hyj.lib.progress.WinProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                hyj:paintColor="@color/btn_normal"
+                hyj:paintWidth="8dp" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

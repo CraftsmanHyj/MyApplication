@@ -6,10 +6,18 @@
     <attr name="hasSound" format="boolean" />
     <!--点击是否有震动-->
     <attr name="hasShake" format="boolean" />
+    <!--点的个数-->
+    <attr name="pointCount" format="integer" />
+    <!--半径-->
+    <attr name="radius" format="dimension|reference" />
+    <!--画笔宽度-->
+    <attr name="paintWidth" format="dimension|reference" />
+    <!--画笔颜色-->
+    <attr name="paintColor" format="color|reference" />
 
     <!--九宫格中用到的-->
     <declare-styleable name="lockPattern">
-        <attr name="pointCount" format="integer" />
+        <attr name="pointCount" />
         <attr name="hasTrack" />
         <attr name="hasSound" />
         <attr name="hasShake" />
@@ -20,5 +28,25 @@
         <attr name="hasTrack" />
         <attr name="hasSound" />
         <attr name="hasShake" />
+    </declare-styleable>
+
+    <!--自定义进度条-->
+    <declare-styleable name="HorizontalProBar">
+        <attr name="pbUnreachColor" format="color|reference" />
+        <attr name="PbUnreachHeight" format="dimension|reference" />
+        <attr name="pbReachColor" format="color|reference" />
+        <attr name="pbReachHeight" format="dimension|reference" />
+        <attr name="pbTextColor" format="color|reference" />
+        <attr name="pbTextSize" format="dimension|reference" />
+        <attr name="pbTextOffset" format="dimension|reference" />
+    </declare-styleable>
+    <declare-styleable name="CircleProBar">
+        <attr name="radius" />
+    </declare-styleable>
+
+    <!--仿win10进度条-->
+    <declare-styleable name="WinProBar">
+        <attr name="paintWidth" />
+        <attr name="paintColor" />
     </declare-styleable>
 </resources>

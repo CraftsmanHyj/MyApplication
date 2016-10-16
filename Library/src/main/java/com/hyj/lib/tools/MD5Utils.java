@@ -67,32 +67,28 @@ public final class MD5Utils {
         return y ^ (x | (~z));
     }
 
-    private static long FF(long l, long l1, long l2, long l3, long l4, long l5,
-                           long l6) {
+    private static long FF(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += F(l1, l2, l3) + l4 + l6;
         l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private static long GG(long l, long l1, long l2, long l3, long l4, long l5,
-                           long l6) {
+    private static long GG(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += G(l1, l2, l3) + l4 + l6;
         l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private static long HH(long l, long l1, long l2, long l3, long l4, long l5,
-                           long l6) {
+    private static long HH(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += H(l1, l2, l3) + l4 + l6;
         l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
         return l;
     }
 
-    private static long II(long l, long l1, long l2, long l3, long l4, long l5,
-                           long l6) {
+    private static long II(long l, long l1, long l2, long l3, long l4, long l5, long l6) {
         l += I(l1, l2, l3) + l4 + l6;
         l = (int) l << (int) l5 | (int) l >>> (int) (32L - l5);
         l += l1;
@@ -131,8 +127,7 @@ public final class MD5Utils {
         Encode(digest, state, 16);
     }
 
-    private static void md5Memcpy(byte abyte0[], byte abyte1[], int i, int j,
-                                  int k) {
+    private static void md5Memcpy(byte abyte0[], byte abyte1[], int i, int j, int k) {
         for (int l = 0; l < k; l++)
             abyte0[i + l] = abyte1[j + l];
     }

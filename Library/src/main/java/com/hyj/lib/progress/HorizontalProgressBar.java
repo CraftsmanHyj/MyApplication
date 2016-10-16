@@ -1,4 +1,4 @@
-package com.hyj.demo.porgress;
+package com.hyj.lib.progress;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ProgressBar;
 
-import com.hyj.demo.R;
+import com.hyj.lib.R;
 
 /**
  * <pre>

@@ -6,6 +6,8 @@ import android.os.Message;
 
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
+import com.hyj.lib.progress.CircleProgressBar;
+import com.hyj.lib.progress.HorizontalProgressBar;
 
 public class ProgressBarActivity extends BaseActivity {
     private final int MSG_UPDATE = 0X00010000;

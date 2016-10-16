@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.hyj.lib.tools.FileUtils;
-import com.hyj.lib.tools.LogUtils;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
@@ -117,8 +116,6 @@ public class DemoApplication extends Application {
     private void initTools() {
         String appName = getBaseContext().getResources().getString(R.string.app_name);
         FileUtils.initParameter(appName);
-
-        LogUtils.initParameter(Constants.PROP_ISDEBUG, Constants.PROP_LOGTAG);
     }
 
     /**

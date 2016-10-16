@@ -2,7 +2,6 @@ package com.hyj.lib.tools;
 
 import android.util.Log;
 
-
 /**
  * <pre>
  *     log工具类，改变boolean值常量控制是否打印日志
