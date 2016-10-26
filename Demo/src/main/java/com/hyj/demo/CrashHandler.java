@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Process;
 
 import com.hyj.lib.tools.FileUtils;
+import com.hyj.lib.tools.PhoneUtils;
 import com.hyj.lib.tools.Utils;
 
 import org.json.JSONException;
@@ -119,9 +120,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
     private void getDeviceInfo() throws JSONException {
         mapErrorInfo.put("Platform", "Android");
         mapErrorInfo.put("Time", Utils.getCurrentTime());
-        mapErrorInfo.put("Mobile", Utils.getMobileType());
-        mapErrorInfo.put("OSVersion", Utils.getOSVersionCode() + "");
-        mapErrorInfo.put("OSVersionName", Utils.getOSVersionName());
+        mapErrorInfo.put("Mobile", PhoneUtils.getPhoneName());
+        mapErrorInfo.put("OSVersion", PhoneUtils.getOSVersionCode() + "");
+        mapErrorInfo.put("OSVersionName", PhoneUtils.getOSVersionName());
         mapErrorInfo.put("AppVersion", Utils.getAppVersionCode(context) + "");
         mapErrorInfo.put("AppVersionName", Utils.getAppVersionName(context));
     }
