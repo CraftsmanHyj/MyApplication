@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notification_custom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context="com.hyj.demo.notification.CustomNotificationActivity">
+
+    <Button
+        android:id="@+id/nfBtSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="系统默认通知" />
+
+    <Button
+        android:id="@+id/nfBtCustom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="自定义通知样式适配" />
+</LinearLayout>

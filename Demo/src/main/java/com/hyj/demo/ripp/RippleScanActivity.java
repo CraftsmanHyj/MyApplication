@@ -8,6 +8,10 @@ import android.widget.ImageView;
 import com.hyj.demo.BaseActivity;
 import com.hyj.demo.R;
 
+/**
+ * 支付宝咻咻咻波形图
+ * 需要导入第三方jar包：nineoldandroids-2.4.0.jar
+ */
 public class RippleScanActivity extends BaseActivity {
     private ImageView imageview;
     private RippleLayout layout;
@@ -25,7 +29,6 @@ public class RippleScanActivity extends BaseActivity {
         initData();
         initListener();
     }
-
 
     private void initView() {
         layout = (RippleLayout) findViewById(R.id.ripple_layout);

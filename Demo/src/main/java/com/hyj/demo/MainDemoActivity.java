@@ -21,6 +21,7 @@ import com.hyj.demo.annotaionsframe.AnnotationsActivity_;
 import com.hyj.demo.annotation.AnnotationActivity;
 import com.hyj.demo.circleimageview.CircleImageActivity;
 import com.hyj.demo.downservice.DownServiceActivity;
+import com.hyj.demo.example.CusClockViewActivity;
 import com.hyj.demo.flowlayout.FlowLayoutActivity;
 import com.hyj.demo.gobang.GobangActivity;
 import com.hyj.demo.image_mt.ImageMain;
@@ -40,10 +41,12 @@ import com.hyj.demo.luckydial.LuckyDialActivity;
 import com.hyj.demo.mainview.qq5_0.SlidingActivity;
 import com.hyj.demo.mainview.tabfragment.FragmentTabActivity;
 import com.hyj.demo.mainview.wechat.WeChatActivivty;
+import com.hyj.demo.notification.CustomNotificationActivity;
 import com.hyj.demo.popup.PopupActivity;
 import com.hyj.demo.porgress.ProgressBarActivity;
 import com.hyj.demo.porgress.load.ProLoaddingActivity;
 import com.hyj.demo.recyclerview.RecyclerActivity;
+import com.hyj.demo.ripp.CusWaveActivity;
 import com.hyj.demo.ripp.RippleScanActivity;
 import com.hyj.demo.scratch.ScratchCardActivity;
 import com.hyj.demo.six.SixGameActivity;
@@ -130,8 +133,19 @@ public class MainDemoActivity extends BaseActivity {
         ListItem bean;
 
         bean = new ListItem();
+        bean.setTitle("自定义时钟");
+        bean.setValue(CusClockViewActivity.class);
+        lItems.add(bean);
+
+        bean = new ListItem();
+        bean.setTitle("自定义通知样式适配");
+        bean.setValue(CustomNotificationActivity.class);
+        lItems.add(bean);
+
+        bean = new ListItem();
         bean.setTitle("波形搜索图");
-        bean.setValue(RippleScanActivity.class);
+        bean.setValue(SecondaryActivity.class);
+        bean.setBundle(getRipp());
         lItems.add(bean);
 
         bean = new ListItem();
@@ -356,6 +370,30 @@ public class MainDemoActivity extends BaseActivity {
         lItems.add(bean);
 
         adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 波形图汇总
+     *
+     * @return
+     */
+    private Bundle getRipp() {
+        ArrayList<ListItem> lData = new ArrayList<ListItem>();
+        ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("波形图-自定义实现方案");
+        bean.setValue(CusWaveActivity.class);
+        lData.add(bean);
+
+        bean = new ListItem();
+        bean.setTitle("波形图-第三方jar包");
+        bean.setValue(RippleScanActivity.class);
+        lData.add(bean);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(DATA_BUNDLE, lData);
+        return bundle;
     }
 
     /**

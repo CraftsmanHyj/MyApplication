@@ -149,7 +149,7 @@
             android:name=".lock.lockpattern3.Lock3Activity"
             android:launchMode="singleTask" />
 
-        <!--数字锁-->
+        <!-- 数字锁 -->
         <activity
             android:name=".lock.number.LockNumberActivity"
             android:label="@string/title_activity_lock_number"
@@ -333,9 +333,23 @@
             android:label="RvWidthHeaderActivity"
             android:launchMode="singleTask" />
 
-        <!--波形搜索图-->
+        <!-- 波形搜索图 -->
         <activity
             android:name=".ripp.RippleScanActivity"
+            android:launchMode="singleTask" />
+        <!--自定义波形图搜索-->
+        <activity
+            android:name=".ripp.CusWaveActivity"
+            android:launchMode="singleTask" />
+
+        <!-- 自定义通知栏 -->
+        <activity
+            android:name=".notification.CustomNotificationActivity"
+            android:launchMode="singleTask" />
+
+        <!--自定义时钟-->
+        <activity
+            android:name="com.hyj.demo.example.CusClockViewActivity"
             android:launchMode="singleTask" />
     </application>
 

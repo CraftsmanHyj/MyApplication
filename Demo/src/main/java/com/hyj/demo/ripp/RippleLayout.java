@@ -18,13 +18,13 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import java.util.ArrayList;
 
 /**
- * 这是一个类似支付宝声波支付的波纹效果布局,该布局中默认添加了不可见的圆形的视图,启动动画时会启动缩放、颜色渐变动画使得产生波纹效果.
+ * 这是一个类似支付宝声波支付的波纹效果布局,
+ * 该布局中默认添加了不可见的圆形的视图,启动动画时会启动缩放、颜色渐变动画使得产生波纹效果.
  * 这些动画都是无限循环的,并且每个View的动画之间都有时间间隔，这些时间间隔就会导致视图有大有小，从而产生波纹的效果.
  *
  * @author mrsimple
  */
 public class RippleLayout extends RelativeLayout {
-
     /**
      * static final fields
      */
