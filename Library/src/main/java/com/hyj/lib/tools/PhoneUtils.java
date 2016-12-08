@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 /**
  * 电话状态，网络等于手机相关的数据处理
@@ -50,6 +51,25 @@ public class PhoneUtils {
         String phoneNumber = tm.getLine1Number();
         if (phoneNumber.startsWith("+86")) {
             phoneNumber = phoneNumber.replace("+86", "");
+        }
+
+        //若果拿不到手机号码，就取SIM卡中的IMSI号
+        if (TextUtils.isEmpty(phoneNumber)) {
+            // IMSI号前面3位460是国家；紧接着后面2位00、02是中国移动；01是中国联通；03是中国电信。
+            phoneNumber = tm.getSubscriberId();
+            int type = Integer.parseInt(phoneNumber.substring(0, 5));
+            switch (type) {
+                case 46000:
+                case 46002:
+                    phoneNumber = "中国移动　" + phoneNumber;
+                    break;
+                case 46001:
+                    phoneNumber = "中国联通　" + phoneNumber;
+                    break;
+                case 46003:
+                    phoneNumber = "中国电信　" + phoneNumber;
+                    break;
+            }
         }
         return phoneNumber;
     }

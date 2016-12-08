@@ -198,7 +198,6 @@ public class ListViewRefresh extends ListView {
     }
 
     private void initData() {
-//        pullDownRefereshEnable = false;
         refreshStatus = STATUS_COMPLETE;
 
         //初始化刷新时间提示
@@ -304,7 +303,6 @@ public class ListViewRefresh extends ListView {
                             isRecorded = true;
                         }
 
-//                        if (refreshStatus != STATUS_REFRESHING) {
                         if (refreshStatus == STATUS_COMPLETE) {
                             if (secondTempY - startY > 0) {     //初始状态→ 进入 下拉刷新
                                 refreshStatus = STATUS_PULL_TO_REFRESH;
@@ -336,7 +334,6 @@ public class ListViewRefresh extends ListView {
                         if (refreshStatus == STATUS_PULL_TO_REFRESH || refreshStatus == STATUS_RELEASE_TO_REFRESH) {
                             header.setPadding(0, (int) ((secondTempY - startY) / RATIO - headerHeight), 0, 0);
                         }
-//                        }
                     } else if (pullUpRefreshCondition() && REFRESH_PULL == pullUpRefreshType) {
                         //上拉刷新
                         firstTempY = secondTempY;
@@ -347,7 +344,6 @@ public class ListViewRefresh extends ListView {
                             isRecorded = true;
                         }
 
-//                        if (refreshStatus != STATUS_REFRESHING) {     // 不是正在刷新状态
                         if (refreshStatus == STATUS_COMPLETE) {
                             if (startY - secondTempY > 0) {     // 刷新完成/初始状态 → 进入 下拉刷新
                                 refreshStatus = STATUS_PULL_TO_REFRESH;
@@ -381,12 +377,10 @@ public class ListViewRefresh extends ListView {
                                 || refreshStatus == STATUS_RELEASE_TO_REFRESH) && secondTempY < startY) {
                             footer.setPadding(0, 0, 0, (int) ((startY - secondTempY) / RATIO - headerHeight));
                         }
-//                        }
                     }
                     break;
 
                 case MotionEvent.ACTION_UP:
-//                    if (refreshStatus != STATUS_REFRESHING) {
                     if (refreshStatus == STATUS_PULL_TO_REFRESH) {
                         refreshStatus = STATUS_COMPLETE;
                         if (pullType) {     // 下拉
@@ -413,7 +407,6 @@ public class ListViewRefresh extends ListView {
                             }
                         }
                     }
-//                    }
                     break;
             }
         }
