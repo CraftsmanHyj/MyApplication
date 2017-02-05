@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -27,10 +28,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * <pre>
- *     数字解锁界面
- *     如果旋转屏幕要求状态保存，则必须在XML文件中定义ID，否则无法保存
- * </pre>
+ * 数字解锁界面
+ * 如果旋转屏幕要求状态保存，则必须在XML文件中定义ID，否则无法保存
  * Created by hyj on 2016/8/1.
  */
 public class LockNumberView extends ViewGroup {
@@ -258,16 +257,15 @@ public class LockNumberView extends ViewGroup {
         textSize = buttonWidth * TEXT_SIZE_SCALE;//字体大小按宽高比例缩小
         for (int i = 1; i < 5; i++) {
             for (int j = 1; j < 4; j++) {
-                int index = (i - 1) * 3 + (j - 1);
-                String str = lBtValue.get(index);
                 TextView tv = getTextView(buttonWidth, textSize);
-                tv.setText(str);
-
                 int cl = dividerWidth * (j + 1) + buttonWidth * j;
                 int cr = cl + buttonWidth;
                 int ct = dividerWidth * (i + 1) + buttonWidth * i;
                 int cb = ct + buttonWidth;
                 tv.layout(cl, ct, cr, cb);
+
+                int index = (i - 1) * 3 + (j - 1);
+                tv.setText(lBtValue.get(index));
                 lBtView.add(tv);
 
                 tv.setOnClickListener(new OnClickListener() {
@@ -323,9 +321,9 @@ public class LockNumberView extends ViewGroup {
         tv.setPadding(0, (int) (width * TEXT_SIZE_SCALE * 1 / 2.0f), 0, 0);
 
         if (!hasTrack) {
-            tv.setBackground(getResources().getDrawable(R.drawable.item_normal));
+            tv.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.item_normal));
         } else {
-            tv.setBackground(getResources().getDrawable(R.drawable.item_press_bg));
+            tv.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.item_press_bg));
         }
 
         addView(tv);
