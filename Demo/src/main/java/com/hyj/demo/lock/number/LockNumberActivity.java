@@ -7,6 +7,7 @@ import android.widget.CompoundButton;
 
 import com.hyj.demo.R;
 import com.hyj.lib.lock.LockNumberView;
+import com.hyj.lib.lock.OnCompleteListener;
 
 public class LockNumberActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
 
@@ -26,10 +27,11 @@ public class LockNumberActivity extends Activity implements CompoundButton.OnChe
         ((CheckBox) findViewById(R.id.lnChkSound)).setOnCheckedChangeListener(this);
         ((CheckBox) findViewById(R.id.lnChkShake)).setOnCheckedChangeListener(this);
 
-        lockNumber.setOnCompleteListener(new LockNumberView.OnCompleteListener() {
+        lockNumber.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(String password) {
-                lockNumber.resert();
+//                lockNumber.resert();
+                lockNumber.clearPassword();
             }
         });
     }

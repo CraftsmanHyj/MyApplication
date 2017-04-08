@@ -25,14 +25,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * <pre>
- *     所有以locus开头的图片都是九宫格要用到的图片
- *     九宫格解锁
- * </pre>
+ * 所有以locus开头的图片都是九宫格要用到的图片
+ * 九宫格解锁
  *
  * @author hyj
  */
-public class LockPointView extends View {
+public class LockPointView extends View implements BaseLock {
     private int pointNumber = 5;// 密码最小长度
     private int pointCount = 3;//密码行列数
 
@@ -75,7 +73,7 @@ public class LockPointView extends View {
     private boolean hasShake = true;//按下是否震动
     private boolean hasVoice = true;//是否有声音
 
-    private OnCompleteListener completeListener;
+    private OnCompleteListener completeListener;//密码输入完时回调事件
 
     /**
      * 设置每行点的个数
@@ -93,6 +91,7 @@ public class LockPointView extends View {
      *
      * @param track
      */
+    @Override
     public void setHasTrack(boolean track) {
         this.hasTrack = track;
     }
@@ -102,6 +101,7 @@ public class LockPointView extends View {
      *
      * @param hasShake
      */
+    @Override
     public void setHasShake(boolean hasShake) {
         this.hasShake = hasShake;
     }
@@ -111,6 +111,7 @@ public class LockPointView extends View {
      *
      * @param hasVoice
      */
+    @Override
     public void setHasVoice(boolean hasVoice) {
         this.hasVoice = hasVoice;
     }
@@ -120,6 +121,7 @@ public class LockPointView extends View {
      *
      * @param completeListener
      */
+    @Override
     public void setOnCompleteListener(OnCompleteListener completeListener) {
         this.completeListener = completeListener;
     }
@@ -491,6 +493,7 @@ public class LockPointView extends View {
     /**
      * 设置已选中的点，选中状态为错误
      */
+    @Override
     public void error() {
         for (Point p : lSelPoint) {
             p.setState(Point.STATE_ERROR);
@@ -501,6 +504,7 @@ public class LockPointView extends View {
     /**
      * 重置点的状态
      */
+    @Override
     public void resert() {
         for (Point p : lSelPoint) {
             p.setState(Point.STATE_NORMAL);
@@ -511,8 +515,10 @@ public class LockPointView extends View {
     }
 
     /**
-     * 清除已绘制的密码
+     * 延迟清除已绘制的密码
+     * 让其显示一段时间后再清除
      */
+    @Override
     public void clearPassword() {
         if (CLEAR_TIME > 0) {
             if (null != task) {
@@ -530,19 +536,5 @@ public class LockPointView extends View {
             resert();
             postInvalidate();
         }
-    }
-
-    /**
-     * 轨迹绘画完成事件
-     *
-     * @author: hyj
-     */
-    public interface OnCompleteListener {
-        /**
-         * 绘制完成
-         *
-         * @param password
-         */
-        public void onComplete(String password);
     }
 }

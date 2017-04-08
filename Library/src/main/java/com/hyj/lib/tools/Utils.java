@@ -45,7 +45,7 @@ public class Utils {
 
     /**
      * 获取APP版本名
-     *
+     *可以使用BuildConfig.VERSION_NAME代替
      * @param context
      * @return
      */

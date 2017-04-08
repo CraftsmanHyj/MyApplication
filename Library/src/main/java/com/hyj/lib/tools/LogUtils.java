@@ -3,10 +3,8 @@ package com.hyj.lib.tools;
 import android.util.Log;
 
 /**
- * <pre>
- *     log工具类，改变boolean值常量控制是否打印日志
- *     在调用项目的Application中调用initParameter()方法，初始化参数
- * </pre>
+ * log工具类，改变boolean值常量控制是否打印日志
+ * 在调用项目的Application中调用initParameter()方法，初始化参数
  *
  * @Author hyj
  * @Date 2015-12-16 下午2:53:10

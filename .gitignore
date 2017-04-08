@@ -60,4 +60,6 @@ Temporary Items
 build/
 *.iml
 local.properties
+gradle.properties
 CodeBook/
+keystore*

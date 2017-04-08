@@ -12,6 +12,7 @@ import com.hyj.demo.BaseActivity;
 import com.hyj.demo.Constants;
 import com.hyj.demo.R;
 import com.hyj.lib.lock.LockPointView;
+import com.hyj.lib.lock.OnCompleteListener;
 import com.hyj.lib.tools.MD5Utils;
 import com.hyj.lib.tools.SPUtils;
 import com.hyj.lib.tools.ToastUtils;
@@ -78,7 +79,7 @@ public class LockActivity extends BaseActivity {
     }
 
     private void iniListener() {
-        lock.setOnCompleteListener(new LockPointView.OnCompleteListener() {
+        lock.setOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(String password) {
                 chargePwd(password);

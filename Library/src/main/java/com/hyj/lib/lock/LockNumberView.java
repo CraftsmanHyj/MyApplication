@@ -32,13 +32,14 @@ import java.util.Comparator;
  * 如果旋转屏幕要求状态保存，则必须在XML文件中定义ID，否则无法保存
  * Created by hyj on 2016/8/1.
  */
-public class LockNumberView extends ViewGroup {
+public class LockNumberView extends ViewGroup implements BaseLock {
     private final String[] pwdShow = new String[]{"ㄛ", "ㄜ", "ㄞ", "ㄓ", "ㄒ", "ㄌ", "ㄢ", "ㄝ", "ㄘ", "ㄊ"};
     private final String BTN_CLEAR = "C";//清除所有密码
     private final String BTN_DEL = "←";//删除一个密码
 
     private final int MSG_COMPLETE = 0X0000100;//密码输入完成判断
     private final int MSG_PWDERROR = 0X0000101;//密码错误执行操作
+    private final int MSG_DELAYRESERT = 0X0000102;//延迟清空显示的密码
 
     private final float TEXT_SIZE_SCALE = 1 / 4.0f;//将字体大小同按钮大小成比例缩放
     private final float PWD_WIDTH_SCALE = 9 / 10.0f;//密码显示界面所占宽度比例
@@ -65,13 +66,14 @@ public class LockNumberView extends ViewGroup {
     private boolean hasShake = true;//按下是否震动
     private boolean hasVoice = true;//是否有声音
 
-    private OnCompleteListener completeListener;
+    private OnCompleteListener completeListener;//密码输入完成时调用
 
     /**
      * 绘制轨迹是否可见
      *
      * @param track
      */
+    @Override
     public void setHasTrack(boolean track) {
         this.hasTrack = track;
     }
@@ -81,6 +83,7 @@ public class LockNumberView extends ViewGroup {
      *
      * @param hasShake
      */
+    @Override
     public void setHasShake(boolean hasShake) {
         this.hasShake = hasShake;
     }
@@ -90,6 +93,7 @@ public class LockNumberView extends ViewGroup {
      *
      * @param hasVoice
      */
+    @Override
     public void setHasVoice(boolean hasVoice) {
         this.hasVoice = hasVoice;
     }
@@ -99,6 +103,7 @@ public class LockNumberView extends ViewGroup {
      *
      * @param completeListener
      */
+    @Override
     public void setOnCompleteListener(OnCompleteListener completeListener) {
         this.completeListener = completeListener;
     }
@@ -119,6 +124,10 @@ public class LockNumberView extends ViewGroup {
 
                 case MSG_PWDERROR:
                     error();
+                    break;
+
+                case MSG_DELAYRESERT:
+                    resert();
                     break;
             }
         }
@@ -352,32 +361,13 @@ public class LockNumberView extends ViewGroup {
                         sb.append(value);
                     }
 
-                    Message msg = handler.obtainMessage();
-                    msg.what = MSG_COMPLETE;
+                    Message msg = handler.obtainMessage(MSG_COMPLETE);
                     msg.obj = sb.deleteCharAt(0).toString();
                     handler.sendMessageDelayed(msg, 100);
                 }
 
                 break;
             }
-        }
-    }
-
-    /**
-     * 重置密码
-     */
-    public void resert() {
-        for (TextView tv : lPwdView) {
-            pwdNumber = 0;
-            lPwdValue.clear();
-            tv.setText("");
-            tv.setTag("");
-        }
-
-        initBtValues();
-        for (int i = 0; i < lBtView.size(); i++) {
-            TextView tv = lBtView.get(i);
-            tv.setText(lBtValue.get(i));
         }
     }
 
@@ -399,8 +389,28 @@ public class LockNumberView extends ViewGroup {
     }
 
     /**
+     * 重置密码
+     */
+    @Override
+    public void resert() {
+        for (TextView tv : lPwdView) {
+            pwdNumber = 0;
+            lPwdValue.clear();
+            tv.setText("");
+            tv.setTag("");
+        }
+
+        initBtValues();
+        for (int i = 0; i < lBtView.size(); i++) {
+            TextView tv = lBtView.get(i);
+            tv.setText(lBtValue.get(i));
+        }
+    }
+
+    /**
      * 密码输入错误：让密码闪烁
      */
+    @Override
     public void error() {
         isError = true;
 
@@ -420,6 +430,16 @@ public class LockNumberView extends ViewGroup {
 
         sparkTimes++;
         handler.sendEmptyMessageDelayed(MSG_PWDERROR, 200);
+    }
+
+    /**
+     * 延迟清除已绘制的密码
+     * 让其显示一段时间后再清除
+     */
+    @Override
+    public void clearPassword() {
+        Message message = handler.obtainMessage(MSG_DELAYRESERT);
+        handler.sendMessageDelayed(message, 600);
     }
 
     /**
@@ -471,19 +491,5 @@ public class LockNumberView extends ViewGroup {
             return;
         }
         super.onRestoreInstanceState(state);
-    }
-
-    /**
-     * 轨迹绘画完成事件
-     *
-     * @author: hyj
-     */
-    public interface OnCompleteListener {
-        /**
-         * 绘制完成
-         *
-         * @param password
-         */
-        public void onComplete(String password);
     }
 }

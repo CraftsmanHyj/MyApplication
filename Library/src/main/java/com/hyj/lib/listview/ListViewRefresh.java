@@ -507,18 +507,6 @@ public class ListViewRefresh extends ListView {
         }
     }
 
-    /**
-     * 隐藏Footer
-     */
-    private void hideFooter() {
-        isFooterVisible = false;
-
-        footerArrow.setVisibility(View.VISIBLE);
-        footerLastUpdated.setVisibility(View.VISIBLE);
-        footerTitle.setText("");
-        footer.setPadding(0, -1 * headerHeight, 0, 0);
-    }
-
     /********************对外公开方法********************/
     /**
      * 设置ListView状态为下拉正在刷新状态
@@ -527,6 +515,18 @@ public class ListViewRefresh extends ListView {
         pullType = true;
         refreshStatus = STATUS_REFRESHING;
         onHeaderStateChange();
+    }
+
+    /**
+     * 隐藏Footer
+     */
+    public void hideFooter() {
+        isFooterVisible = false;
+
+        footerArrow.setVisibility(View.VISIBLE);
+        footerLastUpdated.setVisibility(View.VISIBLE);
+        footerTitle.setText("");
+        footer.setPadding(0, -1 * headerHeight, 0, 0);
     }
 
     /**
@@ -550,10 +550,10 @@ public class ListViewRefresh extends ListView {
     public void refreshComplete() {
         refreshStatus = STATUS_COMPLETE;
 
-        if (pullType) {// 上拉
+        if (pullType) { //上拉
             onHeaderStateChange();
             headerLastUpdated.setText(getRefreshTime());
-        } else {// 下拉
+        } else { //下拉
             onFooterStateChange();
             footerLastUpdated.setText(getRefreshTime());
         }
