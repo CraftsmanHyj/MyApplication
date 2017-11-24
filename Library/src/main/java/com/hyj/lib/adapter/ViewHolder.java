@@ -197,10 +197,10 @@ public class ViewHolder extends RecyclerView.ViewHolder {
      * 设置控件是否可见
      *
      * @param viewId
-     * @param visible
+     * @param visibility
      */
-    public void setVisibility(int viewId, boolean visible) {
-        getView(viewId).setVisibility(visible ? View.VISIBLE : View.GONE);
+    public void setVisibility(int viewId, int visibility) {
+        getView(viewId).setVisibility(visibility);
     }
 
     /**

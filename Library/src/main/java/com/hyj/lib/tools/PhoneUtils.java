@@ -1,8 +1,10 @@
 package com.hyj.lib.tools;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -10,6 +12,12 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * 电话状态，网络等于手机相关的数据处理
@@ -37,6 +45,71 @@ public class PhoneUtils {
     public static String getIMEI(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceId();
+    }
+
+    /**
+     * 获取设备MAC地址
+     *
+     * @param context
+     * @return
+     */
+    public static String getDeviceMac(Context context) {
+        try {
+            String mac = null;
+            FileReader fstream = null;
+            try {
+                fstream = new FileReader("/sys/class/net/wlan0/address");
+            } catch (FileNotFoundException e) {
+                fstream = new FileReader("/sys/class/net/eth0/address");
+            }
+            BufferedReader in = null;
+            if (fstream != null) {
+                try {
+                    in = new BufferedReader(fstream, 1024);
+                    mac = in.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fstream != null) {
+                        try {
+                            fstream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (in != null) {
+                        try {
+                            in.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            return mac;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取设备唯一ID
+     *
+     * @param context
+     * @return
+     */
+    public static String getDeviceID(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String device_id = null;
+        if (checkPermission(context, Manifest.permission.READ_PHONE_STATE)) {
+            device_id = tm.getDeviceId();
+        }
+        if (TextUtils.isEmpty(device_id)) {
+            device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),
+                    android.provider.Settings.Secure.ANDROID_ID);
+        }
+        return device_id;
     }
 
     /**
@@ -195,5 +268,36 @@ public class PhoneUtils {
 
         NetworkInfo info = manager.getActiveNetworkInfo();
         return null != info && info.isAvailable();
+    }
+
+    /**
+     * 检查用户是否有某一个权限
+     *
+     * @param context
+     * @param permission
+     * @return
+     */
+    public static boolean checkPermission(Context context, String permission) {
+        boolean result = false;
+        if (Build.VERSION.SDK_INT >= 23) {
+            try {
+                Class<?> clazz = Class.forName("android.content.Context");
+                Method method = clazz.getMethod("checkSelfPermission", String.class);
+                int rest = (Integer) method.invoke(context, permission);
+                if (rest == PackageManager.PERMISSION_GRANTED) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            } catch (Exception e) {
+                result = false;
+            }
+        } else {
+            PackageManager pm = context.getPackageManager();
+            if (pm.checkPermission(permission, context.getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+                result = true;
+            }
+        }
+        return result;
     }
 }

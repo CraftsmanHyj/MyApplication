@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    compileSdkVersion rootProject.ext.compileSdkVersion //23
+    buildToolsVersion rootProject.ext.buildToolsVersion //'26.0.2'
 
     defaultConfig {
         applicationId "com.hyj.demo"
-        minSdkVersion 16
-        targetSdkVersion 18
+        minSdkVersion rootProject.ext.minSdkVersion//16
+        targetSdkVersion rootProject.ext.targetSdkVersion//18
+        versionCode 1
+        versionName '1.0.1'
+
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_7
             targetCompatibility JavaVersion.VERSION_1_7
@@ -30,6 +33,12 @@ android {
             signingConfig signingConfigs.release     //签名信息
         }
     }
+
+    //lint检查相关参数
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false //发生错误终止打包
+    }
 }
 
 dependencies {
@@ -44,4 +53,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile project(':libzxing')
     compile project(':Library')
+    compile files('libs/bcprov-ext-jdk15on-151.jar')
+    compile files('libs/sunjce_provider.jar')
 }

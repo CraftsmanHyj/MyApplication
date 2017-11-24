@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <TextView
+            android:id="@+id/secret_key"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"/>
+
+    <TextView
+            android:id="@+id/iv"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"/>
+
+    <TextView android:layout_width="fill_parent"
+              android:text="要加密的数据"
+              android:gravity="left"
+              android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+            android:id="@+id/data"
+            android:inputType="text"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"/>
+
+    <Button android:layout_width="match_parent"
+            android:id="@+id/btn"
+            android:layout_height="50dp"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_marginTop="50dp"
+              android:id="@+id/result1"
+              android:layout_height="wrap_content"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_marginTop="50dp"
+              android:id="@+id/result2"
+              android:layout_height="wrap_content"/>
+
+</LinearLayout>
+

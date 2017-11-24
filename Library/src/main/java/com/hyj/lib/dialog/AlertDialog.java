@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -26,7 +25,6 @@ public class AlertDialog {
     private TextView tvTitle;//标题
     private TextView tvMsg;//文字提示
     private LinearLayout llView;//预留给自定义的布局
-    private ImageView imgLine;//水平分割线
     private Button btNeg;//确认按钮
     private Button btPos;//取消按钮
 
@@ -46,7 +44,6 @@ public class AlertDialog {
         tvTitle = (TextView) view.findViewById(R.id.alertTvTitle);
         tvMsg = (TextView) view.findViewById(R.id.alertTvMsg);
         llView = (LinearLayout) view.findViewById(R.id.alertLlView);
-        imgLine = (ImageView) view.findViewById(R.id.alertImgLine);
 
         btNeg = (Button) view.findViewById(R.id.alertBtNeg);
         btPos = (Button) view.findViewById(R.id.alertBtPos);

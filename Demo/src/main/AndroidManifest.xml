@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hyj.demo"
-    android:versionCode="1"
-    android:versionName="1.0.1">
-
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+    package="com.hyj.demo">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -350,6 +344,11 @@
         <!--自定义时钟-->
         <activity
             android:name="com.hyj.demo.example.CusClockViewActivity"
+            android:launchMode="singleTask" />
+
+        <!--AES数据加密-->
+        <activity
+            android:name="com.hyj.demo.aes.AESMainActivity"
             android:launchMode="singleTask" />
     </application>
 

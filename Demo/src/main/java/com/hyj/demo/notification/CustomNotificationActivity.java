@@ -169,7 +169,6 @@ public class CustomNotificationActivity extends BaseActivity {
         return lTv.get(index).getCurrentTextColor();
     }
 
-
     private int titleColor;
 
     private int getNotificationColorInternal(Context context) {

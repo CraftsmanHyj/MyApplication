@@ -13,5 +13,4 @@
     <!--按钮不同状态所使用到的颜色-->
     <color name="btn_gray">#AAAAAA</color>
     <color name="btn_white">#FFFFFF</color>
-
 </resources>

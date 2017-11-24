@@ -1,15 +1,28 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:3.0.0'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
+}
+
+//Project全局配置
+ext {
+    compileSdkVersion = 23  //开发时采用的sdk版本
+    buildToolsVersion = "26.0.2"    //编译时采用的编译工具版本
+    minSdkVersion = 18  //APP最低支持Android系统版本
+    targetSdkVersion = 23   //开发目标版本
+    versionCode = 1
+    versionName = "V1.0.1"
+    flavorDimensions = 'default'    //APP维度
 }

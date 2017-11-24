@@ -440,8 +440,11 @@ public class LockPointView extends View implements BaseLock {
         for (int row = 0, rCount = points.length; row < rCount; row++) {
             for (int col = 0, cCount = points[row].length; col < cCount; col++) {
                 Point p = points[row][col];
-                if (Point.checkInRound(p.getX(), p.getY(), bitRadius, movingX, movingY)) {
+                if (null == p) {
+                    continue;
+                }
 
+                if (Point.checkInRound(p.getX(), p.getY(), bitRadius, movingX, movingY)) {
                     if (!isTouchUp) {
                         if (lSelPoint.contains(p)) {
                             movingNoPoint = true;

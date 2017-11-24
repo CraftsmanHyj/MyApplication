@@ -70,6 +70,10 @@ public class ServiceUtils {
     public static boolean isBackground(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<RunningAppProcessInfo> lTasks = am.getRunningAppProcesses();
+        if (null == lTasks) {
+            return false;
+        }
+
         for (RunningAppProcessInfo task : lTasks) {
             if (task.processName.equals(context.getPackageName())) {
                 if (task.importance != RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {

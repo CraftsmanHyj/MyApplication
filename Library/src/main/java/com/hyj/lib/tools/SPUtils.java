@@ -3,6 +3,7 @@ package com.hyj.lib.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.HashMap;
@@ -157,6 +158,7 @@ public class SPUtils {
      * @param defValue 默认值
      * @return Object
      */
+    @Nullable
     public static Object getParam(Context context, String spName, String key, Object defValue) {
         SharedPreferences sp = getSharedPre(context, spName);
 

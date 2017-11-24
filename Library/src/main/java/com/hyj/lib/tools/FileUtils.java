@@ -28,7 +28,7 @@ import java.math.BigDecimal;
  *     应该在调用项目Application中需要调用initAppName()方法，初始化根目录名字
  * </pre>
  *
- * @author Administrator
+ * @author hyj
  */
 @SuppressLint("SdCardPath")
 public abstract class FileUtils {

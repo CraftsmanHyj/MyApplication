@@ -17,6 +17,7 @@ import com.hyj.demo.adapter.recycler.MultiItemRvActivity;
 import com.hyj.demo.adapter.recycler.RecyclerAdapterActivity;
 import com.hyj.demo.adapter.recycler.RecyclerViewActivity;
 import com.hyj.demo.adapter.recycler.RvWidthHeaderActivity;
+import com.hyj.demo.aes.AESMainActivity;
 import com.hyj.demo.annotaionsframe.AnnotationsActivity_;
 import com.hyj.demo.annotation.AnnotationActivity;
 import com.hyj.demo.circleimageview.CircleImageActivity;
@@ -131,6 +132,11 @@ public class MainDemoActivity extends BaseActivity {
 
     private void initData() {
         ListItem bean;
+
+        bean = new ListItem();
+        bean.setTitle("AES数据加密");
+        bean.setValue(AESMainActivity.class);
+        lItems.add(bean);
 
         bean = new ListItem();
         bean.setTitle("自定义时钟");

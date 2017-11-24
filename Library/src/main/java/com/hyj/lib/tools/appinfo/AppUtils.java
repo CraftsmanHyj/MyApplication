@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.hyj.lib.tools.LogUtils;
 import com.hyj.lib.tools.Utils;
 
 import java.util.ArrayList;
@@ -183,6 +184,12 @@ public class AppUtils {
         bundle.putString("value", msg);
 
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (null == intent) {
+            AppInfo info = getAppInfo(context, packageName);
+            LogUtils.i("用户未安装APP：" + info.getAppName() + "_" + info.getPackageName());
+            return false;
+        }
+
         intent.putExtras(bundle);
         context.startActivity(intent);
         return true;
